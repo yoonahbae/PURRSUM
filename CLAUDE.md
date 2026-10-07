@@ -73,8 +73,9 @@ that swapped in `purrsum_reader.py`; it is NOT what ships.)
 1. Bump `VERSION` in `build/installer.nsi`, add a CHANGELOG.md entry (newest first, plain words).
 2. Run all tests (numbers, OCR fixtures, pets, e2e), then `cd build && ./build.sh`.
 3. `downloads` branch: replace the top-level installer AND add `versions/vX.Y.Z/Install PurrSum Noir.exe`.
-4. `main` branch: commit the source, then push tag `vX.Y.Z` → `.github/workflows/release.yml`
-   publishes the GitHub Release (notes from CHANGELOG + that version's installer).
+4. `main` branch: commit the source and push. `.github/workflows/release.yml` sees the new VERSION and
+   publishes the GitHub Release + `vX.Y.Z` tag itself (notes from CHANGELOG, installer from step 3).
+   Pushing tags or creating releases directly is blocked from Claude sessions; the workflow does it.
 5. Website changes only when the page's words/design change (canvas "Send to Netlify" creates a
    NEW Netlify site each time: rename it to `purrsum-noir` and the old one to `purrsum-noir-previous`,
    and set visitor access so the live site needs no login).

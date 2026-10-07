@@ -1,9 +1,13 @@
-# When a version tag like v1.8.2 is pushed, publish a GitHub Release automatically:
-# notes come from CHANGELOG.md, the installer from versions/<tag>/ on the "downloads" branch.
+# Publishes a GitHub Release automatically whenever a NEW version reaches the main branch.
+# Version  = VERSION in build/installer.nsi        Notes = that version's section in CHANGELOG.md
+# Installer = versions/vX.Y.Z/ on the "downloads" branch (must be pushed first).
+# GitHub creates the vX.Y.Z tag itself. If that release already exists, nothing happens.
 name: Release
 on:
   push:
-    tags: ["v*"]
+    branches: [main]
+    paths: ["build/installer.nsi", "CHANGELOG.md", ".github/workflows/release.yml"]
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -11,16 +15,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Get the installer for this version
-        run: |
-          git fetch --depth 1 origin downloads
-          git show "origin/downloads:versions/${GITHUB_REF_NAME}/Install PurrSum Noir.exe" > "Install-PurrSum-Noir-${GITHUB_REF_NAME}.exe"
-      - name: Pull this version's notes from CHANGELOG.md
-        run: |
-          v="${GITHUB_REF_NAME#v}"
-          awk -v v="$v" '$0 ~ "^## "v" " {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
-          printf '\n---\nWindows protected your PC? Click **More info → Run anyway** (the app is free and not code-signed yet).\n' >> notes.md
-      - name: Publish the release
+      - name: Read the version
+        id: v
+        run: echo "version=$(sed -n 's/^!define VERSION "\(.*\)"/\1/p' build/installer.nsi)" >> "$GITHUB_OUTPUT"
+      - name: Skip if this version is already released
+        id: check
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" "Install-PurrSum-Noir-${GITHUB_REF_NAME}.exe" --title "PurrSum Noir ${GITHUB_REF_NAME}" --notes-file notes.md
+        run: |
+          if gh release view "v${{ steps.v.outputs.version }}" >/dev/null 2>&1; then echo "exists=yes" >> "$GITHUB_OUTPUT"; else echo "exists=no" >> "$GITHUB_OUTPUT"; fi
+      - name: Get the installer for this version
+        if: steps.check.outputs.exists == 'no'
+        run: |
+          git fetch --depth 1 origin downloads
+          git show "origin/downloads:versions/v${{ steps.v.outputs.version }}/Install PurrSum Noir.exe" > "Install-PurrSum-Noir-v${{ steps.v.outputs.version }}.exe"
+      - name: Pull this version's notes from CHANGELOG.md
+        if: steps.check.outputs.exists == 'no'
+        run: |
+          awk -v v="${{ steps.v.outputs.version }}" '$0 ~ "^## "v" " {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
+          printf '\n---\nWindows protected your PC? Click **More info → Run anyway** (the app is free and not code-signed yet).\n' >> notes.md
+      - name: Publish the release (creates the tag)
+        if: steps.check.outputs.exists == 'no'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.v.outputs.version }}" "Install-PurrSum-Noir-v${{ steps.v.outputs.version }}.exe" \
+            --target "${GITHUB_SHA}" --title "PurrSum Noir v${{ steps.v.outputs.version }}" --notes-file notes.md --latest
