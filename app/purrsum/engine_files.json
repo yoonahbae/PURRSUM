@@ -1,0 +1,37 @@
+[
+ {
+  "name": "numpy",
+  "file": "numpy-1.26.4-cp312-cp312-win_amd64.whl",
+  "url": "https://files.pythonhosted.org/packages/16/2e/86f24451c2d530c88daf997cb8d6ac622c1d40d19f5a031ed68a4b73a374/numpy-1.26.4-cp312-cp312-win_amd64.whl",
+  "sha256": "08beddf13648eb95f8d867350f6a018a4be2e5ad54c8d8caed89ebca558b2818",
+  "size": 15517754
+ },
+ {
+  "name": "opencv-python-headless",
+  "file": "opencv_python_headless-4.11.0.86-cp37-abi3-win_amd64.whl",
+  "url": "https://files.pythonhosted.org/packages/86/8a/69176a64335aed183529207ba8bc3d329c2999d852b4f3818027203f50e6/opencv_python_headless-4.11.0.86-cp37-abi3-win_amd64.whl",
+  "sha256": "6c304df9caa7a6a5710b91709dd4786bf20a74d57672b3c31f7033cc638174ca",
+  "size": 39402386
+ },
+ {
+  "name": "onnxruntime",
+  "file": "onnxruntime-1.30.0-cp312-cp312-win_amd64.whl",
+  "url": "https://files.pythonhosted.org/packages/a6/13/0f1699f6de549c9324bc9112a2a85b14c517904cd11b562a654643b755a1/onnxruntime-1.30.0-cp312-cp312-win_amd64.whl",
+  "sha256": "f3501472571f1b1eee50e017851e7929f5ea37312d2d8c2494a19e8fc58b4a38",
+  "size": 14311470
+ },
+ {
+  "name": "pillow",
+  "file": "pillow-12.3.0-cp312-cp312-win_amd64.whl",
+  "url": "https://files.pythonhosted.org/packages/45/89/da2f7971a317f83d807fdd4065c0af40208e59e692cc43d315a71a0e96d1/pillow-12.3.0-cp312-cp312-win_amd64.whl",
+  "sha256": "a2b55dd6b2a4c4b7d87ffa56bdb33fdc5fdb9a462173861a7bc097f17d91cb09",
+  "size": 7227137
+ },
+ {
+  "name": "rapidocr-onnxruntime",
+  "file": "rapidocr_onnxruntime-1.2.3-py3-none-any.whl",
+  "url": "https://files.pythonhosted.org/packages/b7/ef/0df9a58310895ab357f85df67935af6a8fb98f0965c7476cee6fcb966a7e/rapidocr_onnxruntime-1.2.3-py3-none-any.whl",
+  "sha256": "c707d3a6eb72d13119afe9602d3cc36d8b2a4a4d74e9575cf1b0e67ed6a27819",
+  "size": 12326259
+ }
+]

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PurrSum Noir — a tiny cat that adds up numbers</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#141217}
+*{box-sizing:border-box}
+a{color:#f4f1ea}a:hover{color:#ffcf6b}
+.light a{color:#5a3a00}.light a:hover{color:#1f1b24}
+a:focus-visible,button:focus-visible{outline:3px solid #ffb21e;outline-offset:3px;border-radius:10px}
+.light a:focus-visible,.light button:focus-visible{outline-color:#8a5a00}
+.skip{position:absolute;left:16px;top:-80px;background:#ffb21e;color:#1a1206;padding:12px 18px;border-radius:10px;font-weight:600;z-index:10;text-decoration:none}
+.skip:focus{top:12px;color:#1a1206}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+svg.px{shape-rendering:crispEdges;display:block}
+.ico{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:64px;align-items:center}
+.invoice-wrap{position:relative;padding-bottom:56px}
+.float{position:absolute;right:-28px;bottom:-12px;display:flex;align-items:flex-end;gap:10px}
+.inv td,.inv th{padding:7px 10px;text-align:left;border-bottom:1px solid #ece6dc}
+.inv th{font-weight:600;color:#5c5566;font-size:12px;letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid #d9d2c8}
+.inv .num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;white-space:pre}
+.inv td{position:relative}
+.lit{background:#fff3d6;box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00}
+.lit.top{box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00,inset 0 2px #c27c00}
+.lit.bot{box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00,inset 0 -2px #c27c00}
+.lit.one{box-shadow:inset 0 0 0 2px #c27c00}
+.badge{position:absolute;left:-9px;top:-9px;width:20px;height:20px;border-radius:10px;background:#ffb21e;color:#1a1206;font:700 11px/20px "IBM Plex Sans",sans-serif;text-align:center}
+.cat{animation:bob 2.6s ease-in-out infinite}
+.shadow{animation:shrink 2.6s ease-in-out infinite}
+.eyes{animation:blink 5.5s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes shrink{0%,100%{transform:scaleX(1);opacity:.55}50%{transform:scaleX(.8);opacity:.35}}
+@keyframes blink{0%,93%,97%,100%{opacity:1}94%,96%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.cat,.shadow,.eyes{animation:none}}
+.row-btn{display:flex;align-items:center;gap:10px;width:100%;min-height:36px;padding:4px 8px;border:0;border-radius:8px;background:transparent;color:#f4f1ea;font:500 14px "IBM Plex Mono",ui-monospace,monospace;cursor:pointer;text-align:left}
+.row-btn:hover{background:#2a2632}
+.feat-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
+.feat{grid-column:span 2}
+.feat.wide{grid-column:span 3}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.kitties{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:1100px){.float{right:-8px}}
+@media (max-width:960px){
+.hero-grid{grid-template-columns:minmax(0,1fr);gap:40px}
+.float{position:static;justify-content:flex-end;margin-top:16px}
+.invoice-wrap{padding-bottom:0}
+.feat,.feat.wide{grid-column:span 6}
+.steps{grid-template-columns:minmax(0,1fr)}
+.kitties{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){.float{flex-direction:column;align-items:flex-end}.hide-sm{display:none}}
+</style>
+</helmet>
+<div style="font-family: 'IBM Plex Sans', system-ui, sans-serif; color: #f4f1ea; background: #141217; min-width: 0">
+<a class="skip" href="#download">Skip to download</a>
+
+<header style="max-width: 1240px; margin: 0 auto; padding: 22px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#top" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #f4f1ea" aria-label="PurrSum Noir home">
+<svg class="px" viewBox="0 0 23 18" width="46" height="36" aria-hidden="true"><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#4a4a54" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.01em">PurrSum <span style="color: #ffb21e">Noir</span></span>
+</a>
+<nav aria-label="Main">
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px">
+<li><a href="#features" style="display: inline-block; padding: 12px 14px; text-decoration: none; font-weight: 500">Features</a></li>
+<li><a href="#how" style="display: inline-block; padding: 12px 14px; text-decoration: none; font-weight: 500">How it works</a></li>
+<li><a href="#download" style="display: inline-block; padding: 12px 16px; text-decoration: none; font-weight: 600; border: 1.5px solid #ffb21e; border-radius: 12px; color: #ffcf6b">Download</a></li>
+</ul>
+</nav>
+</header>
+
+<main id="top">
+<section aria-labelledby="hero-title" style="max-width: 1240px; margin: 0 auto; padding: 48px 24px 112px">
+<div class="hero-grid">
+<div style="display: flex; flex-direction: column; gap: 28px; min-width: 0">
+<p style="margin: 0; display: inline-flex; align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #2a2412; color: #ffcf6b; font-size: 14px; font-weight: 500">Free desktop app · nothing leaves your computer</p>
+<h1 id="hero-title" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(2.6rem, 5.2vw, 4.6rem); line-height: 1.02; letter-spacing: -0.03em">A tiny cat that adds up the numbers on your screen.</h1>
+<p style="margin: 0; font-size: 1.2rem; line-height: 1.6; color: #c9c3d4; max-width: 34rem">Click the cat, drag a box over any numbers — in a PDF, an email, a website — and the total is already on your clipboard. Built for people who check invoices all day.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<a href="#windows-download" style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 26px; border-radius: 14px; background: #ffb21e; color: #1a1206; text-decoration: none; font-weight: 600; font-size: 17px"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
+<a href="#mac-download" style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 26px; border-radius: 14px; border: 1.5px solid #f4f1ea; color: #f4f1ea; text-decoration: none; font-weight: 600; font-size: 17px"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Mac</a>
+</div>
+<p style="margin: 0; color: #a39cb0; font-size: 15px">Pick from four kitties and give yours a name when you first open it.</p>
+</div>
+
+<div class="invoice-wrap" style="min-width: 0">
+<p aria-hidden="true" style="margin: 0 0 12px; display: inline-flex; padding: 8px 16px; border-radius: 999px; background: #24212b; color: #e9e4f0; font-size: 13px">Drag over numbers · hold Shift to add more boxes · Enter to add up</p>
+<div style="background: #ffffff; color: #2a2730; border-radius: 16px; padding: 28px 28px 22px; box-shadow: 0 30px 80px rgba(0,0,0,0.45)">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-bottom: 18px">
+<div>
+<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: 0.02em">COMMERCIAL INVOICE</p>
+<p style="margin: 4px 0 0; font-size: 13px; color: #5c5566">Hanbit Industrial Supply Co. · Busan</p>
+</div>
+<dl style="margin: 0; display: grid; grid-template-columns: auto auto; column-gap: 14px; row-gap: 2px; font-size: 13px">
+<dt style="color: #5c5566">Invoice</dt><dd style="margin: 0; font-family: 'IBM Plex Mono', monospace">INV-24081</dd>
+<dt style="color: #5c5566">Date</dt><dd style="margin: 0; font-family: 'IBM Plex Mono', monospace">10/06/2026</dd>
+<dt style="color: #5c5566">PO</dt><dd style="margin: 0; font-family: 'IBM Plex Mono', monospace">PO#55</dd>
+<dt style="color: #5c5566">Terms</dt><dd style="margin: 0; font-family: 'IBM Plex Mono', monospace">Net 30</dd>
+</dl>
+</div>
+<div style="overflow-x: auto">
+<table class="inv" style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px">
+<caption class="sr">Sample commercial invoice. Highlighted amounts are the three boxes the cat is adding up; the Hex nuts row is skipped.</caption>
+<thead><tr><th scope="col">Item</th><th scope="col" class="num">Qty</th><th scope="col" class="hide-sm">Size (mm)</th><th scope="col" class="num">Unit</th><th scope="col" class="num">Amount</th></tr></thead>
+<tbody>
+<tr><td>Steel plate</td><td class="num">3</td><td class="hide-sm" style="font-family: 'IBM Plex Mono', monospace">12*1800</td><td class="num">547.20</td><td class="num lit top"><span class="badge" aria-hidden="true">1</span>1641. 60</td></tr>
+<tr><td>Anchor bolts M12</td><td class="num">10</td><td class="hide-sm" style="font-family: 'IBM Plex Mono', monospace">173.5*265</td><td class="num">125.00</td><td class="num lit bot">$1,250.00</td></tr>
+<tr><td>Hex nuts</td><td class="num">200</td><td class="hide-sm">—</td><td class="num">0.45</td><td class="num">90.00</td></tr>
+<tr><td>Rubber gaskets</td><td class="num">40</td><td class="hide-sm" style="font-family: 'IBM Plex Mono', monospace">60*60</td><td class="num">3.15</td><td class="num lit top"><span class="badge" aria-hidden="true">2</span>126.00</td></tr>
+<tr><td>Packing crate</td><td class="num">2</td><td class="hide-sm" style="font-family: 'IBM Plex Mono', monospace">1200*800</td><td class="num">64.50</td><td class="num lit">129.00</td></tr>
+<tr><td>Handling</td><td class="num">1</td><td class="hide-sm">—</td><td class="num">45.00</td><td class="num lit bot">45.00</td></tr>
+</tbody>
+</table>
+</div>
+<div style="display: flex; justify-content: flex-end; margin-top: 10px">
+<table class="inv" style="border-collapse: collapse; font-size: 14px; min-width: 300px">
+<tbody>
+<tr><th scope="row" style="text-transform: none; letter-spacing: 0; font-size: 14px; color: #2a2730; border-bottom: 1px solid #ece6dc">Subtotal</th><td class="num">3,281.60</td></tr>
+<tr><th scope="row" style="text-transform: none; letter-spacing: 0; font-size: 14px; font-weight: 400; color: #2a2730; border-bottom: 1px solid #ece6dc">Credit memo CM-0912</th><td class="num lit top"><span class="badge" aria-hidden="true">3</span>(75.25)</td></tr>
+<tr><th scope="row" style="text-transform: none; letter-spacing: 0; font-size: 14px; font-weight: 400; color: #2a2730; border-bottom: 1px solid #ece6dc">Price adjustment</th><td class="num lit bot">300.00-</td></tr>
+<tr><th scope="row" style="text-transform: none; letter-spacing: 0; font-size: 14px; font-weight: 400; color: #2a2730; border-bottom: 1px solid #ece6dc">Freight</th><td class="num">210.40</td></tr>
+<tr><th scope="row" style="text-transform: none; letter-spacing: 0; font-size: 14px; font-weight: 400; color: #2a2730; border-bottom: 1px solid #ece6dc">Insurance</th><td class="num">32.80</td></tr>
+<tr><th scope="row" style="text-transform: none; letter-spacing: 0; font-size: 15px; color: #1f1b24; border-bottom: 0">Total due (USD)</th><td class="num" style="font-weight: 600; border-bottom: 0">3,149.55</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="float">
+<section aria-label="PurrSum result" style="width: 264px; background: #1c1a22; border: 1px solid #3a3644; border-radius: 16px; padding: 14px 12px 12px 16px; color: #f4f1ea; box-shadow: 0 18px 40px rgba(0,0,0,0.45)">
+<p style="margin: 0; color: #b9b3c6; font-size: 13px">Noir found 7 numbers</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px">
+<p aria-live="polite" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em"><span class="sr">Total </span>{{total}}</p>
+<span style="padding: 3px 9px; border-radius: 9px; background: #2e2a12; color: #ffcf6b; font-size: 12px; white-space: nowrap">Copied ✓</span>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px">
+<sc-for list="{{items}}" as="item" hint-placeholder-count="7">
+<li>
+<button type="button" class="row-btn" aria-pressed="{{item.included}}" onClick="{{item.toggle}}">
+<span aria-hidden="true" style="flex: none; width: 18px; height: 18px; border-radius: 9px; background: #ffb21e; color: #1a1206; font: 700 10px/18px 'IBM Plex Sans', sans-serif; text-align: center">{{item.box}}</span>
+<span style="flex: 1; text-align: right">
+<sc-if value="{{item.included}}" hint-placeholder-val="{{ true }}"><span>{{item.text}}</span></sc-if>
+<sc-if value="{{item.out}}" hint-placeholder-val="{{ false }}"><s style="color: #8f889e">{{item.text}}</s><span class="sr"> (left out)</span></sc-if>
+</span>
+</button>
+</li>
+</sc-for>
+</ul>
+<p style="margin: 8px 0 0; color: #a39cb0; font-size: 12px">Try it: click a number to leave it out.</p>
+</section>
+<div aria-hidden="true" style="flex: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 4px">
+<div class="cat">
+<svg class="px" viewBox="0 0 23 18" width="92" height="72"><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM5 6h2v1h-2zM10 6h2v1h-2zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#2f2f36" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h11v1h-11zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path class="eyes" fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg>
+</div>
+<div class="shadow" style="width: 60px; height: 8px; margin-top: 6px; border-radius: 50%; background: #000000"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="features" aria-labelledby="features-title" class="light" style="background: #f7f3ec; color: #1f1b24; padding: 104px 24px">
+<div style="max-width: 1192px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 46rem">
+<p style="margin: 0; color: #7a4f00; font-weight: 600; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase">Why PurrSum</p>
+<h2 id="features-title" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.08; letter-spacing: -0.02em">Five things it does better than a calculator and a squint.</h2>
+</div>
+<ul class="feat-grid" style="list-style: none; margin: 0; padding: 0">
+<li class="feat" style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span aria-hidden="true" style="display: inline-flex; width: 48px; height: 48px; border-radius: 14px; background: #1f1b24; color: #ffb21e; align-items: center; justify-content: center"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="2" y="4" width="13" height="10" rx="1.5"/><rect x="11" y="9" width="11" height="9" rx="1.5"/><path d="M6 18h5"/></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px">Any app, any screen</h3>
+<p style="margin: 0; color: #4a4452; line-height: 1.6">PDFs in Adobe Acrobat, Outlook emails, websites, scanned statements. Drag the cat to your other monitor and it works there too.</p>
+</li>
+<li class="feat" style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span aria-hidden="true" style="display: inline-flex; width: 48px; height: 48px; border-radius: 14px; background: #1f1b24; color: #ffb21e; align-items: center; justify-content: center"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><path d="M6 2h9l4 4v16H6z"/><path d="M9 11h7"/><path d="M9 15h7"/><path d="M9 19h4"/></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px">Reads invoices like you do</h3>
+<p style="margin: 0; color: #4a4452; line-height: 1.6"><span style="font-family: 'IBM Plex Mono', monospace; white-space: pre">1641. 60</span> stays one number. <span style="font-family: 'IBM Plex Mono', monospace">(75.25)</span> and <span style="font-family: 'IBM Plex Mono', monospace">300.00-</span> count as negatives. Dates, times, INV-24081, PO#55 and sizes like 12*1800 are skipped.</p>
+</li>
+<li class="feat" style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span aria-hidden="true" style="display: inline-flex; width: 48px; height: 48px; border-radius: 14px; background: #1f1b24; color: #ffb21e; align-items: center; justify-content: center"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="3" y="3" width="11" height="7" rx="1"/><rect x="10" y="14" width="11" height="7" rx="1"/><path d="M6 13v2"/><path d="M6 18v.5"/></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px">Hold Shift to skip rows</h3>
+<p style="margin: 0; color: #4a4452; line-height: 1.6">Draw as many boxes as you need, even across monitors. Each one gets a numbered badge, so you always know where a number came from.</p>
+</li>
+<li class="feat wide" style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span aria-hidden="true" style="display: inline-flex; width: 48px; height: 48px; border-radius: 14px; background: #1f1b24; color: #ffb21e; align-items: center; justify-content: center"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px">Private by design</h3>
+<p style="margin: 0; color: #4a4452; line-height: 1.6">The numbers are read right on your computer. Nothing you select is ever uploaded, so client invoices and bank statements stay yours.</p>
+</li>
+<li class="feat wide" style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span aria-hidden="true" style="display: inline-flex; width: 48px; height: 48px; border-radius: 14px; background: #1f1b24; color: #ffb21e; align-items: center; justify-content: center"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="M9.5 13l2 2 3.5-4"/></svg></span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px">Total copied, ready to paste</h3>
+<p style="margin: 0; color: #4a4452; line-height: 1.6">The total lands on your clipboard without commas, ready for Excel or your entry form. Click any number in the bubble to leave it out and the total updates.</p>
+</li>
+</ul>
+</div>
+</section>
+
+<section id="how" aria-labelledby="how-title" style="background: #141217; padding: 104px 24px">
+<div style="max-width: 1192px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px">
+<h2 id="how-title" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.08; letter-spacing: -0.02em">Three seconds, start to paste.</h2>
+<ol class="steps" style="list-style: none; margin: 0; padding: 0">
+<li style="border-top: 2px solid #ffb21e; padding-top: 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', monospace; color: #ffcf6b; font-size: 15px">01</span>
+<h3 style="margin: 0; font-size: 21px; font-weight: 600">Click your cat</h3>
+<p style="margin: 0; color: #c9c3d4; line-height: 1.6">Every screen dims, ready for you to pick the numbers.</p>
+</li>
+<li style="border-top: 2px solid #ffb21e; padding-top: 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', monospace; color: #ffcf6b; font-size: 15px">02</span>
+<h3 style="margin: 0; font-size: 21px; font-weight: 600">Drag over the numbers</h3>
+<p style="margin: 0; color: #c9c3d4; line-height: 1.6">Hold Shift for more boxes. Let go, or press Enter, to add them up. Esc cancels.</p>
+</li>
+<li style="border-top: 2px solid #ffb21e; padding-top: 22px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', monospace; color: #ffcf6b; font-size: 15px">03</span>
+<h3 style="margin: 0; font-size: 21px; font-weight: 600">Paste the total</h3>
+<p style="margin: 0; color: #c9c3d4; line-height: 1.6">It's already copied. The bubble shows every number found, so you can double-check at a glance.</p>
+</li>
+</ol>
+</div>
+</section>
+
+<section id="download" aria-labelledby="download-title" class="light" style="background: #f7f3ec; color: #1f1b24; padding: 104px 24px">
+<div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 36px; text-align: center">
+<div style="display: flex; flex-direction: column; gap: 14px; align-items: center">
+<h2 id="download-title" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.08; letter-spacing: -0.02em">Pick your kitty. Name it anything.</h2>
+<p style="margin: 0; color: #4a4452; font-size: 1.15rem; line-height: 1.6; max-width: 36rem">Choose one of four cats the first time you open PurrSum. You can switch any time from the cat's right-click menu.</p>
+</div>
+<ul class="kitties" style="list-style: none; margin: 0; padding: 0; width: 100%">
+<li style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 24px 12px 18px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<svg class="px" viewBox="0 0 23 18" width="92" height="72" role="img" aria-label="Black cat with amber eyes"><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#2f2f36" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg>
+<p style="margin: 0; font-weight: 600">Noir</p>
+</li>
+<li style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 24px 12px 18px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<svg class="px" viewBox="0 0 23 18" width="92" height="72" role="img" aria-label="White cat with blue eyes"><path fill="#16161a" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f7a8bb" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#fbfbfb" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path fill="#3fb3f2" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg>
+<p style="margin: 0; font-weight: 600">Snowball</p>
+</li>
+<li style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 24px 12px 18px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<svg class="px" viewBox="0 0 23 18" width="92" height="72" role="img" aria-label="Gray tabby cat"><path fill="#16161a" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM6 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM6 6h1v1h-1zM11 6h1v1h-1zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f2a7b6" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#aaa59f" d="M3 3h3v1h-3zM7 3h1v1h-1zM9 3h1v1h-1zM11 3h3v1h-3zM4 4h4v1h-4zM9 4h4v1h-4zM4 5h1v1h-1zM7 5h3v1h-3zM12 5h1v1h-1zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM5 11h2v1h-2zM10 11h2v1h-2zM5 12h2v1h-2zM10 12h2v1h-2zM19 12h1v1h-1zM21 12h1v1h-1zM5 13h2v1h-2zM10 13h2v1h-2zM18 13h1v1h-1zM20 13h1v1h-1zM4 14h3v1h-3zM10 14h3v1h-3zM17 14h2v1h-2zM4 15h2v1h-2zM11 15h2v1h-2zM17 15h1v1h-1zM4 16h2v1h-2zM11 16h6v1h-6z"/><path fill="#6c6762" d="M6 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM3 4h1v1h-1zM8 4h1v1h-1zM13 4h1v1h-1zM3 5h1v1h-1zM13 5h1v1h-1zM4 11h1v1h-1zM12 11h1v1h-1zM4 12h1v1h-1zM12 12h1v1h-1zM20 12h1v1h-1zM4 13h1v1h-1zM12 13h1v1h-1zM19 13h1v1h-1zM16 15h1v1h-1z"/><path fill="#ffffff" d="M5 5h1v1h-1zM10 5h1v1h-1zM5 6h1v1h-1zM10 6h1v1h-1z"/><path fill="#e7c3bd" d="M7 11h3v1h-3zM7 12h3v1h-3zM7 13h3v1h-3zM7 14h3v1h-3zM7 15h3v1h-3zM7 16h3v1h-3z"/></svg>
+<p style="margin: 0; font-weight: 600">Pebble</p>
+</li>
+<li style="background: #ffffff; border: 1px solid #e6e0d8; border-radius: 18px; padding: 24px 12px 18px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<svg class="px" viewBox="0 0 23 18" width="92" height="72" role="img" aria-label="Orange tabby cat"><path fill="#16161a" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM6 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM6 6h1v1h-1zM11 6h1v1h-1zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f7cfb2" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#e3803d" d="M3 3h3v1h-3zM7 3h1v1h-1zM9 3h1v1h-1zM11 3h3v1h-3zM4 4h4v1h-4zM9 4h4v1h-4zM4 5h1v1h-1zM7 5h3v1h-3zM12 5h1v1h-1zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM5 11h2v1h-2zM10 11h2v1h-2zM5 12h2v1h-2zM10 12h2v1h-2zM19 12h1v1h-1zM21 12h1v1h-1zM5 13h2v1h-2zM10 13h2v1h-2zM18 13h1v1h-1zM20 13h1v1h-1zM4 14h3v1h-3zM10 14h3v1h-3zM17 14h2v1h-2zM4 15h2v1h-2zM11 15h2v1h-2zM17 15h1v1h-1zM4 16h2v1h-2zM11 16h6v1h-6z"/><path fill="#b85a1f" d="M6 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM3 4h1v1h-1zM8 4h1v1h-1zM13 4h1v1h-1zM3 5h1v1h-1zM13 5h1v1h-1zM4 11h1v1h-1zM12 11h1v1h-1zM4 12h1v1h-1zM12 12h1v1h-1zM20 12h1v1h-1zM4 13h1v1h-1zM12 13h1v1h-1zM19 13h1v1h-1zM16 15h1v1h-1z"/><path fill="#ffffff" d="M5 5h1v1h-1zM10 5h1v1h-1zM5 6h1v1h-1zM10 6h1v1h-1z"/><path fill="#f6dcc2" d="M7 11h3v1h-3zM7 12h3v1h-3zM7 13h3v1h-3zM7 14h3v1h-3zM7 15h3v1h-3zM7 16h3v1h-3z"/></svg>
+<p style="margin: 0; font-weight: 600">Mango</p>
+</li>
+</ul>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 14px">
+<a id="windows-download" href="#windows-download" style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 28px; border-radius: 14px; background: #1f1b24; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 17px"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
+<a id="mac-download" href="#mac-download" style="display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 28px; border-radius: 14px; border: 1.5px solid #1f1b24; color: #1f1b24; text-decoration: none; font-weight: 600; font-size: 17px"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Mac</a>
+</div>
+<p style="margin: 0; color: #5c5566; font-size: 15px">Free. Works offline after setup. Nothing you select is uploaded.</p>
+</div>
+</section>
+</main>
+
+<footer style="background: #141217; padding: 36px 24px">
+<div style="max-width: 1192px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: #a39cb0; font-size: 14px">
+<p style="margin: 0">PurrSum Noir · made by Yoonah</p>
+<p style="margin: 0">Built for people who add up invoices for a living.</p>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { off: {} };
+  }
+  renderVals() {
+    var found = [
+      { id: 'a', box: 1, cents: 164160, text: '1641.60' },
+      { id: 'b', box: 1, cents: 125000, text: '$1,250.00' },
+      { id: 'c', box: 2, cents: 12600, text: '126.00' },
+      { id: 'd', box: 2, cents: 12900, text: '129.00' },
+      { id: 'e', box: 2, cents: 4500, text: '45.00' },
+      { id: 'f', box: 3, cents: -7525, text: '-75.25' },
+      { id: 'g', box: 3, cents: -30000, text: '-300.00' }
+    ];
+    var off = this.state.off;
+    var self = this;
+    var sum = 0;
+    var items = found.map(function (f) {
+      var included = !off[f.id];
+      if (included) { sum += f.cents; }
+      return {
+        box: f.box,
+        text: f.text,
+        included: included,
+        out: !included,
+        toggle: function () {
+          var next = Object.assign({}, self.state.off);
+          next[f.id] = !next[f.id];
+          self.setState({ off: next });
+        }
+      };
+    });
+    var neg = sum < 0;
+    var abs = Math.abs(sum);
+    var whole = Math.floor(abs / 100).toLocaleString('en-US');
+    var frac = String(abs % 100).padStart(2, '0');
+    return { items: items, total: (neg ? '-' : '') + whole + '.' + frac };
+  }
+}
+</script>
+</body>
+</html>
