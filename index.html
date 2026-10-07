@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PurrSum Noir — add up numbers from anywhere on your screen</title>
+<meta name="description" content="A tiny cat for Windows that adds up any numbers on your screen: PDFs, Excel, Google Sheets, emails and websites, across all your monitors. Free, and nothing leaves your computer.">
+<meta name="theme-color" content="#141217">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://purrsum-noir.netlify.app/">
+<meta property="og:title" content="PurrSum Noir — add up any numbers on your screen">
+<meta property="og:description" content="Click the cat, drag a box over numbers in a PDF, Excel, Google Sheets or anywhere else, and the total is copied. Free for Windows.">
+<meta property="og:image" content="https://raw.githubusercontent.com/yoonahbae/PURRSUM/site/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2023%2018%22%20width%3D%2246%22%20height%3D%2236%22%3E%3Cpath%20fill%3D%22%230b0b0e%22%20d%3D%22M2%200h2v1h-2zM13%200h2v1h-2zM2%201h1v1h-1zM4%201h1v1h-1zM12%201h1v1h-1zM14%201h1v1h-1zM2%202h1v1h-1zM5%202h7v1h-7zM14%202h1v1h-1zM2%203h1v1h-1zM14%203h1v1h-1zM2%204h1v1h-1zM14%204h1v1h-1zM2%205h1v1h-1zM14%205h1v1h-1zM0%206h3v1h-3zM14%206h3v1h-3zM2%207h1v1h-1zM8%207h1v1h-1zM14%207h1v1h-1zM0%208h3v1h-3zM7%208h1v1h-1zM9%208h1v1h-1zM14%208h3v1h-3zM2%209h1v1h-1zM14%209h1v1h-1zM3%2010h1v1h-1zM13%2010h1v1h-1zM3%2011h1v1h-1zM13%2011h1v1h-1zM19%2011h3v1h-3zM3%2012h1v1h-1zM13%2012h1v1h-1zM18%2012h1v1h-1zM22%2012h1v1h-1zM3%2013h1v1h-1zM13%2013h1v1h-1zM17%2013h1v1h-1zM21%2013h1v1h-1zM3%2014h1v1h-1zM13%2014h1v1h-1zM16%2014h1v1h-1zM19%2014h1v1h-1zM3%2015h1v1h-1zM6%2015h1v1h-1zM10%2015h1v1h-1zM13%2015h3v1h-3zM18%2015h1v1h-1zM3%2016h1v1h-1zM6%2016h1v1h-1zM10%2016h1v1h-1zM17%2016h1v1h-1zM3%2017h14v1h-14z%22/%3E%3Cpath%20fill%3D%22%23f39bb0%22%20d%3D%22M3%201h1v1h-1zM13%201h1v1h-1zM3%202h2v1h-2zM12%202h2v1h-2z%22/%3E%3Cpath%20fill%3D%22%232f2f36%22%20d%3D%22M3%203h11v1h-11zM3%204h11v1h-11zM3%205h2v1h-2zM7%205h3v1h-3zM12%205h2v1h-2zM3%206h2v1h-2zM7%206h3v1h-3zM12%206h2v1h-2zM3%207h5v1h-5zM9%207h5v1h-5zM3%208h4v1h-4zM8%208h1v1h-1zM10%208h4v1h-4zM3%209h11v1h-11zM4%2010h9v1h-9zM4%2011h9v1h-9zM4%2012h9v1h-9zM19%2012h3v1h-3zM4%2013h9v1h-9zM18%2013h3v1h-3zM4%2014h9v1h-9zM17%2014h2v1h-2zM4%2015h2v1h-2zM7%2015h3v1h-3zM11%2015h2v1h-2zM16%2015h2v1h-2zM4%2016h2v1h-2zM7%2016h3v1h-3zM11%2016h6v1h-6z%22/%3E%3Cpath%20fill%3D%22%23ffb21e%22%20d%3D%22M5%205h2v1h-2zM10%205h2v1h-2zM5%206h2v1h-2zM10%206h2v1h-2z%22/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#141217}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+a{color:#f4f1ea}a:hover{color:#ffcf6b}
+.light a{color:#5a3a00}.light a:hover{color:#1f1b24}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #ffb21e;outline-offset:3px;border-radius:10px}
+.light a:focus-visible,.light button:focus-visible,.light summary:focus-visible{outline-color:#8a5a00}
+.skip{position:absolute;left:16px;top:-80px;background:#ffb21e;color:#1a1206;padding:12px 18px;border-radius:10px;font-weight:600;z-index:30;text-decoration:none}
+.skip:focus{top:12px;color:#1a1206}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+svg.px{shape-rendering:crispEdges;display:block}
+.ico{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.wrap{max-width:1240px;margin:0 auto;padding-left:clamp(16px,4vw,24px);padding-right:clamp(16px,4vw,24px)}
+.sec{padding-top:clamp(64px,9vw,104px);padding-bottom:clamp(64px,9vw,104px)}
+.h2{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(1.9rem,4vw,3rem);line-height:1.08;letter-spacing:-.02em}
+.eyebrow{margin:0;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 26px;border-radius:14px;text-decoration:none;font-weight:600;font-size:17px}
+.btn-main{background:#ffb21e;color:#1a1206}
+a.btn-main:hover{background:#ffc64d;color:#1a1206}
+.btn-ghost{border:1.5px solid #f4f1ea;color:#f4f1ea}
+.btn-dark{background:#1f1b24;color:#ffffff}
+.light a.btn-dark{color:#ffffff}.light a.btn-dark:hover{background:#3a3344;color:#ffffff}
+
+/* header + hamburger */
+.top{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:18px;padding-bottom:18px}
+.desk-nav ul{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:6px}
+.desk-nav a{display:inline-block;padding:12px 14px;text-decoration:none;font-weight:500}
+.desk-nav a.nav-cta{padding:11px 16px;font-weight:600;border:1.5px solid #ffb21e;border-radius:12px;color:#ffcf6b}
+.burger{display:none;width:48px;height:48px;border:1.5px solid #3a3644;border-radius:12px;background:#1c1a22;color:#f4f1ea;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.mob-nav{position:absolute;left:0;right:0;top:100%;background:#1c1a22;border-top:1px solid #3a3644;border-bottom:1px solid #3a3644;box-shadow:0 20px 40px rgba(0,0,0,.45)}
+.mob-nav ul{list-style:none;margin:0;padding:8px clamp(16px,4vw,24px) 20px;display:flex;flex-direction:column;gap:2px}
+.mob-nav a{display:flex;align-items:center;min-height:52px;padding:0 4px;text-decoration:none;font-size:18px;font-weight:500;border-bottom:1px solid #2a2632}
+.mob-nav a.btn{margin-top:14px;border-bottom:0;justify-content:center;font-weight:600;font-size:17px}
+@media (max-width:820px){.desk-nav{display:none}.burger{display:inline-flex}}
+@media (min-width:821px){.mob-nav{display:none}}
+
+/* hero */
+.chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.chips li{padding:7px 12px;border-radius:999px;background:#24212b;border:1px solid #3a3644;color:#e9e4f0;font-size:14px;font-weight:500}
+
+/* demo: two screens + bubble */
+.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:20px;align-items:end;margin-top:clamp(40px,6vw,64px)}
+.screen{background:#2a2632;border-radius:16px;padding:10px;box-shadow:0 24px 60px rgba(0,0,0,.4);min-width:0}
+.screen-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 6px 10px;color:#c9c3d4;font-size:13px}
+.screen-bar .tag{flex:none;padding:3px 9px;border-radius:8px;background:#141217;color:#ffcf6b;font-size:12px;font-weight:600}
+.paper{background:#ffffff;color:#2a2730;border-radius:10px;padding:18px 18px 16px;overflow:hidden}
+.inv{width:100%;border-collapse:collapse;font-size:13.5px}
+.inv td,.inv th{padding:6px 8px;text-align:left;border-bottom:1px solid #ece6dc}
+.inv th{font-weight:600;color:#5c5566;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid #d9d2c8}
+.inv .num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;white-space:pre}
+.lit{background:#fff3d6;box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00}
+.lit.top{box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00,inset 0 2px #c27c00}
+.lit.bot{box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00,inset 0 -2px #c27c00}
+.sheet{width:100%;border-collapse:collapse;font-size:13px;background:#ffffff;color:#202124}
+.sheet th{background:#f1f3f4;color:#5f6368;font-weight:500;font-size:11.5px;padding:4px 6px;border:1px solid #dadce0;text-align:center}
+.sheet td{padding:6px 8px;border:1px solid #e3e3e3}
+.sheet th.rh{width:28px}
+.sheet .num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;white-space:pre}
+.sheet-tabs{display:flex;gap:4px;padding:8px 2px 0;font-size:12px;color:#5f6368}
+.sheet-tabs span{padding:4px 10px;border-radius:6px 6px 0 0;background:#f1f3f4}
+.sheet-tabs span.on{background:#ffffff;color:#1e7e34;font-weight:600;border-bottom:2px solid #1e7e34}
+.side{display:flex;align-items:flex-end;gap:10px}
+.bubble{width:272px;background:#1c1a22;border:1px solid #3a3644;border-radius:16px;padding:14px 12px 12px 14px;color:#f4f1ea;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.row-btn{display:flex;align-items:center;gap:10px;width:100%;min-height:30px;padding:2px 8px;border:0;border-radius:8px;background:transparent;color:#f4f1ea;font:500 14px "IBM Plex Mono",ui-monospace,monospace;cursor:pointer;text-align:left}
+.row-btn:hover{background:#2a2632}
+.rownum{flex:none;width:18px;color:#8f889e;font:500 12px "IBM Plex Mono",ui-monospace,monospace;text-align:right}
+.divider{height:1px;margin:3px 8px;background:#3a3644}
+.cat{animation:bob 2.6s ease-in-out infinite}
+.shadow{animation:shrink 2.6s ease-in-out infinite}
+.eyes{animation:blink 5.5s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes shrink{0%,100%{transform:scaleX(1);opacity:.55}50%{transform:scaleX(.8);opacity:.35}}
+@keyframes blink{0%,93%,97%,100%{opacity:1}94%,96%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.cat,.shadow,.eyes{animation:none}}
+@media (max-width:1100px){.demo{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.side{grid-column:1 / -1;justify-content:flex-end}}
+@media (max-width:700px){.demo{grid-template-columns:minmax(0,1fr)}.side{grid-column:auto}}
+@media (max-width:400px){.bubble{width:100%}.side{flex-direction:column;align-items:flex-end}.inv td,.inv th{padding:6px 5px}}
+
+/* sections */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.steps li{border-top:2px solid #1f1b24;padding-top:22px;display:flex;flex-direction:column;gap:10px}
+.steps h3{margin:0;font-size:21px;font-weight:600}
+.steps p{margin:0;color:#4a4452;line-height:1.6}
+.feat-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{background:#ffffff;color:#1f1b24;border:1px solid #e6e0d8;border-radius:18px;padding:clamp(22px,3vw,28px);display:flex;flex-direction:column;gap:12px}
+.icon-tile{display:inline-flex;width:48px;height:48px;border-radius:14px;background:#1f1b24;color:#ffb21e;align-items:center;justify-content:center}
+.card h3{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:22px}
+.card p{margin:0;color:#4a4452;line-height:1.6}
+.install{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.install>li{background:#1c1a22;border:1px solid #3a3644;border-radius:18px;padding:clamp(22px,3vw,26px);display:flex;flex-direction:column;gap:12px;min-width:0}
+.install h3{margin:0;font-size:21px;font-weight:600}
+.install p{margin:0;color:#c9c3d4;line-height:1.6}
+.stepnum{display:inline-flex;width:34px;height:34px;border-radius:17px;background:#ffb21e;color:#1a1206;font-weight:700;align-items:center;justify-content:center}
+.ss{background:#1d5ea8;color:#ffffff;border-radius:10px;padding:16px 16px 18px;font-size:13px;line-height:1.45}
+.ss b{display:block;font-size:16px;font-weight:600;margin-bottom:6px}
+.ss .more{display:inline-block;margin-top:8px;color:#ffffff;text-decoration:underline;font-weight:600;outline:2px dashed #ffcf6b;outline-offset:2px;border-radius:2px}
+.ss .run{display:inline-block;margin-top:12px;padding:5px 14px;border:1.5px solid #ffffff;border-radius:4px;outline:2px dashed #ffcf6b;outline-offset:3px}
+kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-radius:6px;border:1px solid currentColor}
+.faq{display:flex;flex-direction:column;gap:12px;width:100%;max-width:820px}
+.faq details{background:#ffffff;border:1px solid #e6e0d8;border-radius:14px;padding:0 clamp(16px,3vw,22px)}
+.faq summary{cursor:pointer;padding:18px 0;font-weight:600;font-size:17px;min-height:44px}
+.faq details p{margin:0 0 18px;color:#4a4452;line-height:1.6}
+@media (max-width:960px){.steps,.install{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:700px){.feat-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:480px){.hero-ctas .btn{width:100%}}
+</style>
+
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div style="font-family: 'IBM Plex Sans', system-ui, sans-serif; color: #f4f1ea; background: #141217; min-width: 0; overflow-x: hidden">
+<a class="skip" href="#install">Skip to download</a>
+
+<header class="wrap top">
+<a href="#top" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #f4f1ea" aria-label="PurrSum Noir home">
+<svg class="px" viewBox="0 0 23 18" width="46" height="36" aria-hidden="true"><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#2f2f36" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.01em">PurrSum <span style="color: #ffb21e">Noir</span></span>
+</a>
+<nav class="desk-nav" aria-label="Main">
+<ul>
+<li><a href="#how">How it works</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#faq">Questions</a></li>
+<li><a class="nav-cta" href="#install">Download</a></li>
+</ul>
+</nav>
+<button type="button" class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+<svg data-ic="open" class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+<svg data-ic="close" hidden class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+</button>
+
+<nav id="mobile-menu" class="mob-nav" hidden aria-label="Main">
+<ul>
+<li><a href="#how">How it works</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#faq">Questions</a></li>
+<li><a class="btn btn-main" href="#install">Download for Windows</a></li>
+</ul>
+</nav>
+
+</header>
+
+<main id="top">
+<section aria-labelledby="hero-title" class="wrap" style="padding-top: clamp(24px, 5vw, 48px); padding-bottom: clamp(64px, 9vw, 104px)">
+<div style="display: flex; flex-direction: column; gap: 24px; max-width: 52rem">
+<p style="margin: 0; display: inline-flex; align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #2a2412; color: #ffcf6b; font-size: 14px; font-weight: 500">Free for Windows · nothing leaves your computer</p>
+<h1 id="hero-title" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(2.4rem, 6.4vw, 5rem); line-height: 1.02; letter-spacing: -0.03em">Add up any numbers on your screen.</h1>
+<p style="margin: 0; font-size: clamp(1.05rem, 2vw, 1.25rem); line-height: 1.6; color: #c9c3d4; max-width: 40rem">PDFs, Excel, Google Sheets, emails, websites, even scanned pages, across all your monitors. Click the cat, drag a box over the numbers, and the total is copied.</p>
+<ul class="chips" aria-label="Works with">
+<li>PDF</li><li>Excel</li><li>Google Sheets</li><li>Email</li><li>Websites</li><li>Scans &amp; images</li><li>Multiple monitors</li>
+</ul>
+<div class="hero-ctas" style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 4px">
+<a class="btn btn-main" href="https://github.com/yoonahbae/PURRSUM/raw/downloads/Install%20PurrSum%20Noir.exe" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
+<a class="btn btn-ghost" href="#install">How to install</a>
+</div>
+<p style="margin: 0; color: #a39cb0; font-size: 15px; line-height: 1.6">Windows 10 and 11 · 22 MB · no account. Mac version coming soon.</p>
+</div>
+
+<div class="demo">
+<figure class="screen" style="margin: 0" aria-label="Screen 1: a PDF invoice with three amounts boxed">
+<div class="screen-bar"><span class="mono" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">invoice_24081.pdf</span><span class="tag">Screen 1</span></div>
+<div class="paper">
+<p style="margin: 0 0 12px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: 0.02em">INVOICE <span class="mono" style="font-weight: 400; font-size: 12px; color: #5c5566">INV-24081 · 10/06/2026</span></p>
+<table class="inv">
+<thead><tr><th scope="col">Item</th><th scope="col" class="num">Amount</th></tr></thead>
+<tbody>
+<tr><td>Steel plate 12*1800</td><td class="num lit top">1641. 60</td></tr>
+<tr><td>Anchor bolts M12</td><td class="num lit">$1,250.00</td></tr>
+<tr><td>Credit memo</td><td class="num lit bot">(75.25)</td></tr>
+<tr><td>Hex nuts</td><td class="num">90.00</td></tr>
+</tbody>
+</table>
+</div>
+</figure>
+
+<figure class="screen" style="margin: 0" aria-label="Screen 2: a spreadsheet with three cells boxed">
+<div class="screen-bar"><span class="mono" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Q3 freight.xlsx</span><span class="tag">Screen 2</span></div>
+<div class="paper" style="padding: 0; background: #ffffff">
+<table class="sheet">
+<thead><tr><th class="rh" scope="col"><span class="sr">Row</span></th><th scope="col">A</th><th scope="col">B</th></tr></thead>
+<tbody>
+<tr><th class="rh" scope="row">1</th><td style="font-weight: 600">Carrier</td><td class="num" style="font-weight: 600; font-family: 'IBM Plex Sans', sans-serif">Cost</td></tr>
+<tr><th class="rh" scope="row">2</th><td>Ocean · LAX</td><td class="num lit top">980.00</td></tr>
+<tr><th class="rh" scope="row">3</th><td>Drayage</td><td class="num lit">1,312.50</td></tr>
+<tr><th class="rh" scope="row">4</th><td>Exam fee</td><td class="num lit bot">47.25</td></tr>
+<tr><th class="rh" scope="row">5</th><td>Notes</td><td style="color: #5f6368">due 10/15</td></tr>
+</tbody>
+</table>
+<div class="sheet-tabs" aria-hidden="true" style="padding: 8px 8px 0"><span class="on">Sheet1</span><span>Sheet2</span></div>
+</div>
+</figure>
+
+<div class="side">
+<section class="bubble" aria-label="Example PurrSum result. Click a number to leave it out.">
+<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found <span id="count">6</span> numbers on 2 screens</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px 4px">
+<p aria-live="polite" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em"><span class="sr">Total </span><span id="total">5,156.10</span></p>
+<span style="padding: 3px 9px; border-radius: 9px; background: #2e2a12; color: #ffcf6b; font-size: 12px; white-space: nowrap">Copied ✓</span>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px">
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="164160">
+<span class="rownum" aria-hidden="true">1</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1641.60</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1641.60</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="125000">
+<span class="rownum" aria-hidden="true">2</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$1,250.00</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$1,250.00</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="-7525">
+<span class="rownum" aria-hidden="true">3</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>-75.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">-75.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+<li aria-hidden="true" class="divider"></li>
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="98000">
+<span class="rownum" aria-hidden="true">4</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>980.00</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">980.00</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="131250">
+<span class="rownum" aria-hidden="true">5</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,312.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,312.50</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="4725">
+<span class="rownum" aria-hidden="true">6</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>47.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">47.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+</ul>
+<p style="margin: 8px 0 0 4px; color: #a39cb0; font-size: 12px">Try it: click a number to leave it out.</p>
+</section>
+<div aria-hidden="true" style="flex: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 4px">
+<div class="cat"><svg class="px" viewBox="0 0 23 18" width="92" height="72" aria-hidden="true"><path fill="#2f2f36" d="M5 5h1v1h-1zM11 5h1v1h-1zM10 5h1v1h-1zM6 5h1v1h-1z"/><path fill="#0b0b0e" d="M5 6h1v1h-1zM11 6h1v1h-1zM10 6h1v1h-1zM6 6h1v1h-1z"/><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#2f2f36" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path class="eyes" fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg></div>
+<div class="shadow" style="width: 44px; height: 8px; margin-top: 4px; margin-right: 24px; border-radius: 50%; background: #000000"></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="how" aria-labelledby="how-title" class="light sec" style="background: #f7f3ec; color: #1f1b24">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 44px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 46rem">
+<p class="eyebrow" style="color: #7a4f00">How it works</p>
+<h2 id="how-title" class="h2">Three seconds, start to paste.</h2>
+</div>
+<ol class="steps">
+<li>
+<span class="mono" style="color: #7a4f00; font-size: 15px">01</span>
+<h3>Click your cat</h3>
+<p>It sits in the corner of your screen. Click it and every monitor dims, ready for you to pick numbers.</p>
+</li>
+<li>
+<span class="mono" style="color: #7a4f00; font-size: 15px">02</span>
+<h3>Box the numbers, anywhere</h3>
+<p>Drag over numbers in any app. Hold <kbd>Shift</kbd> to box more, on any screen. Let go or press <kbd>Enter</kbd> to add up.</p>
+</li>
+<li>
+<span class="mono" style="color: #7a4f00; font-size: 15px">03</span>
+<h3>Paste the total</h3>
+<p>It's already copied, without commas. The bubble lists every number, numbered 1, 2, 3, so you can check them against the document.</p>
+</li>
+</ol>
+</div>
+</section>
+
+<section id="features" aria-labelledby="features-title" class="sec" style="background: #141217">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 44px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 46rem">
+<p class="eyebrow" style="color: #ffcf6b">Why PurrSum</p>
+<h2 id="features-title" class="h2">If you can see it, you can add it up.</h2>
+</div>
+<ul class="feat-grid">
+<li class="card">
+<span class="icon-tile" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="2" y="4" width="13" height="10" rx="1.5"/><rect x="11" y="9" width="11" height="9" rx="1.5"/><path d="M6 18h5"/></svg></span>
+<h3>Any format, any screen</h3>
+<p>It reads what's on your screen, not the file. So it works in PDFs, Excel, Google Sheets, Outlook, websites and scanned pages, on every monitor at once. Need more? Add from another window or type a number in.</p>
+</li>
+<li class="card">
+<span class="icon-tile" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><path d="M6 2h9l4 4v16H6z"/><path d="M9 11h7"/><path d="M9 15h7"/><path d="M9 19h4"/></svg></span>
+<h3>Reads numbers the way people write them</h3>
+<p><span class="mono" style="white-space: pre">1641. 60</span> stays one number. <span class="mono">(75.25)</span> and <span class="mono">300.00-</span> are negatives. $ ₩ € £ ¥ and commas are fine. Dates, invoice codes like INV-24081 and sizes like 12*1800 are skipped.</p>
+</li>
+<li class="card">
+<span class="icon-tile" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="M9.5 13l2 2 3.5-4"/></svg></span>
+<h3>Total copied, ready to paste</h3>
+<p>The total lands on your clipboard without commas, ready for a cell or a form. Click any number in the bubble to leave it out, and the total updates.</p>
+</li>
+<li class="card">
+<span class="icon-tile" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+<h3>Private by design</h3>
+<p>Numbers are read right on your computer. Nothing you select is uploaded, so client invoices and statements stay yours.</p>
+</li>
+</ul>
+</div>
+</section>
+
+<section id="install" aria-labelledby="install-title" class="light sec" style="background: #f7f3ec; color: #1f1b24">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 44px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 40rem">
+<p class="eyebrow" style="color: #7a4f00">Download</p>
+<h2 id="install-title" class="h2">Set up in about a minute.</h2>
+<p style="margin: 0; color: #4a4452; font-size: 1.1rem; line-height: 1.6">No admin rights needed. Stay online during setup: it downloads its number-reading part once.</p>
+</div>
+<a class="btn btn-dark" href="https://github.com/yoonahbae/PURRSUM/raw/downloads/Install%20PurrSum%20Noir.exe" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
+</div>
+<ol class="install" style="color: #f4f1ea">
+<li>
+<span class="stepnum" aria-hidden="true">1</span>
+<h3><span class="sr">Step 1: </span>Open the file</h3>
+<p>Open <span class="mono" style="color: #f4f1ea">Install PurrSum Noir.exe</span> from your Downloads folder. If your browser asks, choose <strong style="color: #f4f1ea">Keep</strong>.</p>
+</li>
+<li>
+<span class="stepnum" aria-hidden="true">2</span>
+<h3><span class="sr">Step 2: </span>Blue warning? That's normal.</h3>
+<p>Windows shows it for new apps from small makers. Click <strong style="color: #f4f1ea">More info</strong>, then <strong style="color: #f4f1ea">Run anyway</strong>.</p>
+<div class="ss" role="img" aria-label="Illustration of the blue Windows protected your PC screen, with More info and Run anyway highlighted">
+<b>Windows protected your PC</b>
+<span>Microsoft Defender SmartScreen prevented an unrecognized app from starting…</span><br>
+<span class="more">More info</span><br>
+<span class="run">Run anyway</span>
+</div>
+</li>
+<li>
+<span class="stepnum" aria-hidden="true">3</span>
+<h3><span class="sr">Step 3: </span>Click Install, meet your cat</h3>
+<p>When it's done, pick a buddy and give it a name. It moves into the corner of your screen, ready to add.</p>
+<p>It's also on your Desktop and in the Start menu. To pin it: open Start, right-click PurrSum Noir, choose Pin to taskbar.</p>
+</li>
+</ol>
+</div>
+</section>
+
+<section id="faq" aria-labelledby="faq-title" class="sec" style="background: #141217">
+<div class="wrap light" style="display: flex; flex-direction: column; align-items: center; gap: 36px; color: #1f1b24">
+<h2 id="faq-title" class="h2" style="text-align: center; color: #f4f1ea">Questions</h2>
+<div class="faq">
+<details><summary>Does it work with Excel and Google Sheets?</summary><p>Yes. It reads the numbers you can see on screen, so it works in Excel, Google Sheets, PDFs, emails, websites, even screenshots and scans. You don't need to open or upload the file.</p></details>
+<details><summary>Can I add numbers from different windows or monitors?</summary><p>Yes. Hold Shift to draw boxes on any screen in one go, or click "Add more from screen" in the bubble to keep adding from another window.</p></details>
+<details><summary>Is it safe? Why the warning?</summary><p>The warning only means the app isn't signed with a paid Microsoft certificate yet, which is normal for new, free apps. It installs just for you (no admin rights) and never sends anything off your computer.</p></details>
+<details><summary>Does it upload my documents anywhere?</summary><p>No. Numbers are read on your own computer. It only goes online once during setup, to download its number-reading part.</p></details>
+<details><summary>Is there a Mac version?</summary><p>Not yet. It's Windows 10 and 11 for now; a Mac version is coming.</p></details>
+<details><summary>How do I uninstall it?</summary><p>Open Windows Settings, go to Apps, find PurrSum Noir, and choose Uninstall.</p></details>
+</div>
+<a class="btn btn-main" href="https://github.com/yoonahbae/PURRSUM/raw/downloads/Install%20PurrSum%20Noir.exe" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
+</div>
+</section>
+</main>
+
+<footer style="background: #141217; border-top: 1px solid #2a2632">
+<div class="wrap" style="padding-top: 28px; padding-bottom: 28px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: #a39cb0; font-size: 14px">
+<p style="margin: 0">PurrSum Noir 1.7 · made by Yoonah</p>
+<p style="margin: 0">For anyone who adds up numbers for a living.</p>
+</div>
+</footer>
+</div>
+
+<script>
+(function(){
+  var burger=document.querySelector('.burger'),menu=document.getElementById('mobile-menu');
+  function setMenu(open){menu.hidden=!open;burger.setAttribute('aria-expanded',String(open));
+    burger.setAttribute('aria-label',open?'Close menu':'Open menu');
+    burger.querySelector('[data-ic=open]').toggleAttribute('hidden',open);
+    burger.querySelector('[data-ic=close]').toggleAttribute('hidden',!open);}
+  burger.addEventListener('click',function(){setMenu(menu.hidden);});
+  menu.addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!menu.hidden){setMenu(false);burger.focus();}});
+  window.matchMedia('(min-width:821px)').addEventListener('change',function(e){if(e.matches)setMenu(false);});
+  var rows=[].slice.call(document.querySelectorAll('.row-btn'));
+  function update(){var sum=0,n=0;rows.forEach(function(b){if(b.getAttribute('aria-pressed')==='true'){sum+=+b.dataset.cents;n++;}});
+    var a=Math.abs(sum);document.getElementById('total').textContent=(sum<0?'-':'')+Math.floor(a/100).toLocaleString('en-US')+'.'+String(a%100).padStart(2,'0');
+    document.getElementById('count').textContent=n;}
+  rows.forEach(function(b){b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')!=='true';
+    b.setAttribute('aria-pressed',String(on));b.querySelector('.v-in').hidden=!on;b.querySelector('.v-out').hidden=on;update();});});
+})();
+</script>
+</body>
+</html>
