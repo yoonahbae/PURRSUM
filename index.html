@@ -163,6 +163,12 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 @media (max-width:400px){.app-float .bubble{width:100%}.app-float{flex-direction:column;align-items:flex-end}}
 
 /* sections */
+.whatsnew{margin-top:6px;padding:16px 18px;border-radius:14px;background:#ffffff;border:1px solid #e6e0d8;display:flex;flex-direction:column;gap:8px;max-width:40rem}
+.whatsnew p{margin:0;color:#4a4452;line-height:1.6}
+.whatsnew .mono,.faq .mono{white-space:nowrap}
+.whatsnew .wn-title{color:#1f1b24;font-weight:600}
+.wn-tag{display:inline-block;margin-right:6px;padding:2px 9px;border-radius:999px;background:#1f1b24;color:#ffcf6b;font-size:12px;font-weight:700;vertical-align:1px}
+
 .isteps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:20px}
 .istep{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,4vw,48px);align-items:start;background:#1c1a22;color:#f4f1ea;border:1px solid #3a3644;border-radius:18px;padding:clamp(20px,3vw,32px)}
 .istep:not(:has(.istep-shot)){grid-template-columns:minmax(0,1fr)}
@@ -739,6 +745,10 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <p class="eyebrow" style="color: #7a4f00">Download</p>
 <h2 id="install-title" class="h2">Set up in about a minute.</h2>
 <p style="margin: 0; color: #4a4452; font-size: 1.1rem; line-height: 1.6">No admin rights needed. Stay online during setup: it downloads its number-reading part once.</p>
+<div class="whatsnew" role="note" aria-label="What's new in version 1.8.2">
+<p class="wn-title"><span class="wn-tag">New in 1.8.2</span> Reads typewriter-style reports correctly</p>
+<p>Some accounting and aging reports leave a gap after the comma, like <span class="mono">8, 764.46</span>. PurrSum now reads that as one amount, 8,764.46, instead of two. Already installed? Download again and run it over your current version: your cat and its name stay.</p>
+</div>
 </div>
 <a class="btn btn-dark" href="https://github.com/yoonahbae/PURRSUM/raw/downloads/Install%20PurrSum%20Noir.exe" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
 </div>
@@ -785,7 +795,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <div class="faq">
 <details><summary>Does it work with Excel and Google Sheets?</summary><p>Yes. It reads the numbers you can see on screen, so it works in Excel, Google Sheets, PDFs, emails, websites, even screenshots and scans. You don't need to open or upload the file.</p></details>
 <details><summary>Can I add numbers from different windows or monitors?</summary><p>Yes. Click "+ Add more from screen" in the bubble to keep adding from another window or monitor. If you like shortcuts, just tap Shift while the bubble is open: it does the same as Add more. Holding Shift while you drag also lets you draw several boxes in one go.</p></details>
-<details><summary>How accurate is it?</summary><p>Very good on clear screen text, but it reads pixels, so tiny, blurry or scanned text can be misread. Always double-check the total: every number in the bubble is numbered 1, 2, 3 so you can tick it off against your document, and you can click any wrong one to leave it out.</p></details>
+<details><summary>How accurate is it?</summary><p>Very good on clear screen text, but it reads pixels, so tiny, blurry or scanned text can be misread. It understands report quirks like a gap after the decimal point (<span class="mono">1641. 60</span>) or after the thousands comma (<span class="mono">8, 764.46</span>), and reads each as one amount. Always double-check the total: every number in the bubble is numbered 1, 2, 3 so you can tick it off against your document, and you can click any wrong one to leave it out.</p></details>
 <details><summary>Is it safe? Why the warnings?</summary><p>The warnings only mean the app isn't signed with a paid Microsoft certificate yet, which is normal for new, free apps. Work antivirus (like the "Newly Encountered Program" pop-up) flags any program it hasn't seen before, so Allow Once is fine for this file. It installs just for you (no admin rights) and never sends anything off your computer.</p></details>
 <details><summary>Does it upload my documents anywhere?</summary><p>No. Numbers are read on your own computer. It only goes online once during setup, to download its number-reading part.</p></details>
 <details><summary>Is there a Mac version?</summary><p>Not yet. It's Windows 10 and 11 for now; a Mac version is coming.</p></details>
@@ -800,7 +810,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <footer style="background: #141217; border-top: 1px solid #2a2632">
 <div class="wrap" style="padding-top: 32px; padding-bottom: 32px; display: flex; flex-direction: column; gap: 18px; color: #a39cb0; font-size: 14px">
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
-<p style="margin: 0">PurrSum Noir 1.8 · made by Yoonah</p>
+<p style="margin: 0">PurrSum Noir 1.8.2 · made by Yoonah</p>
 <a href="https://github.com/yoonahbae/PURRSUM/issues/new?title=Feedback%3A%20" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1.5px solid #4a4556; border-radius: 12px; color: #f4f1ea; text-decoration: none; font-weight: 600"><svg class="ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg>Send feedback or report a bug</a>
 </div>
 <p style="margin: 0; max-width: 52rem; line-height: 1.6">PurrSum reads numbers with on-screen text recognition, so always double-check totals before you rely on them. The numbered list in the bubble makes that quick. Free and provided as-is, without warranty.</p>
