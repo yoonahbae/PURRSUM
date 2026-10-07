@@ -163,6 +163,19 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 @media (max-width:400px){.app-float .bubble{width:100%}.app-float{flex-direction:column;align-items:flex-end}}
 
 /* sections */
+.isteps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:20px}
+.istep{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,4vw,48px);align-items:start;background:#1c1a22;color:#f4f1ea;border:1px solid #3a3644;border-radius:18px;padding:clamp(20px,3vw,32px)}
+.istep:not(:has(.istep-shot)){grid-template-columns:minmax(0,1fr)}
+.istep-text{display:flex;flex-direction:column;gap:12px;max-width:34rem}
+.istep h3{margin:0;font-size:clamp(1.2rem,2vw,1.45rem);font-weight:600}
+.istep p{margin:0;color:#c9c3d4;line-height:1.6}
+.istep strong,.istep .mono{color:#ffffff}
+.istep .inote{padding:10px 12px;border-radius:10px;background:#2a2412;color:#ffcf6b;font-size:15px}
+.istep-shot{margin:0;display:flex;flex-direction:column;gap:8px;align-items:center}
+.istep-shot img{display:block;max-width:100%;height:auto;border-radius:10px;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.istep-shot figcaption{color:#a39cb0;font-size:14px}
+@media (max-width:760px){.istep{grid-template-columns:minmax(0,1fr)}}
+
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .steps li{border-top:2px solid #1f1b24;padding-top:22px;display:flex;flex-direction:column;gap:10px}
 .steps h3{margin:0;font-size:21px;font-weight:600}
@@ -707,7 +720,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <p style="margin: 8px 0 0 4px; color: #a39cb0; font-size: 12px">Try it: click a number to leave it out.</p>
 <div aria-hidden="true">
 <div class="fake-add">+  Add more from screen</div>
-<p class="fake-tip">Shortcut: <kbd>Shift</kbd> + click the cat</p>
+<p class="fake-tip">Shortcut: tap <kbd>Shift</kbd></p>
 </div>
 </section>
 <div aria-hidden="true" style="flex: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 4px">
@@ -729,31 +742,36 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </div>
 <a class="btn btn-dark" href="https://github.com/yoonahbae/PURRSUM/raw/downloads/Install%20PurrSum%20Noir.exe" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
 </div>
-<ol class="install" style="color: #f4f1ea">
-<li>
-<div class="st"><span class="stepnum" aria-hidden="true">1</span>
+<ol class="isteps">
+<li class="istep">
+<div class="istep-text">
+<span class="stepnum" aria-hidden="true">1</span>
 <h3><span class="sr">Step 1: </span>Open the file</h3>
-<p>Open <span class="mono" style="color: #f4f1ea">Install PurrSum Noir.exe</span> from your Downloads folder. If your browser asks, choose <strong style="color: #f4f1ea">Keep</strong>.</p>
+<p>Open <span class="mono">Install PurrSum Noir.exe</span> from your Downloads folder. If your browser asks whether to keep it, choose <strong>Keep</strong>.</p>
 </div>
 </li>
-<li class="has-shot">
-<div class="st"><span class="stepnum" aria-hidden="true">2</span>
+<li class="istep">
+<div class="istep-text">
+<span class="stepnum" aria-hidden="true">2</span>
 <h3><span class="sr">Step 2: </span>Blue "Windows protected your PC" screen</h3>
-<p>That's normal for new apps from small makers. Click the small <strong style="color: #f4f1ea">More info</strong> link under the message, then click <strong style="color: #f4f1ea">Run anyway</strong>.</p>
+<p>This is normal for new apps from small makers. Click the small <strong>More info</strong> link under the message. A <strong>Run anyway</strong> button appears: click it.</p>
 </div>
-<figure class="shot"><img src="smartscreen.png" width="566" height="521" alt="The blue Windows protected your PC screen after clicking More info. App: Install PurrSum Noir.exe. The Run anyway button is circled."><figcaption>After <b>More info</b>, the <b>Run anyway</b> button appears.</figcaption></figure>
+<figure class="istep-shot"><img src="install-smartscreen.png" width="566" height="521" alt="Windows protected your PC screen for Install PurrSum Noir.exe, with the Run anyway button highlighted" loading="lazy"><figcaption>After clicking More info, click Run anyway.</figcaption></figure>
 </li>
-<li class="has-shot">
-<div class="st"><span class="stepnum" aria-hidden="true">3</span>
-<h3><span class="sr">Step 3: </span>Antivirus pop-up? Click Allow Once</h3>
-<p>Some work computers also show a security pop-up such as "Newly Encountered Program Detected". Click <strong style="color: #f4f1ea">Allow Once</strong> before the timer runs out. If it blocks the file, just open the installer again.</p>
+<li class="istep">
+<div class="istep-text">
+<span class="stepnum" aria-hidden="true">3</span>
+<h3><span class="sr">Step 3: </span>Security pop-up? Click Allow Once</h3>
+<p>Work computers with security software (like Trend Micro) may show "Newly Encountered Program Detected". Click <strong>Allow Once</strong>.</p>
+<p class="inote">Be quick: it blocks the installer on its own after about 30 seconds. If that happens, just open the file again.</p>
 </div>
-<figure class="shot"><img src="antivirus.png" width="419" height="335" alt="An antivirus pop-up titled Newly Encountered Program Detected for Install PurrSum Noir.exe, with a countdown. The Allow Once button is circled."><figcaption>You may not see this one. It depends on your antivirus.</figcaption></figure>
+<figure class="istep-shot"><img src="install-security.png" width="419" height="335" alt="Security Agent pop-up saying Newly Encountered Program Detected for Install PurrSum Noir.exe, with the Allow Once button highlighted" loading="lazy"><figcaption>Click Allow Once.</figcaption></figure>
 </li>
-<li>
-<div class="st"><span class="stepnum" aria-hidden="true">4</span>
-<h3><span class="sr">Step 4: </span>Click Install, meet your cat</h3>
-<p>Stay online for about a minute while it sets up. When it's done, pick a buddy and give it a name. It moves into the corner of your screen, ready to add.</p>
+<li class="istep">
+<div class="istep-text">
+<span class="stepnum" aria-hidden="true">4</span>
+<h3><span class="sr">Step 4: </span>Click Install, then pick your cat</h3>
+<p>Stay online for about a minute while it sets up. Then pick a buddy, give it a name, and it moves into the corner of your screen.</p>
 <p>It's also on your Desktop and in the Start menu. To pin it: open Start, right-click PurrSum Noir, choose Pin to taskbar.</p>
 </div>
 </li>
@@ -766,7 +784,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <h2 id="faq-title" class="h2" style="text-align: center; color: #f4f1ea">Questions</h2>
 <div class="faq">
 <details><summary>Does it work with Excel and Google Sheets?</summary><p>Yes. It reads the numbers you can see on screen, so it works in Excel, Google Sheets, PDFs, emails, websites, even screenshots and scans. You don't need to open or upload the file.</p></details>
-<details><summary>Can I add numbers from different windows or monitors?</summary><p>Yes. Click "+ Add more from screen" in the bubble to keep adding from another window or monitor. If you like shortcuts, hold Shift: Shift + click the cat does the same as Add more, and holding Shift while you drag lets you draw several boxes in one go.</p></details>
+<details><summary>Can I add numbers from different windows or monitors?</summary><p>Yes. Click "+ Add more from screen" in the bubble to keep adding from another window or monitor. If you like shortcuts, just tap Shift while the bubble is open: it does the same as Add more. Holding Shift while you drag also lets you draw several boxes in one go.</p></details>
 <details><summary>Is it safe? Why the warnings?</summary><p>The warnings only mean the app isn't signed with a paid Microsoft certificate yet, which is normal for new, free apps. Work antivirus (like the "Newly Encountered Program" pop-up) flags any program it hasn't seen before, so Allow Once is fine for this file. It installs just for you (no admin rights) and never sends anything off your computer.</p></details>
 <details><summary>Does it upload my documents anywhere?</summary><p>No. Numbers are read on your own computer. It only goes online once during setup, to download its number-reading part.</p></details>
 <details><summary>Is there a Mac version?</summary><p>Not yet. It's Windows 10 and 11 for now; a Mac version is coming.</p></details>
