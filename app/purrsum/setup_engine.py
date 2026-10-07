@@ -74,11 +74,8 @@ def install():
             os.remove(dest)
     say("Checking the reading engine...")
     sys.path.insert(0, os.path.dirname(HERE))
-    from purrsum.purrsum_reader import Reader  # noqa: E402
-    r = Reader()
-    r.ready.wait()
-    if r.engine is None:
-        raise RuntimeError(r.error or "reading engine failed to load")
+    from purrsum import ocr  # noqa: E402
+    ocr.engine()
     say("Reading engine ready.")
 
 

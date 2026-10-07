@@ -4,7 +4,7 @@ SetCompressor /SOLID lzma
 SetCompressorDictSize 64
 
 !define APPNAME "PurrSum Noir"
-!define VERSION "1.0.0"
+!define VERSION "1.8.2"
 !define LAUNCHER "$INSTDIR\python\PurrSum Noir.exe"
 !define UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\PurrSumNoir"
 
@@ -27,10 +27,7 @@ VIAddVersionKey "LegalCopyright" "Yoonah"
 !define MUI_WELCOMEPAGE_TITLE "A tiny cat that adds up numbers"
 !define MUI_WELCOMEPAGE_TEXT "PurrSum Noir puts a little cat on your screen. Click it, drag a box over any numbers (PDFs, emails, websites), and it adds them up and copies the total.$\r$\n$\r$\nEverything stays on this computer. Nothing is uploaded.$\r$\n$\r$\nClick Install to set it up. You'll need to be online for a minute while it downloads its number-reading part."
 !define MUI_FINISHPAGE_TITLE "All set!"
-!define MUI_FINISHPAGE_TEXT "There's a PurrSum Noir icon on your Desktop and in the Start menu.$\r$\n$\r$\nNext you'll pick your kitty and give it a name."
-!define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_TEXT "Meet my kitty now"
-!define MUI_FINISHPAGE_RUN_FUNCTION LaunchCat
+!define MUI_FINISHPAGE_TEXT "Your buddy picker is open: choose Noir (or anyone you like) and give them a name.$\r$\n$\r$\nThere's a PurrSum Noir icon on your Desktop and in the Start menu.$\r$\n$\r$\nTo pin it to your taskbar: open Start, right-click PurrSum Noir, then choose Pin to taskbar."
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_INSTFILES
@@ -38,10 +35,6 @@ VIAddVersionKey "LegalCopyright" "Yoonah"
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_LANGUAGE "English"
-
-Function LaunchCat
-  Exec '"${LAUNCHER}" "$INSTDIR\app\purrsum.pyw"'
-FunctionEnd
 
 Section "Install"
   ; if an older cat is running, let it go home before replacing files
@@ -67,6 +60,9 @@ Section "Install"
   SetOutPath "$INSTDIR"
   CreateShortcut "$DESKTOP\${APPNAME}.lnk" "${LAUNCHER}" '"$INSTDIR\app\purrsum.pyw"' "$INSTDIR\purrsum.ico" 0 SW_SHOWNORMAL "" "Call your PurrSum cat"
   CreateShortcut "$SMPROGRAMS\${APPNAME}.lnk" "${LAUNCHER}" '"$INSTDIR\app\purrsum.pyw"' "$INSTDIR\purrsum.ico" 0 SW_SHOWNORMAL "" "Call your PurrSum cat"
+
+  ; open "Meet your PurrSum buddy" right away so people can pick their character
+  Exec '"${LAUNCHER}" "$INSTDIR\app\purrsum.pyw" --welcome'
 
   WriteUninstaller "$INSTDIR\Uninstall PurrSum Noir.exe"
   WriteRegStr HKCU "${UNINSTKEY}" "DisplayName" "${APPNAME}"

@@ -6,21 +6,20 @@ import os
 import random
 import sys
 import threading
-from dataclasses import dataclass
-from decimal import Decimal
+import time
 
 from PySide6.QtCore import (QObject, QPoint, QPointF, QRect, QRectF, QSize, Qt,
                             QTimer, Signal)
-from PySide6.QtGui import (QAction, QColor, QCursor, QFont, QGuiApplication,
+from PySide6.QtGui import (QAction, QColor, QCursor, QFont, QGuiApplication, QPalette,
                            QIcon, QImage, QKeySequence, QPainter, QPainterPath,
                            QPen, QPixmap, QShortcut)
 from PySide6.QtNetwork import QLocalServer, QLocalSocket
 from PySide6.QtWidgets import (QApplication, QButtonGroup, QDialog, QFrame, QToolButton,
+                               QGridLayout, QMessageBox,
                                QHBoxLayout, QLabel, QLineEdit, QMenu,
                                QPushButton, QScrollArea, QVBoxLayout, QWidget)
 
-from . import sprites
-from .purrsum_reader import Reader, decimals_in, find_numbers, fmt
+from . import numparse as numbers, pets, sprites
 
 APP = "PurrSum Noir"
 SERVER = "PurrSumNoir-" + (os.environ.get("USERNAME") or os.environ.get("USER") or "me")
@@ -61,11 +60,14 @@ def draw_grid(p: QPainter, g, x: float, y: float, px: float):
                 p.fillRect(QRectF(x + c * px, y + r * px, px, px), QColor(col))
 
 
-def sprite_pixmap(kitty: str, px: int, blink=False) -> QPixmap:
-    pm = QPixmap(sprites.W * px, sprites.H * px)
+def grid_pixmap(g, box_w: int, box_h: int, max_px: int = 4) -> QPixmap:
+    """A character grid drawn as big as fits in box_w × box_h (whole pixels only)."""
+    gw, gh = len(g[0]), len(g)
+    px = max(1, min(max_px, box_w // gw, box_h // gh))
+    pm = QPixmap(box_w, box_h)
     pm.fill(Qt.transparent)
     p = QPainter(pm)
-    draw_grid(p, sprites.grid(kitty, blink), 0, 0, px)
+    draw_grid(p, g, (box_w - gw * px) // 2, box_h - gh * px, px)
     p.end()
     return pm
 
@@ -114,6 +116,8 @@ class Cat(QWidget):
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAccessibleName("PurrSum cat")
         self.kitty = settings.get("kitty", "noir")
+        self.frames = pets.frames(self.kitty if pets.exists(self.kitty) else "noir")
+        self.seat = pets.seat(self.kitty if pets.exists(self.kitty) else "noir", self.frames[0])
         self.tucked = False
         self.side = "right"
         self.restore_pos = None
@@ -123,7 +127,7 @@ class Cat(QWidget):
         self.hop = 0
         self._press = None
         self._dragging = False
-        self.cat_size = QSize(sprites.W * PX + 4, sprites.H * PX + 18)
+        self.cat_size = self._size_for(self.frames[0])
         self.tab_size = QSize(34, 44)
         self.resize(self.cat_size)
         self.setCursor(Qt.PointingHandCursor)
@@ -149,8 +153,25 @@ class Cat(QWidget):
     def happy_hop(self):
         self.hop = 12
 
+    @staticmethod
+    def _size_for(g) -> QSize:
+        return QSize(len(g[0]) * PX + 4, len(g) * PX + 18)
+
     def set_kitty(self, kitty):
+        if not pets.exists(kitty):
+            kitty = "noir"
         self.kitty = kitty
+        self.frames = pets.frames(kitty)
+        self.seat = pets.seat(kitty, self.frames[0])
+        new = self._size_for(self.frames[0])
+        if new != self.cat_size:
+            bottom, right = self.y() + self.height(), self.x() + self.width()
+            self.cat_size = new
+            if not self.tucked:
+                self.resize(new)
+                self.move(right - new.width(), bottom - new.height())   # stay put on the desk
+                self.keep_on_screen()
+                self.moved.emit()
         self.update()
 
     # geometry
@@ -226,24 +247,27 @@ class Cat(QWidget):
             lift = abs(math.sin(self.hop / 12 * math.pi)) * 10
         else:
             lift = abs(math.sin(self.bob)) * 2.5
-        h = sprites.H * PX
+        g = self.frames[1] if (self.blink and not self.busy) else self.frames[0]
+        gw, gh = len(g[0]) * PX, len(g) * PX
         # soft shadow that shrinks as the cat lifts
         p.setRenderHint(QPainter.Antialiasing)
-        sw = 50 - lift * 2
+        a, b = self.seat                              # centred under where it sits
+        cx = 2 + (a + b + 1) / 2 * PX
+        sw = (b - a + 1) * PX * 0.95 - lift * 2
         p.setPen(Qt.NoPen)
         p.setBrush(QColor(0, 0, 0, 60))
-        p.drawEllipse(QRectF(4 + (50 - sw) / 2, 10 + h - 4, sw, 7))
+        p.drawEllipse(QRectF(cx - sw / 2, 10 + gh - 4, sw, 7))
         p.setRenderHint(QPainter.Antialiasing, False)
-        draw_grid(p, sprites.grid(self.kitty, self.blink and not self.busy), 2, 10 - round(lift), PX)
+        draw_grid(p, g, 2, 10 - round(lift), PX)
         if self.busy:  # thinking dots
             p.setRenderHint(QPainter.Antialiasing)
             p.setBrush(ACCENT)
             for i in range(3):
                 on = int(self.bob * 4) % 3 == i
-                p.drawEllipse(QPointF(46 + i * 7, 6), 2.6 if on else 1.8, 2.6 if on else 1.8)
+                p.drawEllipse(QPointF(gw * 0.62 + i * 7, 6), 2.6 if on else 1.8, 2.6 if on else 1.8)
 
     def _paint_tab(self, p: QPainter):
-        pal = sprites.KITTIES[self.kitty]
+        pal = pets.colors(self.kitty)
         p.setRenderHint(QPainter.Antialiasing)
         r = QRectF(self.rect()).adjusted(0.5, 0.5, -0.5, -0.5)
         path = QPainterPath()
@@ -256,7 +280,7 @@ class Cat(QWidget):
         p.setBrush(QColor(pal["B"]))
         p.drawPath(path)
         p.setRenderHint(QPainter.Antialiasing, False)
-        draw_grid(p, sprites.paw_grid(self.kitty), (self.width() - 24) / 2 + (2 if self.side == "right" else -2), 14, 2)
+        draw_grid(p, sprites.paw_grid(pal["P"]), (self.width() - 24) / 2 + (2 if self.side == "right" else -2), 14, 2)
 
     # mouse
     def mousePressEvent(self, e):
@@ -295,32 +319,6 @@ class Cat(QWidget):
 
     def contextMenuEvent(self, e):
         e.accept()
-
-
-# ---------------------------------------------------------------- numbers found
-@dataclass
-class Found:
-    value: Decimal
-    text: str            # as it was written, for the bubble
-    box: int = 1         # which selection box it came from
-    included: bool = True
-
-
-def total_of(found) -> Decimal:
-    return sum((f.value for f in found if f.included), Decimal(0))
-
-
-def places_of(found) -> int:
-    return max((decimals_in(f.value) for f in found), default=0)
-
-
-def pretty_total(found) -> str:
-    return fmt(total_of(found), places_of(found))
-
-
-def clipboard_total(found) -> str:
-    """Total for pasting: no thousands commas."""
-    return pretty_total(found).replace(",", "")
 
 
 # ---------------------------------------------------------------- selection overlay
@@ -549,7 +547,10 @@ QLabel { color:#f4f1ea; }
 #total { font-size:26px; font-weight:700; color:#ffffff; }
 #copied { background:#2e2a12; color:#ffcf6b; border-radius:9px; padding:2px 8px; font-size:11px; }
 #hint { color:#8f889e; font-size:11px; }
-#badge { background:#ffb21e; color:#1a1206; border-radius:9px; font-size:10px; font-weight:700; }
+#shortcut { color:#a39cb0; font-size:11px; }
+#rownum { color:#8f889e; font-size:11px; }
+#typed { color:#8f889e; font-size:11px; }
+QFrame#divider { background:#34303d; border:none; }
 #val { font-size:14px; font-family:"Segoe UI", "Inter", sans-serif; }
 QPushButton#row { text-align:left; border:none; border-radius:7px; padding:5px 8px;
                   color:#f4f1ea; background:transparent; font-size:13px; }
@@ -558,19 +559,32 @@ QPushButton#row:focus { outline:none; background:#2a2632; border:1px solid #ffb2
 QPushButton#row:checked { color:#6f6880; }
 QPushButton#close { border:none; color:#b9b3c6; font-size:16px; padding:0 6px; background:transparent; }
 QPushButton#close:hover, QPushButton#close:focus { color:#ffffff; }
+QLineEdit#entry { background:#141217; border:1px solid #4a4556; border-radius:8px; padding:6px 9px;
+                  color:#f4f1ea; font-size:13px; }
+QLineEdit#entry:focus { border:1px solid #ffb21e; }
+QPushButton#add { background:#ffb21e; color:#1a1206; border:none; border-radius:8px;
+                  font-weight:600; font-size:13px; padding:6px 10px; }
+QPushButton#add:hover { background:#ffc44d; }
+QPushButton#add:focus { outline:none; border:2px solid #ffffff; }
 QScrollArea, QScrollArea > QWidget > QWidget { background:transparent; border:none; }
 QScrollBar:vertical { width:6px; background:transparent; }
 QScrollBar::handle:vertical { background:#4a4556; border-radius:3px; }
 """
 
 
+DEFAULT_HINT = "Click a number to leave it out. Click the cat to start over."
+
+
 class Bubble(QWidget):
+    add_requested = Signal()      # "+ Add more from screen"
+
     def __init__(self):
         super().__init__(None, Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setStyleSheet(BUBBLE_CSS)
         self.setFixedWidth(250)
-        self.found: list[Found] = []
+        self.found: list[numbers.Found] = []
+        self.name = ""
         outer = QVBoxLayout(self)
         outer.setContentsMargins(0, 0, 0, 0)
         self.card = QFrame(objectName="card")
@@ -605,70 +619,187 @@ class Bubble(QWidget):
         self.hint = QLabel(objectName="hint")
         self.hint.setWordWrap(True)
         lay.addWidget(self.hint)
+        # add more: type a number, or box more numbers on screen
+        self.foot = QWidget()
+        fl = QVBoxLayout(self.foot)
+        fl.setContentsMargins(0, 6, 0, 0)
+        fl.setSpacing(6)
+        self.entry = QLineEdit(objectName="entry")
+        self.entry.setPlaceholderText("Type a number, press Enter")
+        self.entry.setAccessibleName("Type a number to add to the list")
+        self.entry.setMinimumHeight(34)
+        pal = self.entry.palette()
+        pal.setColor(QPalette.PlaceholderText, QColor("#a39cb0"))
+        self.entry.setPalette(pal)
+        self.entry.returnPressed.connect(self._add_typed)
+        self.entry.textEdited.connect(lambda _: self.found and self.hint.setText(DEFAULT_HINT))
+        fl.addWidget(self.entry)
+        self.add_btn = QPushButton("+  Add more from screen", objectName="add")
+        self.add_btn.setCursor(Qt.PointingHandCursor)
+        self.add_btn.setMinimumHeight(36)
+        self.add_btn.setToolTip("Box more numbers and add them to this list (shortcut: tap Shift)")
+        self.add_btn.setAccessibleDescription("Shortcut: tap the Shift key")
+        self.add_btn.clicked.connect(lambda: self.add_requested.emit())
+        fl.addWidget(self.add_btn)
+        self.shortcut_tip = QLabel("Shortcut: tap Shift", objectName="shortcut")
+        self.shortcut_tip.setAlignment(Qt.AlignCenter)
+        fl.addWidget(self.shortcut_tip)
+        lay.addWidget(self.foot)
         QShortcut(QKeySequence(Qt.Key_Escape), self, self.hide)
+
+    def _fit(self):
+        """Size the bubble to its contents (measuring wrapped text at the real width)."""
+        self.ensurePolished()
+        for c in self.findChildren(QWidget):
+            c.ensurePolished()
+        lay = self.layout()
+        lay.invalidate()
+        lay.activate()
+        w = self.width()
+        h = lay.totalSizeHint().height()
+        if lay.hasHeightForWidth():
+            h = max(h, lay.totalHeightForWidth(w))
+        self.resize(w, max(h, lay.totalMinimumSize().height()))
+
+    def showEvent(self, e):
+        super().showEvent(e)
+        QTimer.singleShot(0, self._refit)
+
+    def _refit(self):
+        if getattr(self, "_anchor", None) is not None:
+            self.follow(self._anchor)
+        else:
+            self._fit()
 
     def _clear_rows(self):
         while self.rows.count():
             w = self.rows.takeAt(0).widget()
             if w:
+                w.setParent(None)
                 w.deleteLater()
 
-    def show_busy(self, name):
-        self.found = []
-        self._clear_rows()
+    def show_busy(self, name, keep=False):
+        """keep=True: we're adding to the list, so leave it showing."""
+        self.name = name
+        if not keep:
+            self.found = []
+            self._clear_rows()
+            self.total.setText("…")
+            self.scroll.hide()
+            self.copied.hide()
         self.who.setText(f"{name} is counting…")
-        self.total.setText("…")
-        self.copied.hide()
-        self.scroll.hide()
         self.hint.hide()
-        self.adjustSize()
+        self.foot.hide()
+        self._fit()
 
     def show_error(self, name, msg):
+        self.name = name
         self.who.setText(name)
         self.total.setText("Hmm.")
         self.copied.hide()
         self.scroll.hide()
         self.hint.setText(msg)
         self.hint.show()
-        self.adjustSize()
+        self.foot.show()
+        self._fit()
 
-    def show_result(self, name, found: list[Found], nboxes: int):
-        self.found = found
-        self._clear_rows()
+    def show_result(self, name, found: list[numbers.Found], nboxes: int = 1):
+        """A fresh list (clicking the cat starts over)."""
+        self.name = name
+        self.found = list(found)
         if not found:
-            self.show_error(name, "I couldn't find any numbers in there. Try a slightly bigger box.")
+            self.show_error(name, "I couldn't find any numbers in there. Try a slightly "
+                                  "bigger box, or type a number below.")
             return
-        self.who.setText(f"{name} found {len(found)} number{'s' if len(found) != 1 else ''}")
-        multi = len({f.box for f in found}) > 1
-        for f in found:
+        self._render()
+
+    def add_found(self, new: list[numbers.Found]):
+        """Add numbers to the current list (from more boxes, or typed)."""
+        self.found += new
+        if not self.found:
+            self.show_error(self.name, "I couldn't find any numbers in there. Try a slightly "
+                                       "bigger box, or type a number below.")
+            return
+        self._render()
+        if not new:
+            self.note("No new numbers in that box.")
+        self._scroll_to_end()
+
+    def next_box(self) -> int:
+        return max((f.box for f in self.found), default=0) + 1
+
+    def note(self, msg):
+        self.hint.setText(msg)
+        self.hint.show()
+        self._fit()
+
+    def _scroll_to_end(self):
+        bar = self.scroll.verticalScrollBar()
+        QTimer.singleShot(0, lambda: bar.setValue(bar.maximum()))
+
+    def _add_typed(self):
+        text = self.entry.text().strip()
+        if not text:
+            return
+        new = numbers.find_numbers(text, box=0)        # box 0 = typed by hand
+        if not new:
+            self.note("That doesn't look like a number. Try 1250.00 or (75.25).")
+            return
+        self.entry.clear()
+        self.add_found(new)
+
+    def _render(self):
+        self._clear_rows()
+        found = self.found
+        n = len(found)
+        self.who.setText(f"{self.name} found {n} number{'s' if n != 1 else ''}")
+        prev, dividers = None, 0
+        for i, f in enumerate(found, 1):
+            if prev is not None and f.box != prev:      # a faint line where a new box starts
+                line = QFrame(objectName="divider")
+                line.setFixedHeight(1)
+                self.rows.addWidget(line)
+                line.show()
+                dividers += 1
+            prev = f.box
             b = QPushButton(objectName="row", checkable=True)
             b.setCursor(Qt.PointingHandCursor)
             b.setMinimumHeight(28)
-            b.f = f
+            b.setChecked(not f.included)
+            b.f, b.row = f, i
             rl = QHBoxLayout(b)
-            rl.setContentsMargins(8, 0, 8, 0)
-            badge = QLabel(str(f.box) if multi else "", objectName="badge")
-            badge.setFixedSize(18, 18)
-            badge.setAlignment(Qt.AlignCenter)
-            badge.setVisible(multi)
+            rl.setContentsMargins(4, 0, 8, 0)
+            rl.setSpacing(6)
+            num = QLabel(str(i), objectName="rownum")      # row number, to match the document
+            num.setFixedWidth(20)
+            num.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            num.setAttribute(Qt.WA_TransparentForMouseEvents)
+            rl.addWidget(num)
+            if f.box == 0:
+                mark = QLabel("✎", objectName="typed")
+                mark.setAttribute(Qt.WA_TransparentForMouseEvents)
+                rl.addWidget(mark)
             b.val = QLabel(objectName="val")
             b.val.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
             b.val.setAttribute(Qt.WA_TransparentForMouseEvents)
-            badge.setAttribute(Qt.WA_TransparentForMouseEvents)
-            rl.addWidget(badge)
             rl.addStretch(1)
             rl.addWidget(b.val)
             b.toggled.connect(lambda on, b=b: self._toggle(b, on))
             self._label(b)
             self.rows.addWidget(b)
+            b.show()        # rows added to an open bubble must be shown before measuring
         self.rows.addStretch(1)
         self.scroll.show()
-        rows_h = min(len(found), 8) * 29 + 4
-        self.scroll.setFixedHeight(rows_h)
-        self.hint.setText("Click a number to leave it out.")
+        self.rows.activate()
+        anchor = getattr(self, "_anchor", None)
+        scr = screen_at(anchor.center()) if anchor is not None else QGuiApplication.primaryScreen()
+        room = max(8 * 29, scr.availableGeometry().height() - 300)   # keep total + Add on screen
+        self.scroll.setFixedHeight(min(self.list.sizeHint().height(), room) + 2)
+        self.hint.setText(DEFAULT_HINT)
         self.hint.show()
+        self.foot.show()
         self._update_total()
-        self.adjustSize()
+        self._fit()
 
     def _label(self, b):
         f = b.f
@@ -678,7 +809,9 @@ class Bubble(QWidget):
         b.val.setFont(font)
         b.val.setStyleSheet("color:#f4f1ea;" if f.included else "color:#6f6880;")
         b.setToolTip("Click to leave this out" if f.included else "Click to add this back")
-        b.setAccessibleName(f"{f.text}, {'included' if f.included else 'left out'}. Press to toggle.")
+        src = "typed" if f.box == 0 else f"box {f.box}"
+        b.setAccessibleName(f"Row {b.row}: {f.text}, {src}, {'included' if f.included else 'left out'}. "
+                            "Press to toggle.")
 
     def _toggle(self, b, checked):
         b.f.included = not checked
@@ -686,14 +819,15 @@ class Bubble(QWidget):
         self._update_total()
 
     def _update_total(self):
-        self.total.setText(pretty_total(self.found))
-        QGuiApplication.clipboard().setText(clipboard_total(self.found))
+        self.total.setText(numbers.pretty(self.found))
+        QGuiApplication.clipboard().setText(numbers.clipboard_text(self.found))
         self.copied.show()
 
     def follow(self, anchor: QRect):
+        self._anchor = QRect(anchor)
         if not self.isVisible():
             return
-        self.adjustSize()
+        self._fit()
         a = screen_at(anchor.center()).availableGeometry()
         w, h = self.width(), self.height()
         x = anchor.left() - w - 6
@@ -717,6 +851,13 @@ QToolButton#kitty { background:#ffffff; border:2px solid #e6e0d8; border-radius:
 QToolButton#kitty:hover { border-color:#c9bfb2; }
 QToolButton#kitty:checked { border:3px solid #1f1b24; background:#fff6e3; }
 QToolButton#kitty:focus { outline:none; border:3px solid #b8740a; }
+QToolButton#addpet { background:transparent; border:2px dashed #b9b0a4; border-radius:14px;
+                     padding:10px 6px 8px 6px; color:#4a4452; font-size:12px; font-weight:600; }
+QToolButton#addpet:hover { border-color:#1f1b24; color:#1f1b24; }
+QToolButton#addpet:focus { outline:none; border:3px solid #b8740a; }
+QToolButton#rm { background:#ffffff; border:1px solid #d9d2c8; border-radius:13px; color:#4a4452;
+                 font-size:14px; font-weight:700; }
+QToolButton#rm:hover, QToolButton#rm:focus { border:2px solid #b8740a; color:#1f1b24; }
 QLineEdit { background:#ffffff; border:2px solid #d9d2c8; border-radius:10px; padding:8px 10px;
             font-size:14px; color:#1f1b24; }
 QLineEdit:focus { border-color:#1f1b24; }
@@ -728,42 +869,35 @@ QPushButton#go:focus { outline:none; border:3px solid #b8740a; }
 
 
 class Picker(QDialog):
+    """Pick a built-in buddy or one of your own pets, and give it a name."""
+    TILE = 112
+
     def __init__(self, kitty="noir", name=""):
         super().__init__(None, Qt.WindowStaysOnTopHint | Qt.WindowCloseButtonHint)
-        self.setWindowTitle("Meet your PurrSum kitty")
+        self.setWindowTitle("Meet your PurrSum buddy")
         self.setWindowIcon(app_icon())
         self.setStyleSheet(PICK_CSS)
-        self.kitty = kitty
+        self.kitty = kitty if pets.exists(kitty) else "noir"
         self._typed = bool(name)
         lay = QVBoxLayout(self)
         lay.setContentsMargins(28, 24, 28, 24)
         lay.setSpacing(10)
-        lay.addWidget(QLabel("Pick your kitty", objectName="title"))
-        lay.addWidget(QLabel("They'll sit on your screen and add up numbers for you.", objectName="sub"))
-        row = QHBoxLayout()
-        row.setSpacing(12)
+        lay.addWidget(QLabel("Pick your buddy", objectName="title"))
+        lay.addWidget(QLabel("They'll sit on your screen and add up numbers for you. "
+                             "Or add your own pet.", objectName="sub"))
+        self.grid = QGridLayout()
+        self.grid.setSpacing(12)
+        lay.addLayout(self.grid)
         self.group = QButtonGroup(self)
-        for k in sprites.ORDER:
-            b = QToolButton(objectName="kitty", checkable=True)
-            b.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-            b.setIcon(QIcon(sprite_pixmap(k, 4)))
-            b.setIconSize(QSize(sprites.W * 4, sprites.H * 4))
-            b.setText(sprites.KITTIES[k]["label"])
-            b.setAccessibleName(f"{sprites.KITTIES[k]['label']} kitty")
-            b.setMinimumSize(118, 118)
-            b.setCursor(Qt.PointingHandCursor)
-            b.setChecked(k == kitty)
-            b.clicked.connect(lambda _=False, k=k: self._pick(k))
-            self.group.addButton(b)
-            row.addWidget(b)
-        lay.addLayout(row)
+        self.tiles = {}
+        self._build_tiles()
         lay.addSpacing(6)
-        lbl = QLabel("Name your kitty")
+        lbl = QLabel("Name your buddy")
         lbl.setStyleSheet("font-weight:600;")
         lay.addWidget(lbl)
-        self.name = QLineEdit(name or sprites.KITTIES[kitty]["default"])
+        self.name = QLineEdit(name or pets.default_name(self.kitty))
         self.name.setMaxLength(24)
-        self.name.setAccessibleName("Kitty name")
+        self.name.setAccessibleName("Buddy name")
         self.name.textEdited.connect(lambda _: setattr(self, "_typed", True))
         lbl.setBuddy(self.name)
         self.name.returnPressed.connect(self.accept)
@@ -776,19 +910,130 @@ class Picker(QDialog):
         self.name.selectAll()
         self.name.setFocus()
 
-    def _pick(self, k):
-        self.kitty = k
-        if not self._typed:
-            self.name.setText(sprites.KITTIES[k]["default"])
+    def showEvent(self, e):
+        super().showEvent(e)
+        self.raise_()                 # come to the front, even right after the installer
+        self.activateWindow()
+
+    def _tile(self, cid, label) -> QToolButton:
+        t = self.TILE
+        b = QToolButton(objectName="kitty", checkable=True)
+        b.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        b.setIcon(QIcon(grid_pixmap(pets.frames(cid)[0], 92, 70)))
+        b.setIconSize(QSize(92, 70))
+        b.setText(label)
+        b.setAccessibleName(label)
+        b.setFixedSize(t, t)
+        b.setCursor(Qt.PointingHandCursor)
+        b.setChecked(cid == self.kitty)
+        b.clicked.connect(lambda _=False, cid=cid: self._pick(cid))
+        self.group.addButton(b)
+        return b
+
+    def _build_tiles(self):
+        while self.grid.count():
+            w = self.grid.takeAt(0).widget()
+            if w:
+                self.group.removeButton(w) if isinstance(w, QToolButton) else None
+                w.deleteLater()
+        self.tiles = {}
+        items = [(k, sprites.KITTIES[k]["label"]) for k in sprites.ORDER]
+        items += [("pet:" + m["id"], m["name"]) for m in pets.list_pets()]
+        i = 0
+        for cid, label in items:
+            b = self._tile(cid, label)
+            if cid.startswith("pet:"):
+                rm = QToolButton(b, objectName="rm")
+                rm.setText("×")
+                rm.setAccessibleName(f"Remove {label}")
+                rm.setToolTip(f"Remove {label}")
+                rm.setCursor(Qt.PointingHandCursor)
+                rm.setFixedSize(26, 26)
+                rm.move(self.TILE - 30, 4)
+                rm.clicked.connect(lambda _=False, cid=cid, label=label: self._remove(cid, label))
+            self.tiles[cid] = b
+            self.grid.addWidget(b, i // 4, i % 4)
+            i += 1
+        add = QToolButton(objectName="addpet")
+        add.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        add.setIcon(QIcon(grid_pixmap(sprites.paw_grid("#8a8291"), 92, 70, 3)))
+        add.setIconSize(QSize(92, 70))
+        add.setText("+ My Pet")
+        add.setAccessibleName("Add my own pet")
+        add.setFixedSize(self.TILE, self.TILE)
+        add.setCursor(Qt.PointingHandCursor)
+        add.clicked.connect(self._add_pet)
+        self.add_tile = add
+        self.grid.addWidget(add, i // 4, i % 4)
+
+    def _pick(self, cid):
+        self.kitty = cid
+        self.name.setText(pets.default_name(cid))     # the name follows the buddy you pick
+        self._typed = False
+
+    def _add_pet(self):
+        from .petui import PetMaker
+        d = PetMaker(self)
+        if d.exec() == QDialog.Accepted and d.saved_id:
+            cid = "pet:" + d.saved_id
+            self.kitty = cid
+            self._build_tiles()
+            self.tiles[cid].setChecked(True)
+            self.name.setText(d.saved_name)
+            self._typed = False
+            self.adjustSize()
+
+    def _remove(self, cid, label):
+        ok = QMessageBox.question(self, "Remove pet", f"Remove {label} from your buddies?",
+                                  QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if ok != QMessageBox.Yes:
+            return
+        pets.delete_pet(cid[4:])
+        if self.kitty == cid:
+            self.kitty = "noir"
+            if not self._typed:
+                self.name.setText(pets.default_name("noir"))
+        self._build_tiles()
+        self.adjustSize()
 
     def result_name(self):
-        return self.name.text().strip() or sprites.KITTIES[self.kitty]["default"]
+        return self.name.text().strip() or pets.default_name(self.kitty)
 
 
 # ---------------------------------------------------------------- app controller
 class OcrSignals(QObject):
     finished = Signal(list, int)
     failed = Signal(str)
+
+
+class ShiftTap:
+    """Spots a quick tap of Shift on its own (no other key or click while it was down).
+    Shift held for capitals, Shift+click in a spreadsheet, or a Shift already held when
+    watching starts never counts."""
+
+    def __init__(self, max_s=0.6):
+        self.max_s = max_s
+        self.reset()
+
+    def reset(self):
+        self.prev = None
+        self.t0 = None
+        self.other = False
+
+    def feed(self, shift: bool, other: bool, now: float) -> bool:
+        if self.prev is None:                       # just started watching
+            self.prev = shift
+            return False
+        fired = False
+        if shift and not self.prev:                 # pressed
+            self.t0, self.other = now, other
+        elif shift and self.t0 is not None:         # still held
+            self.other = self.other or other
+        elif not shift and self.prev and self.t0 is not None:   # released
+            fired = not (self.other or other) and now - self.t0 <= self.max_s
+            self.t0 = None
+        self.prev = shift
+        return fired
 
 
 class PurrSum(QObject):
@@ -799,22 +1044,44 @@ class PurrSum(QObject):
         self.cat = Cat(self.s)
         self.bubble = Bubble()
         self.sel = None
+        self.appending = False
+        self._had_bubble = False
         self.sig = OcrSignals()
         self.sig.finished.connect(self._ocr_done)
         self.sig.failed.connect(self._ocr_failed)
-        self.cat.clicked.connect(lambda: self.start_sum())
+        self.cat.clicked.connect(lambda: self.start_sum())      # a click always starts a fresh list
         self.cat.moved.connect(lambda: self.bubble.follow(self.cat.anchor()))
         self.cat.menu_requested.connect(self.show_menu)
-        self.reader = Reader()          # loads the OCR engine in the background
+        self.bubble.add_requested.connect(lambda: self.start_sum(append=True))
+        # tapping Shift on its own while the bubble is open = "Add more from screen"
+        self.tap = ShiftTap()
+        self.tap_timer = QTimer(self)
+        self.tap_timer.setInterval(30)
+        self.tap_timer.timeout.connect(self._poll_shift)
+        if sys.platform == "win32":
+            self.tap_timer.start()
+        threading.Thread(target=self._warm, daemon=True).start()
 
     @property
     def name(self):
-        return self.s.get("name") or sprites.KITTIES[self.cat.kitty]["default"]
+        return self.s.get("name") or pets.default_name(self.cat.kitty)
 
-    def run(self):
-        if "kitty" not in self.s:
+    def _warm(self):
+        from . import ocr
+        ocr.warm_up()
+
+    def run(self, welcome=False):
+        """welcome=True (right after installing): always open the buddy picker first."""
+        if "kitty" not in self.s or welcome:
             if not self.choose_kitty(first=True):
                 return False
+        if self.s.get("kitty") == "smokey" and self.s.get("name") == "Smokey":
+            self.s["name"] = "Beans"                 # Smokey was renamed Beans
+            self.s.save()
+        if not pets.exists(self.s["kitty"]):       # e.g. a buddy that was retired
+            self.s["kitty"] = "noir"
+            self.s["name"] = pets.default_name("noir")
+            self.s.save()
         self.cat.set_kitty(self.s["kitty"])
         self.cat.place_saved()
         self.cat.show()
@@ -840,6 +1107,8 @@ class PurrSum(QObject):
                         "QMenu::item:selected{background:#3a3344;}"
                         "QMenu::separator{height:1px;background:#3a3644;margin:4px 8px;}")
         m.addAction(QAction("Sum numbers", m, triggered=lambda *_: self.start_sum()))
+        if self.bubble.found:
+            m.addAction(QAction("Add more from screen\tShift", m, triggered=lambda *_: self.start_sum(append=True)))
         if self.cat.tucked:
             m.addAction(QAction(f"Bring {self.name} back", m, triggered=lambda *_: self._untuck()))
         else:
@@ -865,10 +1134,32 @@ class PurrSum(QObject):
         self.s["tucked"] = False
         self.s.save()
 
+    def _read_keys(self):
+        """(Shift down?, any other key or mouse button down?) — Windows only."""
+        import ctypes
+        gaks = ctypes.windll.user32.GetAsyncKeyState
+        shift = bool(gaks(0x10) & 0x8000)
+        other = any(gaks(vk) & 0x8000 for vk in range(1, 0xFF) if vk not in (0x10, 0xA0, 0xA1))
+        return shift, other
+
+    def _poll_shift(self):
+        if not (self.sel is None and self.bubble.isVisible() and self.bubble.found):
+            self.tap.reset()
+            return
+        try:
+            shift, other = self._read_keys()
+        except Exception:
+            return
+        if self.tap.feed(shift, other, time.monotonic()):
+            self.start_sum(append=True)
+
     # summing
-    def start_sum(self):
+    def start_sum(self, append=False):
+        """Clicking the cat starts a fresh list; the bubble's Add button adds to it."""
         if self.sel is not None:
             return
+        self.appending = bool(append and self.bubble.found)
+        self._had_bubble = self.bubble.isVisible()
         self.bubble.hide()
         self.cat.hide()
         QTimer.singleShot(120, self._begin_selection)   # let the cat vanish before the screenshot
@@ -880,55 +1171,67 @@ class PurrSum(QObject):
         self.sel.begin()
 
     def _sel_cancelled(self):
+        # cancelling changes nothing: the old list (if any) comes back as it was
         self.sel = None
+        self.appending = False
         self.cat.show()
+        if self._had_bubble:
+            self.bubble.show()
+            self.bubble.follow(self.cat.anchor())
 
     def _selected(self, crops):
         self.sel = None
         self.cat.show()
         self.cat.busy = True
-        self.bubble.show_busy(self.name)
+        base = self.bubble.next_box() - 1 if self.appending else 0
+        self.bubble.show_busy(self.name, keep=self.appending)
         self.bubble.show()
         self.bubble.follow(self.cat.anchor())
-        imgs = [qimage_to_pil(img) for _, img in crops]
-        threading.Thread(target=self._ocr, args=(imgs,), daemon=True).start()
+        imgs = [qimage_to_rgb(img) for _, img in crops]
+        threading.Thread(target=self._ocr, args=(imgs, base), daemon=True).start()
 
-    def _ocr(self, imgs):
+    def _ocr(self, imgs, base=0):
         try:
+            from . import ocr
             found = []
-            for i, img in enumerate(imgs, 1):         # boxes in the order they were drawn
-                lines = self.reader.read(img)
-                found += [Found(v, t, i) for line in lines for v, t in find_numbers(line)]
+            for i, rgb in enumerate(imgs, 1):
+                found += numbers.find_numbers("\n".join(ocr.read_lines(rgb)), box=base + i)
             self.sig.finished.emit(found, len(imgs))
-        except RuntimeError as e:
-            if self.reader.engine is None:
-                self.sig.failed.emit("My number-reading part isn't set up yet. Run the "
-                                     "\u201cInstall PurrSum Noir\u201d file again while "
-                                     "connected to the internet.")
-            else:
-                self.sig.failed.emit("Something went wrong reading the screen:\n" + str(e))
+        except ImportError:
+            self.sig.failed.emit("My number-reading part isn't set up yet. Run the "
+                                 "\u201cInstall PurrSum Noir\u201d file again while "
+                                 "connected to the internet.")
         except Exception as e:      # pragma: no cover
             self.sig.failed.emit("Something went wrong reading the screen:\n" + str(e))
 
     def _ocr_done(self, found, n):
         self.cat.busy = False
-        self.bubble.show_result(self.name, found, n)
+        if self.appending:
+            self.bubble.add_found(found)
+        else:
+            self.bubble.show_result(self.name, found, n)
+        self.appending = False
         self.bubble.follow(self.cat.anchor())
         if found:
             self.cat.happy_hop()
 
     def _ocr_failed(self, msg):
         self.cat.busy = False
-        self.bubble.show_error(self.name, msg)
+        if self.appending and self.bubble.found:
+            self.bubble.add_found([])
+            self.bubble.note(msg)
+        else:
+            self.bubble.show_error(self.name, msg)
+        self.appending = False
         self.bubble.follow(self.cat.anchor())
 
 
-def qimage_to_pil(img: QImage):
-    """Full-resolution (device pixel) crop as a PIL image."""
-    from PIL import Image
+def qimage_to_rgb(img: QImage):
+    import numpy as np
     img = img.convertToFormat(QImage.Format_RGB888)
     w, h, bpl = img.width(), img.height(), img.bytesPerLine()
-    return Image.frombuffer("RGB", (w, h), bytes(img.constBits())[: bpl * h], "raw", "RGB", bpl, 1).copy()
+    arr = np.frombuffer(img.constBits(), dtype=np.uint8, count=bpl * h).reshape(h, bpl)
+    return arr[:, : w * 3].reshape(h, w, 3).copy()
 
 
 # ---------------------------------------------------------------- entry
@@ -977,6 +1280,6 @@ def main():
     ps = PurrSum(app)
     listen_for_summons(server, ps)
 
-    if not ps.run():
+    if not ps.run(welcome="--welcome" in sys.argv):
         return 0
     return app.exec()

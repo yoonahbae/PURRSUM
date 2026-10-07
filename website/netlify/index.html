@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PurrSum Noir — add up numbers from anywhere on your screen</title>
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
+<meta name="description" content="A tiny cat for Windows that adds up any numbers on your screen: PDFs, Excel, Google Sheets, emails and websites, across all your monitors. Free, and nothing leaves your computer.">
+<meta name="theme-color" content="#141217">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PurrSum Noir — add up any numbers on your screen">
+<meta property="og:description" content="Click the cat, drag a box over numbers in a PDF, Excel, Google Sheets or anywhere else, and the total is copied. Free for Windows.">
+<meta property="og:url" content="https://purrsum-noir.netlify.app/">
+<meta property="og:image" content="https://raw.githubusercontent.com/yoonahbae/PURRSUM/site/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2023%2018%22%20width%3D%2246%22%20height%3D%2236%22%3E%3Cpath%20fill%3D%22%230b0b0e%22%20d%3D%22M2%200h2v1h-2zM13%200h2v1h-2zM2%201h1v1h-1zM4%201h1v1h-1zM12%201h1v1h-1zM14%201h1v1h-1zM2%202h1v1h-1zM5%202h7v1h-7zM14%202h1v1h-1zM2%203h1v1h-1zM14%203h1v1h-1zM2%204h1v1h-1zM14%204h1v1h-1zM2%205h1v1h-1zM14%205h1v1h-1zM0%206h3v1h-3zM14%206h3v1h-3zM2%207h1v1h-1zM8%207h1v1h-1zM14%207h1v1h-1zM0%208h3v1h-3zM7%208h1v1h-1zM9%208h1v1h-1zM14%208h3v1h-3zM2%209h1v1h-1zM14%209h1v1h-1zM3%2010h1v1h-1zM13%2010h1v1h-1zM3%2011h1v1h-1zM13%2011h1v1h-1zM19%2011h3v1h-3zM3%2012h1v1h-1zM13%2012h1v1h-1zM18%2012h1v1h-1zM22%2012h1v1h-1zM3%2013h1v1h-1zM13%2013h1v1h-1zM17%2013h1v1h-1zM21%2013h1v1h-1zM3%2014h1v1h-1zM13%2014h1v1h-1zM16%2014h1v1h-1zM19%2014h1v1h-1zM3%2015h1v1h-1zM6%2015h1v1h-1zM10%2015h1v1h-1zM13%2015h3v1h-3zM18%2015h1v1h-1zM3%2016h1v1h-1zM6%2016h1v1h-1zM10%2016h1v1h-1zM17%2016h1v1h-1zM3%2017h14v1h-14z%22/%3E%3Cpath%20fill%3D%22%23f39bb0%22%20d%3D%22M3%201h1v1h-1zM13%201h1v1h-1zM3%202h2v1h-2zM12%202h2v1h-2z%22/%3E%3Cpath%20fill%3D%22%232f2f36%22%20d%3D%22M3%203h11v1h-11zM3%204h11v1h-11zM3%205h2v1h-2zM7%205h3v1h-3zM12%205h2v1h-2zM3%206h2v1h-2zM7%206h3v1h-3zM12%206h2v1h-2zM3%207h5v1h-5zM9%207h5v1h-5zM3%208h4v1h-4zM8%208h1v1h-1zM10%208h4v1h-4zM3%209h11v1h-11zM4%2010h9v1h-9zM4%2011h9v1h-9zM4%2012h9v1h-9zM19%2012h3v1h-3zM4%2013h9v1h-9zM18%2013h3v1h-3zM4%2014h9v1h-9zM17%2014h2v1h-2zM4%2015h2v1h-2zM7%2015h3v1h-3zM11%2015h2v1h-2zM16%2015h2v1h-2zM4%2016h2v1h-2zM7%2016h3v1h-3zM11%2016h6v1h-6z%22/%3E%3Cpath%20fill%3D%22%23ffb21e%22%20d%3D%22M5%205h2v1h-2zM10%205h2v1h-2zM5%206h2v1h-2zM10%206h2v1h-2z%22/%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
@@ -207,7 +213,11 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 @media (max-width:480px){.hero-ctas .btn{width:100%}}
 @media (max-width:960px){.install{grid-template-columns:minmax(0,1fr)}}
 </style>
-</helmet>
+
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+
 <div style="font-family: 'IBM Plex Sans', system-ui, sans-serif; color: #f4f1ea; background: #141217; min-width: 0; overflow-x: hidden">
 <a class="skip" href="#install">Skip to download</a>
 
@@ -224,20 +234,20 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <li><a class="nav-cta" href="#install">Download</a></li>
 </ul>
 </nav>
-<button type="button" class="burger" aria-expanded="{{menuOpen}}" aria-controls="mobile-menu" aria-label="{{menuLabel}}" onClick="{{toggleMenu}}">
-<sc-if value="{{menuClosed}}" hint-placeholder-val="{{ true }}"><svg class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg></sc-if>
-<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}"><svg class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></sc-if>
+<button type="button" class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+<svg data-ic="open" class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+<svg data-ic="close" hidden class="ico" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
 </button>
-<sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}">
-<nav id="mobile-menu" class="mob-nav" aria-label="Main">
+
+<nav id="mobile-menu" class="mob-nav" hidden aria-label="Main">
 <ul>
-<li><a href="#workday" onClick="{{closeMenu}}">See it work</a></li>
-<li><a href="#install" onClick="{{closeMenu}}">Install</a></li>
-<li><a href="#faq" onClick="{{closeMenu}}">Questions</a></li>
-<li><a class="btn btn-main" href="#install" onClick="{{closeMenu}}">Download for Windows</a></li>
+<li><a href="#workday">See it work</a></li>
+<li><a href="#install">Install</a></li>
+<li><a href="#faq">Questions</a></li>
+<li><a class="btn btn-main" href="#install">Download for Windows</a></li>
 </ul>
 </nav>
-</sc-if>
+
 </header>
 
 <main id="top">
@@ -307,24 +317,409 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </ol>
 <div class="app-float">
 <section class="bubble" aria-label="PurrSum result. Click a number to leave it out.">
-<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found {{count}} numbers on 2 screens</p>
+<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found <span id="count">36</span> numbers on 2 screens</p>
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px 4px">
-<p aria-live="polite" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em"><span class="sr">Total </span>{{total}}</p>
+<p aria-live="polite" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em"><span class="sr">Total </span><span id="total">43,825.21</span></p>
 <span style="padding: 3px 9px; border-radius: 9px; background: #2e2a12; color: #ffcf6b; font-size: 12px; white-space: nowrap">Copied ✓</span>
 </div>
 <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px">
-<sc-for list="{{items}}" as="item" hint-placeholder-count="36">
-<sc-if value="{{item.divider}}" hint-placeholder-val="{{ false }}"><li aria-hidden="true" class="divider"></li></sc-if>
+
+
 <li>
-<button type="button" class="row-btn" aria-pressed="{{item.included}}" onClick="{{item.toggle}}">
-<span class="rownum" aria-hidden="true">{{item.n}}</span>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="30750">
+<span class="rownum" aria-hidden="true">1</span>
 <span style="flex: 1; text-align: right">
-<sc-if value="{{item.included}}" hint-placeholder-val="{{ true }}"><span>{{item.text}}</span></sc-if>
-<sc-if value="{{item.out}}" hint-placeholder-val="{{ false }}"><s style="color: #8f889e">{{item.text}}</s><span class="sr"> (left out)</span></sc-if>
+<span class="v-in"><span>307.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">307.50</s><span class="sr"> (left out)</span></span>
 </span>
 </button>
 </li>
-</sc-for>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="16410">
+<span class="rownum" aria-hidden="true">2</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>164.10</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">164.10</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="55785">
+<span class="rownum" aria-hidden="true">3</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>557.85</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">557.85</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="70940">
+<span class="rownum" aria-hidden="true">4</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>709.40</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">709.40</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="211130">
+<span class="rownum" aria-hidden="true">5</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,111.30</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,111.30</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="165115">
+<span class="rownum" aria-hidden="true">6</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,651.15</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,651.15</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="99070">
+<span class="rownum" aria-hidden="true">7</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>990.70</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">990.70</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="158985">
+<span class="rownum" aria-hidden="true">8</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,589.85</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,589.85</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="152885">
+<span class="rownum" aria-hidden="true">9</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,528.85</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,528.85</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="147555">
+<span class="rownum" aria-hidden="true">10</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,475.55</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,475.55</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="66650">
+<span class="rownum" aria-hidden="true">11</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>666.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">666.50</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="219160">
+<span class="rownum" aria-hidden="true">12</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,191.60</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,191.60</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+<li aria-hidden="true" class="divider"></li>
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="64375">
+<span class="rownum" aria-hidden="true">13</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$643.75</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$643.75</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="8375">
+<span class="rownum" aria-hidden="true">14</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$83.75</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$83.75</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="226725">
+<span class="rownum" aria-hidden="true">15</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$2,267.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$2,267.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="138100">
+<span class="rownum" aria-hidden="true">16</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$1,381.00</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$1,381.00</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="194750">
+<span class="rownum" aria-hidden="true">17</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$1,947.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$1,947.50</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="20225">
+<span class="rownum" aria-hidden="true">18</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$202.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$202.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="44450">
+<span class="rownum" aria-hidden="true">19</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$444.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$444.50</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="76475">
+<span class="rownum" aria-hidden="true">20</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$764.75</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$764.75</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+<li aria-hidden="true" class="divider"></li>
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="66019">
+<span class="rownum" aria-hidden="true">21</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>660.19</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">660.19</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="76160">
+<span class="rownum" aria-hidden="true">22</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>761.60</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">761.60</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="45945">
+<span class="rownum" aria-hidden="true">23</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>459.45</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">459.45</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="356840">
+<span class="rownum" aria-hidden="true">24</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>3,568.40</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">3,568.40</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="58897">
+<span class="rownum" aria-hidden="true">25</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>588.97</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">588.97</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="245175">
+<span class="rownum" aria-hidden="true">26</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,451.75</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,451.75</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="28565">
+<span class="rownum" aria-hidden="true">27</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>285.65</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">285.65</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="267335">
+<span class="rownum" aria-hidden="true">28</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,673.35</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,673.35</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="71125">
+<span class="rownum" aria-hidden="true">29</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>711.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">711.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="315060">
+<span class="rownum" aria-hidden="true">30</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>3,150.60</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">3,150.60</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="51404">
+<span class="rownum" aria-hidden="true">31</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>514.04</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">514.04</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="116485">
+<span class="rownum" aria-hidden="true">32</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,164.85</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,164.85</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="5025">
+<span class="rownum" aria-hidden="true">33</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>50.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">50.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="213735">
+<span class="rownum" aria-hidden="true">34</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,137.35</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,137.35</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="22241">
+<span class="rownum" aria-hidden="true">35</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>222.41</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">222.41</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="274600">
+<span class="rownum" aria-hidden="true">36</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,746.00</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,746.00</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
 </ul>
 <p style="margin: 8px 0 0 4px; color: #a39cb0; font-size: 12px">Try it: click a number to leave it out.</p>
 <div aria-hidden="true">
@@ -406,89 +801,25 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </div>
 </footer>
 </div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4200}}'>
-class Component extends DCLogic {
-  constructor(props) {
-    super(props);
-    this.state = { off: {}, menu: false };
-  }
-  renderVals() {
-    var found = [
-      { id: 'n0', box: 1, cents: 30750, text: '307.50' },
-      { id: 'n1', box: 1, cents: 16410, text: '164.10' },
-      { id: 'n2', box: 1, cents: 55785, text: '557.85' },
-      { id: 'n3', box: 1, cents: 70940, text: '709.40' },
-      { id: 'n4', box: 1, cents: 211130, text: '2,111.30' },
-      { id: 'n5', box: 1, cents: 165115, text: '1,651.15' },
-      { id: 'n6', box: 1, cents: 99070, text: '990.70' },
-      { id: 'n7', box: 1, cents: 158985, text: '1,589.85' },
-      { id: 'n8', box: 1, cents: 152885, text: '1,528.85' },
-      { id: 'n9', box: 1, cents: 147555, text: '1,475.55' },
-      { id: 'n10', box: 1, cents: 66650, text: '666.50' },
-      { id: 'n11', box: 1, cents: 219160, text: '2,191.60' },
-      { id: 'n12', box: 2, cents: 64375, text: '$643.75' },
-      { id: 'n13', box: 2, cents: 8375, text: '$83.75' },
-      { id: 'n14', box: 2, cents: 226725, text: '$2,267.25' },
-      { id: 'n15', box: 2, cents: 138100, text: '$1,381.00' },
-      { id: 'n16', box: 2, cents: 194750, text: '$1,947.50' },
-      { id: 'n17', box: 2, cents: 20225, text: '$202.25' },
-      { id: 'n18', box: 2, cents: 44450, text: '$444.50' },
-      { id: 'n19', box: 2, cents: 76475, text: '$764.75' },
-      { id: 'n20', box: 3, cents: 66019, text: '660.19' },
-      { id: 'n21', box: 3, cents: 76160, text: '761.60' },
-      { id: 'n22', box: 3, cents: 45945, text: '459.45' },
-      { id: 'n23', box: 3, cents: 356840, text: '3,568.40' },
-      { id: 'n24', box: 3, cents: 58897, text: '588.97' },
-      { id: 'n25', box: 3, cents: 245175, text: '2,451.75' },
-      { id: 'n26', box: 3, cents: 28565, text: '285.65' },
-      { id: 'n27', box: 3, cents: 267335, text: '2,673.35' },
-      { id: 'n28', box: 3, cents: 71125, text: '711.25' },
-      { id: 'n29', box: 3, cents: 315060, text: '3,150.60' },
-      { id: 'n30', box: 3, cents: 51404, text: '514.04' },
-      { id: 'n31', box: 3, cents: 116485, text: '1,164.85' },
-      { id: 'n32', box: 3, cents: 5025, text: '50.25' },
-      { id: 'n33', box: 3, cents: 213735, text: '2,137.35' },
-      { id: 'n34', box: 3, cents: 22241, text: '222.41' },
-      { id: 'n35', box: 3, cents: 274600, text: '2,746.00' }
-    ];
-    var off = this.state.off;
-    var self = this;
-    var sum = 0;
-    var count = 0;
-    var items = found.map(function (f, i) {
-      var included = !off[f.id];
-      if (included) { sum += f.cents; count += 1; }
-      return {
-        n: i + 1,
-        divider: i > 0 && found[i - 1].box !== f.box,
-        text: f.text,
-        included: included,
-        out: !included,
-        toggle: function () {
-          var next = Object.assign({}, self.state.off);
-          next[f.id] = !next[f.id];
-          self.setState({ off: next });
-        }
-      };
-    });
-    var neg = sum < 0;
-    var abs = Math.abs(sum);
-    var whole = Math.floor(abs / 100).toLocaleString('en-US');
-    var frac = String(abs % 100).padStart(2, '0');
-    var open = this.state.menu;
-    return {
-      items: items,
-      count: count,
-      total: (neg ? '-' : '') + whole + '.' + frac,
-      menuOpen: open,
-      menuClosed: !open,
-      menuLabel: open ? 'Close menu' : 'Open menu',
-      toggleMenu: function () { self.setState({ menu: !self.state.menu }); },
-      closeMenu: function () { self.setState({ menu: false }); }
-    };
-  }
-}
+
+<script>
+(function(){
+  var burger=document.querySelector('.burger'),menu=document.getElementById('mobile-menu');
+  function setMenu(open){menu.hidden=!open;burger.setAttribute('aria-expanded',String(open));
+    burger.setAttribute('aria-label',open?'Close menu':'Open menu');
+    burger.querySelector('[data-ic=open]').toggleAttribute('hidden',open);
+    burger.querySelector('[data-ic=close]').toggleAttribute('hidden',!open);}
+  burger.addEventListener('click',function(){setMenu(menu.hidden);});
+  menu.addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!menu.hidden){setMenu(false);burger.focus();}});
+  window.matchMedia('(min-width:821px)').addEventListener('change',function(e){if(e.matches)setMenu(false);});
+  var rows=[].slice.call(document.querySelectorAll('.row-btn'));
+  function update(){var sum=0,n=0;rows.forEach(function(b){if(b.getAttribute('aria-pressed')==='true'){sum+=+b.dataset.cents;n++;}});
+    var a=Math.abs(sum);document.getElementById('total').textContent=(sum<0?'-':'')+Math.floor(a/100).toLocaleString('en-US')+'.'+String(a%100).padStart(2,'0');
+    document.getElementById('count').textContent=n;}
+  rows.forEach(function(b){b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')!=='true';
+    b.setAttribute('aria-pressed',String(on));b.querySelector('.v-in').hidden=!on;b.querySelector('.v-out').hidden=on;update();});});
+})();
 </script>
 </body>
 </html>

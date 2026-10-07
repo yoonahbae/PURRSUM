@@ -256,17 +256,49 @@ before = ps.bubble.pos()
 QTest.mousePress(cat, Qt.LeftButton, Qt.NoModifier, QPoint(30, 40))
 g0 = cat.mapToGlobal(QPoint(30, 40))
 for i in range(1, 6):
-    QTest.mouseMove(cat, cat.mapFromGlobal(g0 - QPoint(0, i * 30)))
+    QTest.mouseMove(cat, cat.mapFromGlobal(g0 + QPoint(0, i * 40)))
     pump(10)
-QTest.mouseRelease(cat, Qt.LeftButton, Qt.NoModifier, cat.mapFromGlobal(g0 - QPoint(0, 150)))
+QTest.mouseRelease(cat, Qt.LeftButton, Qt.NoModifier, cat.mapFromGlobal(g0 + QPoint(0, 200)))
 pump(100)
-check("bubble follows the cat", ps.bubble.pos().y() < before.y() - 100, f"{before} -> {ps.bubble.pos()}")
+check("bubble follows the cat", ps.bubble.pos().y() > before.y() + 100, f"{before} -> {ps.bubble.pos()}")
 desktop(OUT / "8_after_move.png")
+
+# ---- add more to the same list: bubble's Add button, then a typed number
+def wait_ocr():
+    t0 = time.time()
+    while cat.busy and time.time() - t0 < 60:
+        pump(100)
+    pump(200)
+
+QTest.mouseClick(ps.bubble.add_btn, Qt.LeftButton); pump(400)
+check("Add button opens the dimmed screens to add more", ps.sel is not None and ps.appending)
+sel = ps.sel
+box(col_x1, r3[0] - 6, col_x2, r3[1] + 6, shift=False)       # the Handling row skipped earlier
+wait_ocr()
+f = ps.bubble.found
+check("Add keeps the old list and adds the new box", len(f) == 6 and f[-1].box == 4 and str(f[-1].value) == "45.00",
+      str([(x.box, x.text) for x in f]))
+check("…and keeps what you left out", QGuiApplication.clipboard().text() == "2949.45", QGuiApplication.clipboard().text())
+check("…and every earlier number is still visible in the bubble",
+      ps.bubble.scroll.viewport().height() >= ps.bubble.list.sizeHint().height() - 2,
+      f"{ps.bubble.scroll.viewport().height()} vs {ps.bubble.list.sizeHint().height()}")
+QTest.mouseClick(ps.bubble.entry, Qt.LeftButton)
+QTest.keyClicks(ps.bubble.entry, "(50.55)")
+QTest.keyClick(ps.bubble.entry, Qt.Key_Return); pump(150)
+check("typing a number adds it (with the invoice rules)", len(ps.bubble.found) == 7 and ps.bubble.found[-1].box == 0
+      and QGuiApplication.clipboard().text() == "2898.90", QGuiApplication.clipboard().text())
+QTest.keyClicks(ps.bubble.entry, "hello")
+QTest.keyClick(ps.bubble.entry, Qt.Key_Return); pump(100)
+check("typing something that isn't a number is gently refused", len(ps.bubble.found) == 7 and "number" in ps.bubble.hint.text())
+ps.bubble.entry.clear(); pump(50)
+ps.bubble.grab().save(str(OUT / "7b_bubble_added.png"))
+desktop(OUT / "8b_added_desktop.png")
 
 # ---- Esc cancels / right-click cancels
 ps.start_sum(); pump(400)
 QTest.keyClick(ps.sel.overlays[0], Qt.Key_Escape); pump(100)
-check("Esc cancels", ps.sel is None and cat.isVisible())
+check("Esc cancels and the list comes back unchanged", ps.sel is None and cat.isVisible()
+      and ps.bubble.isVisible() and len(ps.bubble.found) == 7)
 ps.start_sum(); pump(400)
 o = ps.sel.overlays[1]
 QTest.mouseClick(o, Qt.RightButton, Qt.NoModifier, QPoint(100, 100)); pump(100)
@@ -281,6 +313,7 @@ t0 = time.time()
 while cat.busy and time.time() - t0 < 60:
     pump(100)
 check("Enter adds up", QGuiApplication.clipboard().text() == "45.00", QGuiApplication.clipboard().text())
+check("clicking the cat starts a fresh list", len(ps.bubble.found) == 1, str(len(ps.bubble.found)))
 
 # ---- tuck into the side
 ps._tuck(); pump(300)
@@ -310,7 +343,7 @@ def drive_picker2():
     QTest.keyClick(d.name, Qt.Key_Return)
 QTimer.singleShot(300, drive_picker2)
 ps.choose_kitty()
-check("change kitty keeps the typed name", ps.s["kitty"] == "mango" and ps.s["name"] == "Mochi", str(dict(ps.s)))
+check("changing buddy fills in the new buddy's name", ps.s["kitty"] == "mango" and ps.s["name"] == "Mango", str(dict(ps.s)))
 pump(300)
 cat.grab().save(str(OUT / "11_mango.png"))
 ps.s["kitty"] = "noir"; cat.set_kitty("noir")

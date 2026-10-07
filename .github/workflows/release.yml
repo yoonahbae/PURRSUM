@@ -1,0 +1,26 @@
+# When a version tag like v1.8.2 is pushed, publish a GitHub Release automatically:
+# notes come from CHANGELOG.md, the installer from versions/<tag>/ on the "downloads" branch.
+name: Release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get the installer for this version
+        run: |
+          git fetch --depth 1 origin downloads
+          git show "origin/downloads:versions/${GITHUB_REF_NAME}/Install PurrSum Noir.exe" > "Install-PurrSum-Noir-${GITHUB_REF_NAME}.exe"
+      - name: Pull this version's notes from CHANGELOG.md
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          awk -v v="$v" '$0 ~ "^## "v" " {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
+          printf '\n---\nWindows protected your PC? Click **More info → Run anyway** (the app is free and not code-signed yet).\n' >> notes.md
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" "Install-PurrSum-Noir-${GITHUB_REF_NAME}.exe" --title "PurrSum Noir ${GITHUB_REF_NAME}" --notes-file notes.md

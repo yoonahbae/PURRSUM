@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+# big build leftovers (rebuilt by build/build.sh)
+build/stage/
+build/wheels/
+build/alt/
+build/*.exe
+build/wt*.txt
+# installers live on the "downloads" branch, not here
+*.exe
+# real report amounts: keep out of this public repo
+website/demo/
