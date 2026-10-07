@@ -83,6 +83,9 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 @keyframes blink{0%,93%,97%,100%{opacity:1}94%,96%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.cat,.shadow,.eyes{animation:none}}
 
+.fake-add{margin-top:10px;padding:9px 10px;border-radius:9px;background:#ffb21e;color:#1a1206;font-size:13px;font-weight:600;text-align:center}
+.fake-tip{margin:6px 0 0;text-align:center;color:#a39cb0;font-size:12px}
+.fake-tip kbd{font-size:11px;padding:0 5px}
 /* workday scene */
 .scene-note{position:absolute;left:0;bottom:clamp(0px,4vw,56px);list-style:none;margin:0;padding:0;display:flex;gap:clamp(18px,3vw,40px)}
 .scene-note li{display:flex;flex-direction:column;gap:4px}
@@ -203,8 +206,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <nav class="desk-nav" aria-label="Main">
 <ul>
 <li><a href="#workday">See it work</a></li>
-<li><a href="#how">How it works</a></li>
-<li><a href="#features">Features</a></li>
+<li><a href="#install">Install</a></li>
 <li><a href="#faq">Questions</a></li>
 <li><a class="nav-cta" href="#install">Download</a></li>
 </ul>
@@ -217,8 +219,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <nav id="mobile-menu" class="mob-nav" hidden aria-label="Main">
 <ul>
 <li><a href="#workday">See it work</a></li>
-<li><a href="#how">How it works</a></li>
-<li><a href="#features">Features</a></li>
+<li><a href="#install">Install</a></li>
 <li><a href="#faq">Questions</a></li>
 <li><a class="btn btn-main" href="#install">Download for Windows</a></li>
 </ul>
@@ -227,48 +228,17 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </header>
 
 <main id="top">
-<section aria-labelledby="hero-title" class="wrap hero">
-<div class="hero-copy">
+<section id="workday" aria-labelledby="hero-title" style="background: #141217; padding-top: clamp(20px, 4vw, 48px); padding-bottom: clamp(56px, 8vw, 96px)">
+<div class="wrap" style="display: flex; flex-direction: column; gap: clamp(28px, 4vw, 44px)">
+<div style="display: flex; flex-direction: column; gap: 20px; max-width: 50rem">
+<p style="margin: 0; display: inline-flex; align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #2a2412; color: #ffcf6b; font-size: 14px; font-weight: 500">Free for Windows · nothing leaves your computer</p>
 <h1 id="hero-title" class="hero-h1">Add up any numbers on your screen.</h1>
-<ul class="chips" aria-label="Works with">
-<li>PDF</li><li>Excel</li><li>Google Sheets</li><li>Email</li><li>Websites</li><li>Scans &amp; images</li><li>Multiple monitors</li>
-</ul>
-<p class="hero-free">Free for Windows · nothing leaves your computer</p>
-<div class="hero-ctas" style="display: flex; flex-wrap: wrap; gap: 14px">
+<p style="margin: 0; color: #c9c3d4; font-size: clamp(1.05rem, 1.9vw, 1.25rem); line-height: 1.6; max-width: 44rem">Drag one box over a whole column in a PDF, Excel, Google Sheets or your accounting app. Every number inside is added and the total is copied, across all your monitors.</p>
+<div class="hero-ctas" style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 4px">
 <a class="btn btn-main" href="https://github.com/yoonahbae/PURRSUM/raw/downloads/Install%20PurrSum%20Noir.exe" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
 <a class="btn btn-ghost" href="#install">How to install</a>
 </div>
 </div>
-<div class="hero-art">
-<div class="bubble" role="img" aria-label="Example result: Noir found 36 numbers on 2 screens and copied the total, 43,825.21">
-<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found 36 numbers on 2 screens</p>
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px 4px">
-<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em">43,825.21</p>
-<span style="padding: 3px 9px; border-radius: 9px; background: #2e2a12; color: #ffcf6b; font-size: 12px; white-space: nowrap">Copied ✓</span>
-</div>
-<div class="srow"><span class="rownum">1</span><span>307.50</span></div>
-<div class="srow"><span class="rownum">2</span><span>164.10</span></div>
-<div class="srow"><span class="rownum">3</span><span>557.85</span></div>
-<div class="srow"><span class="rownum">4</span><span>709.40</span></div>
-<div class="srow"><span class="rownum">5</span><span>2,111.30</span></div>
-<div class="srow" style="color: #8f889e; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px"><span class="rownum"></span><span>… and 31 more</span></div>
-<p style="margin: 8px 0 0 4px; color: #a39cb0; font-size: 12px">Total copied ✓</p>
-</div>
-<div aria-hidden="true" style="flex: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 4px">
-<div class="cat"><svg class="px" viewBox="0 0 23 18" width="92" height="72" aria-hidden="true"><path fill="#2f2f36" d="M5 5h1v1h-1zM11 5h1v1h-1zM10 5h1v1h-1zM6 5h1v1h-1z"/><path fill="#0b0b0e" d="M5 6h1v1h-1zM11 6h1v1h-1zM10 6h1v1h-1zM6 6h1v1h-1z"/><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#2f2f36" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path class="eyes" fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg></div>
-<div class="shadow" style="width: 44px; height: 8px; margin-top: 4px; margin-right: 24px; border-radius: 50%; background: #000000"></div>
-</div>
-</div>
-</section>
-
-<section id="workday" aria-labelledby="workday-title" class="sec" style="background: #1a1820; border-top: 1px solid #2a2632">
-<div class="wrap" style="display: flex; flex-direction: column; gap: clamp(28px, 4vw, 44px)">
-<div style="display: flex; flex-direction: column; gap: 14px; max-width: 44rem">
-<p class="eyebrow" style="color: #ffcf6b">In a real workday</p>
-<h2 id="workday-title" class="h2">One box. Dozens of numbers.</h2>
-<p style="margin: 0; color: #c9c3d4; font-size: 1.1rem; line-height: 1.6">Drag one box over a whole column and every number inside is added at once: a 12-page PDF statement, your accounting app, a spreadsheet with 24 sheets. Dates and codes are skipped. Hold <kbd>Shift</kbd> to box more, on any screen.</p>
-</div>
-
 <div class="scene">
 <div class="monitors">
 <figure class="mon" aria-label="Left monitor: a 12-page PDF statement and an accounting app's bills list. One box covers 12 amounts in the PDF, another covers 8 bill amounts." style="margin: 0">
@@ -318,7 +288,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </div>
 
 <ol class="scene-note" aria-label="What happened">
-<li><b>3</b><span>boxes dragged</span></li>
+<li><b>3</b><span>boxes, using Add more or <kbd>Shift</kbd></span></li>
 <li><b>36</b><span>numbers read</span></li>
 <li><b>1</b><span>total, copied</span></li>
 </ol>
@@ -729,6 +699,10 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 
 </ul>
 <p style="margin: 8px 0 0 4px; color: #a39cb0; font-size: 12px">Try it: click a number to leave it out.</p>
+<div aria-hidden="true">
+<div class="fake-add">+  Add more from screen</div>
+<p class="fake-tip">Shortcut: <kbd>Shift</kbd> + click the cat</p>
+</div>
 </section>
 <div aria-hidden="true" style="flex: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 4px">
 <div class="cat"><svg class="px" viewBox="0 0 23 18" width="92" height="72" aria-hidden="true"><path fill="#2f2f36" d="M5 5h1v1h-1zM11 5h1v1h-1zM10 5h1v1h-1zM6 5h1v1h-1z"/><path fill="#0b0b0e" d="M5 6h1v1h-1zM11 6h1v1h-1zM10 6h1v1h-1zM6 6h1v1h-1z"/><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#2f2f36" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path class="eyes" fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg></div>
@@ -736,63 +710,6 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </div>
 </div>
 </div>
-</div>
-</section>
-
-<section id="how" aria-labelledby="how-title" class="light sec" style="background: #f7f3ec; color: #1f1b24">
-<div class="wrap" style="display: flex; flex-direction: column; gap: 44px">
-<div style="display: flex; flex-direction: column; gap: 14px; max-width: 46rem">
-<p class="eyebrow" style="color: #7a4f00">How it works</p>
-<h2 id="how-title" class="h2">Three seconds, start to paste.</h2>
-</div>
-<ol class="steps">
-<li>
-<span class="mono" style="color: #7a4f00; font-size: 15px">01</span>
-<h3>Click your cat</h3>
-<p>It sits in the corner of your screen. Click it and every monitor dims, ready for you to pick numbers.</p>
-</li>
-<li>
-<span class="mono" style="color: #7a4f00; font-size: 15px">02</span>
-<h3>Box the numbers, anywhere</h3>
-<p>Drag over numbers in any app. Hold <kbd>Shift</kbd> to box more, on any screen. Let go or press <kbd>Enter</kbd> to add up.</p>
-</li>
-<li>
-<span class="mono" style="color: #7a4f00; font-size: 15px">03</span>
-<h3>Paste the total</h3>
-<p>It's already copied, without commas. The bubble lists every number, numbered 1, 2, 3, so you can check them against the document.</p>
-</li>
-</ol>
-</div>
-</section>
-
-<section id="features" aria-labelledby="features-title" class="sec" style="background: #141217">
-<div class="wrap" style="display: flex; flex-direction: column; gap: 44px">
-<div style="display: flex; flex-direction: column; gap: 14px; max-width: 46rem">
-<p class="eyebrow" style="color: #ffcf6b">Why PurrSum</p>
-<h2 id="features-title" class="h2">If you can see it, you can add it up.</h2>
-</div>
-<ul class="feat-grid">
-<li class="card">
-<span class="icon-tile" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="2" y="4" width="13" height="10" rx="1.5"/><rect x="11" y="9" width="11" height="9" rx="1.5"/><path d="M6 18h5"/></svg></span>
-<h3>Any format, any screen</h3>
-<p>It reads what's on your screen, not the file. So it works in PDFs, Excel, Google Sheets, Outlook, websites and scanned pages, on every monitor at once. Need more? Add from another window or type a number in.</p>
-</li>
-<li class="card">
-<span class="icon-tile" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><path d="M6 2h9l4 4v16H6z"/><path d="M9 11h7"/><path d="M9 15h7"/><path d="M9 19h4"/></svg></span>
-<h3>Reads numbers the way people write them</h3>
-<p><span class="mono" style="white-space: pre">1641. 60</span> stays one number. $ ₩ € £ ¥ and commas are fine. Dates, invoice codes like INV-24081 and sizes like 12*1800 are skipped, so only real amounts get added.</p>
-</li>
-<li class="card">
-<span class="icon-tile" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="M9.5 13l2 2 3.5-4"/></svg></span>
-<h3>Total copied, ready to paste</h3>
-<p>The total lands on your clipboard without commas, ready for a cell or a form. Click any number in the bubble to leave it out, and the total updates.</p>
-</li>
-<li class="card">
-<span class="icon-tile" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="26" height="26"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
-<h3>Private by design</h3>
-<p>Numbers are read right on your computer. Nothing you select is uploaded, so client invoices and statements stay yours.</p>
-</li>
-</ul>
 </div>
 </section>
 
@@ -838,7 +755,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <h2 id="faq-title" class="h2" style="text-align: center; color: #f4f1ea">Questions</h2>
 <div class="faq">
 <details><summary>Does it work with Excel and Google Sheets?</summary><p>Yes. It reads the numbers you can see on screen, so it works in Excel, Google Sheets, PDFs, emails, websites, even screenshots and scans. You don't need to open or upload the file.</p></details>
-<details><summary>Can I add numbers from different windows or monitors?</summary><p>Yes. Hold Shift to draw boxes on any screen in one go, or click "Add more from screen" in the bubble to keep adding from another window.</p></details>
+<details><summary>Can I add numbers from different windows or monitors?</summary><p>Yes. Click "+ Add more from screen" in the bubble to keep adding from another window or monitor. If you like shortcuts, hold Shift: Shift + click the cat does the same as Add more, and holding Shift while you drag lets you draw several boxes in one go.</p></details>
 <details><summary>Is it safe? Why the warning?</summary><p>The warning only means the app isn't signed with a paid Microsoft certificate yet, which is normal for new, free apps. It installs just for you (no admin rights) and never sends anything off your computer.</p></details>
 <details><summary>Does it upload my documents anywhere?</summary><p>No. Numbers are read on your own computer. It only goes online once during setup, to download its number-reading part.</p></details>
 <details><summary>Is there a Mac version?</summary><p>Not yet. It's Windows 10 and 11 for now; a Mac version is coming.</p></details>
