@@ -10,9 +10,9 @@
 <meta property="og:title" content="PurrSum Noir — add up any numbers on your screen">
 <meta property="og:description" content="Click the cat, drag a box over numbers in a PDF, Excel, Google Sheets or anywhere else, and the total is copied. Free for Windows.">
 <meta property="og:url" content="https://purrsum-noir.netlify.app/">
-<meta property="og:image" content="https://purrsum-noir.netlify.app/og.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/yoonahbae/PURRSUM/site/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2023%2018%22%20width%3D%2246%22%20height%3D%2236%22%3E%3Cpath%20fill%3D%22%230b0b0e%22%20d%3D%22M2%200h2v1h-2zM13%200h2v1h-2zM2%201h1v1h-1zM4%201h1v1h-1zM12%201h1v1h-1zM14%201h1v1h-1zM2%202h1v1h-1zM5%202h7v1h-7zM14%202h1v1h-1zM2%203h1v1h-1zM14%203h1v1h-1zM2%204h1v1h-1zM14%204h1v1h-1zM2%205h1v1h-1zM14%205h1v1h-1zM0%206h3v1h-3zM14%206h3v1h-3zM2%207h1v1h-1zM8%207h1v1h-1zM14%207h1v1h-1zM0%208h3v1h-3zM7%208h1v1h-1zM9%208h1v1h-1zM14%208h3v1h-3zM2%209h1v1h-1zM14%209h1v1h-1zM3%2010h1v1h-1zM13%2010h1v1h-1zM3%2011h1v1h-1zM13%2011h1v1h-1zM19%2011h3v1h-3zM3%2012h1v1h-1zM13%2012h1v1h-1zM18%2012h1v1h-1zM22%2012h1v1h-1zM3%2013h1v1h-1zM13%2013h1v1h-1zM17%2013h1v1h-1zM21%2013h1v1h-1zM3%2014h1v1h-1zM13%2014h1v1h-1zM16%2014h1v1h-1zM19%2014h1v1h-1zM3%2015h1v1h-1zM6%2015h1v1h-1zM10%2015h1v1h-1zM13%2015h3v1h-3zM18%2015h1v1h-1zM3%2016h1v1h-1zM6%2016h1v1h-1zM10%2016h1v1h-1zM17%2016h1v1h-1zM3%2017h14v1h-14z%22/%3E%3Cpath%20fill%3D%22%23f39bb0%22%20d%3D%22M3%201h1v1h-1zM13%201h1v1h-1zM3%202h2v1h-2zM12%202h2v1h-2z%22/%3E%3Cpath%20fill%3D%22%232f2f36%22%20d%3D%22M3%203h11v1h-11zM3%204h11v1h-11zM3%205h2v1h-2zM7%205h3v1h-3zM12%205h2v1h-2zM3%206h2v1h-2zM7%206h3v1h-3zM12%206h2v1h-2zM3%207h5v1h-5zM9%207h5v1h-5zM3%208h4v1h-4zM8%208h1v1h-1zM10%208h4v1h-4zM3%209h11v1h-11zM4%2010h9v1h-9zM4%2011h9v1h-9zM4%2012h9v1h-9zM19%2012h3v1h-3zM4%2013h9v1h-9zM18%2013h3v1h-3zM4%2014h9v1h-9zM17%2014h2v1h-2zM4%2015h2v1h-2zM7%2015h3v1h-3zM11%2015h2v1h-2zM16%2015h2v1h-2zM4%2016h2v1h-2zM7%2016h3v1h-3zM11%2016h6v1h-6z%22/%3E%3Cpath%20fill%3D%22%23ffb21e%22%20d%3D%22M5%205h2v1h-2zM10%205h2v1h-2zM5%206h2v1h-2zM10%206h2v1h-2z%22/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
@@ -74,7 +74,7 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 .row-btn{display:flex;align-items:center;gap:10px;width:100%;min-height:30px;padding:2px 8px;border:0;border-radius:8px;background:transparent;color:#f4f1ea;font:500 14px "IBM Plex Mono",ui-monospace,monospace;cursor:pointer;text-align:left}
 .row-btn:hover{background:#2a2632}
 .rownum{flex:none;width:18px;color:#8f889e;font:500 12px "IBM Plex Mono",ui-monospace,monospace;text-align:right}
-.divider{height:1px;margin:3px 8px;background:#3a3644}
+.divider{flex:none;height:1px;min-height:1px;margin:5px 8px;background:#4a4552}
 .cat{animation:bob 2.6s ease-in-out infinite}
 .shadow{animation:shrink 2.6s ease-in-out infinite}
 .eyes{animation:blink 5.5s infinite}
@@ -191,16 +191,14 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 .icon-tile{display:inline-flex;width:48px;height:48px;border-radius:14px;background:#1f1b24;color:#ffb21e;align-items:center;justify-content:center}
 .card h3{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:22px}
 .card p{margin:0;color:#4a4452;line-height:1.6}
-.install{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.install{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.install>li{background:#1c1a22;border:1px solid #3a3644;border-radius:18px;padding:clamp(22px,3vw,26px);display:flex;flex-direction:column;gap:12px;min-width:0}
+.install h3{margin:0;font-size:21px;font-weight:600}
+.install p{margin:0;color:#c9c3d4;line-height:1.6}
 .shot{margin:0;display:flex;flex-direction:column;gap:8px}
 .shot img{display:block;width:100%;max-width:440px;height:auto;border-radius:10px;border:1px solid #3a3644}
 .shot figcaption{color:#a39cb0;font-size:14px;line-height:1.5}
 .shot figcaption b{color:#f4f1ea;font-weight:600}
-.install>li{background:#1c1a22;border:1px solid #3a3644;border-radius:18px;padding:clamp(20px,3vw,28px);display:grid;grid-template-columns:minmax(0,1fr);gap:20px;min-width:0}
-.install>li.has-shot{grid-template-columns:minmax(0,1fr) minmax(0,440px);align-items:start;column-gap:clamp(20px,4vw,48px)}
-.install .st{display:flex;flex-direction:column;gap:12px;min-width:0}
-.install h3{margin:0;font-size:21px;font-weight:600}
-.install p{margin:0;color:#c9c3d4;line-height:1.6}
 .stepnum{display:inline-flex;width:34px;height:34px;border-radius:17px;background:#ffb21e;color:#1a1206;font-weight:700;align-items:center;justify-content:center}
 .ss{background:#1d5ea8;color:#ffffff;border-radius:10px;padding:16px 16px 18px;font-size:13px;line-height:1.45}
 .ss b{display:block;font-size:16px;font-weight:600;margin-bottom:6px}
@@ -211,9 +209,9 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 .faq details{background:#ffffff;border:1px solid #e6e0d8;border-radius:14px;padding:0 clamp(16px,3vw,22px)}
 .faq summary{cursor:pointer;padding:18px 0;font-weight:600;font-size:17px;min-height:44px}
 .faq details p{margin:0 0 18px;color:#4a4452;line-height:1.6}
-@media (max-width:760px){.install>li.has-shot{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:700px){.feat-grid{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:480px){.hero-ctas .btn{width:100%}}
+@media (max-width:960px){.install{grid-template-columns:minmax(0,1fr)}}
 </style>
 
 <style>[hidden]{display:none!important}</style>
@@ -745,45 +743,31 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <p class="eyebrow" style="color: #7a4f00">Download</p>
 <h2 id="install-title" class="h2">Set up in about a minute.</h2>
 <p style="margin: 0; color: #4a4452; font-size: 1.1rem; line-height: 1.6">No admin rights needed. Stay online during setup: it downloads its number-reading part once.</p>
-<div class="whatsnew" role="note" aria-label="What's new in version 1.8.2">
-<p class="wn-title"><span class="wn-tag">New in 1.8.2</span> Reads typewriter-style reports correctly</p>
-<p>Some accounting and aging reports leave a gap after the comma, like <span class="mono">8, 764.46</span>. PurrSum now reads that as one amount, 8,764.46, instead of two. Already installed? Download again and run it over your current version: your cat and its name stay.</p>
-</div>
 </div>
 <a class="btn btn-dark" href="https://github.com/yoonahbae/PURRSUM/raw/downloads/Install%20PurrSum%20Noir.exe" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
 </div>
-<ol class="isteps">
-<li class="istep">
-<div class="istep-text">
+<ol class="install" style="color: #f4f1ea">
+<li>
 <span class="stepnum" aria-hidden="true">1</span>
 <h3><span class="sr">Step 1: </span>Open the file</h3>
-<p>Open <span class="mono">Install PurrSum Noir.exe</span> from your Downloads folder. If your browser asks whether to keep it, choose <strong>Keep</strong>.</p>
-</div>
+<p>Open <span class="mono" style="color: #f4f1ea">Install PurrSum Noir.exe</span> from your Downloads folder. If your browser asks, choose <strong style="color: #f4f1ea">Keep</strong>.</p>
 </li>
-<li class="istep">
-<div class="istep-text">
+<li>
 <span class="stepnum" aria-hidden="true">2</span>
-<h3><span class="sr">Step 2: </span>Blue "Windows protected your PC" screen</h3>
-<p>This is normal for new apps from small makers. Click the small <strong>More info</strong> link under the message. A <strong>Run anyway</strong> button appears: click it.</p>
+<h3><span class="sr">Step 2: </span>Blue warning? That's normal.</h3>
+<p>Windows shows it for new apps from small makers. Click <strong style="color: #f4f1ea">More info</strong>, then <strong style="color: #f4f1ea">Run anyway</strong>.</p>
+<div class="ss" role="img" aria-label="Illustration of the blue Windows protected your PC screen, with More info and Run anyway highlighted">
+<b>Windows protected your PC</b>
+<span>Microsoft Defender SmartScreen prevented an unrecognized app from starting…</span><br>
+<span class="more">More info</span><br>
+<span class="run">Run anyway</span>
 </div>
-<figure class="istep-shot"><img src="install-smartscreen.png" width="566" height="521" alt="Windows protected your PC screen for Install PurrSum Noir.exe, with the Run anyway button highlighted" loading="lazy"><figcaption>After clicking More info, click Run anyway.</figcaption></figure>
 </li>
-<li class="istep">
-<div class="istep-text">
+<li>
 <span class="stepnum" aria-hidden="true">3</span>
-<h3><span class="sr">Step 3: </span>Security pop-up? Click Allow Once</h3>
-<p>Work computers with security software (like Trend Micro) may show "Newly Encountered Program Detected". Click <strong>Allow Once</strong>.</p>
-<p class="inote">Be quick: it blocks the installer on its own after about 30 seconds. If that happens, just open the file again.</p>
-</div>
-<figure class="istep-shot"><img src="install-security.png" width="419" height="335" alt="Security Agent pop-up saying Newly Encountered Program Detected for Install PurrSum Noir.exe, with the Allow Once button highlighted" loading="lazy"><figcaption>Click Allow Once.</figcaption></figure>
-</li>
-<li class="istep">
-<div class="istep-text">
-<span class="stepnum" aria-hidden="true">4</span>
-<h3><span class="sr">Step 4: </span>Click Install, then pick your cat</h3>
-<p>Stay online for about a minute while it sets up. Then pick a buddy, give it a name, and it moves into the corner of your screen.</p>
+<h3><span class="sr">Step 3: </span>Click Install, meet your cat</h3>
+<p>When it's done, pick a buddy and give it a name. It moves into the corner of your screen, ready to add.</p>
 <p>It's also on your Desktop and in the Start menu. To pin it: open Start, right-click PurrSum Noir, choose Pin to taskbar.</p>
-</div>
 </li>
 </ol>
 </div>
