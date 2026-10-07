@@ -84,7 +84,33 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 @media (prefers-reduced-motion:reduce){.cat,.shadow,.eyes{animation:none}}
 
 /* workday scene */
-.scene{position:relative;padding-bottom:clamp(0px,8vw,96px)}
+.scene-note{position:absolute;left:0;bottom:clamp(0px,4vw,56px);list-style:none;margin:0;padding:0;display:flex;gap:clamp(18px,3vw,40px)}
+.scene-note li{display:flex;flex-direction:column;gap:4px}
+.scene-note b{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1;color:#ffb21e}
+.scene-note span{color:#c9c3d4;font-size:15px}
+@media (max-width:860px){.scene-note{position:static;margin-top:28px}}
+
+.tbl-wrap{position:relative}
+.grid{width:100%;border-collapse:collapse;table-layout:fixed;font-size:1.12cqw;line-height:1}
+.grid th,.grid td{height:2.2cqw;padding:0 .6cqw;border-bottom:.1cqw solid #ebe7f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.grid th{height:2.6cqw;color:#6a6474;font-weight:600;border-bottom:.15cqw solid #d9d2c8}
+.grid .r{text-align:right;font-family:"IBM Plex Mono",monospace}
+.grid.xl th{background:#f1f3f4;font-weight:500}
+.grid.xl td,.grid.xl th{border:.1cqw solid #e3e3e3}
+.box{position:absolute;z-index:2;border:.3cqw solid #ffb21e;border-radius:.3cqw;-webkit-backdrop-filter:brightness(2.08);backdrop-filter:brightness(2.08);box-shadow:0 0 0 .2cqw rgba(255,178,30,.25)}
+.box-n{position:absolute;left:-1.5cqw;top:-1.5cqw;width:2.6cqw;height:2.6cqw;border-radius:50%;background:#ffb21e;color:#1a1206;font:700 1.4cqw/2.6cqw "IBM Plex Sans",sans-serif;text-align:center}
+.box-tag{position:absolute;left:50%;bottom:-1.3cqw;transform:translateX(-50%);padding:.25cqw .9cqw;border-radius:2cqw;background:#ffb21e;color:#1a1206;font:700 1.2cqw/1.4 "IBM Plex Sans",sans-serif;white-space:nowrap}
+.appnav{display:flex;gap:1.4cqw;padding:.8cqw 1.4cqw;background:#1f6f5c;font-size:1.3cqw;color:#d8efe7}
+.appnav .on{color:#ffffff;font-weight:600;border-bottom:.25cqw solid #ffffff}
+.fx{display:flex;gap:1.4cqw;padding:.5cqw 1.2cqw;border-bottom:.1cqw solid #e3e3e3;font:1.2cqw "IBM Plex Mono",monospace;color:#3c3846}
+.fx span{color:#8f889e;font-style:italic}
+.sheettabs{position:absolute;left:0;right:0;bottom:0;display:flex;gap:.3cqw;padding:.4cqw .6cqw;background:#f1f3f4;border-top:.1cqw solid #dadce0;font-size:1.1cqw;color:#5f6368;white-space:nowrap;overflow:hidden}
+.sheettabs span{padding:.3cqw .8cqw;border-radius:.4cqw}
+.sheettabs .on{background:#ffffff;color:#1e7e34;font-weight:600;box-shadow:inset 0 -.25cqw #1e7e34}
+.sheettabs .nav{color:#8f889e}
+.app-float .bubble ul{max-height:220px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#4a4552 transparent}
+
+.scene{position:relative;padding-bottom:clamp(0px,19vw,250px)}
 .monitors{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(14px,2.4vw,32px)}
 .mon{display:flex;flex-direction:column;align-items:center;min-width:0}
 .bezel{width:100%;background:#09080c;border:1px solid #34303d;border-radius:14px;padding:clamp(5px,.9vw,10px);box-shadow:0 30px 60px rgba(0,0,0,.45)}
@@ -120,10 +146,16 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 .sel[data-n]::after{content:attr(data-n);position:absolute;right:-2.2cqw;top:-2.6cqw;width:2.6cqw;height:2.6cqw;border-radius:50%;background:#ffb21e;color:#1a1206;font:700 1.4cqw/2.6cqw "IBM Plex Sans",sans-serif;text-align:center}
 .app-float{position:absolute;right:clamp(-28px,-1.5vw,0px);bottom:0;z-index:3;display:flex;align-items:flex-end;gap:10px}
 .app-float .bubble{box-shadow:0 24px 60px rgba(0,0,0,.6)}
+@media (min-width:861px) and (max-width:1300px){
+.scene{display:grid;grid-template-columns:minmax(0,1fr) auto;padding-bottom:0;column-gap:24px}
+.monitors{grid-column:1 / -1}
+.scene-note{position:static;align-self:end;margin-bottom:24px}
+.app-float{position:relative;right:auto;margin-top:-48px}
+}
 @media (max-width:860px){
 .monitors{grid-template-columns:minmax(0,1fr);gap:28px}
 .scene{padding-bottom:0}
-.app-float{position:relative;right:auto;justify-content:flex-end;margin-top:-56px}
+.app-float{position:relative;right:auto;justify-content:flex-end;margin-top:24px}
 }
 @media (max-width:400px){.app-float .bubble{width:100%}.app-float{flex-direction:column;align-items:flex-end}}
 
@@ -208,21 +240,18 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </div>
 </div>
 <div class="hero-art">
-<div class="bubble" role="img" aria-label="Example result: Noir found 6 numbers on 2 screens and copied the total, 5,357.35">
-<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found 6 numbers on 2 screens</p>
+<div class="bubble" role="img" aria-label="Example result: Noir found 36 numbers on 2 screens and copied the total, 43,825.21">
+<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found 36 numbers on 2 screens</p>
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px 4px">
-<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em">5,357.35</p>
+<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em">43,825.21</p>
 <span style="padding: 3px 9px; border-radius: 9px; background: #2e2a12; color: #ffcf6b; font-size: 12px; white-space: nowrap">Copied ✓</span>
 </div>
-<div class="srow"><span class="rownum">1</span><span>$1,250.00</span></div>
-<div class="divider"></div>
-<div class="srow"><span class="rownum">2</span><span>126.00</span></div>
-<div class="divider"></div>
-<div class="srow"><span class="rownum">3</span><span>1641.60</span></div>
-<div class="divider"></div>
-<div class="srow"><span class="rownum">4</span><span>980.00</span></div>
-<div class="srow"><span class="rownum">5</span><span>1,312.50</span></div>
-<div class="srow"><span class="rownum">6</span><span>47.25</span></div>
+<div class="srow"><span class="rownum">1</span><span>307.50</span></div>
+<div class="srow"><span class="rownum">2</span><span>164.10</span></div>
+<div class="srow"><span class="rownum">3</span><span>557.85</span></div>
+<div class="srow"><span class="rownum">4</span><span>709.40</span></div>
+<div class="srow"><span class="rownum">5</span><span>2,111.30</span></div>
+<div class="srow" style="color: #8f889e; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px"><span class="rownum"></span><span>… and 31 more</span></div>
 <p style="margin: 8px 0 0 4px; color: #a39cb0; font-size: 12px">Total copied ✓</p>
 </div>
 <div aria-hidden="true" style="flex: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 4px">
@@ -236,65 +265,51 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <div class="wrap" style="display: flex; flex-direction: column; gap: clamp(28px, 4vw, 44px)">
 <div style="display: flex; flex-direction: column; gap: 14px; max-width: 44rem">
 <p class="eyebrow" style="color: #ffcf6b">In a real workday</p>
-<h2 id="workday-title" class="h2">Two screens, ten tabs, one total.</h2>
-<p style="margin: 0; color: #c9c3d4; font-size: 1.1rem; line-height: 1.6">Amounts scattered across a portal, a PDF, an email and a spreadsheet? Click the cat, box them all in one go (hold <kbd>Shift</kbd> for more boxes), and the total is ready to paste.</p>
+<h2 id="workday-title" class="h2">One box. Dozens of numbers.</h2>
+<p style="margin: 0; color: #c9c3d4; font-size: 1.1rem; line-height: 1.6">Drag one box over a whole column and every number inside is added at once: a 12-page PDF statement, your accounting app, a spreadsheet with 24 sheets. Dates and codes are skipped. Hold <kbd>Shift</kbd> to box more, on any screen.</p>
 </div>
 
 <div class="scene">
 <div class="monitors">
-
-<figure class="mon" aria-label="Left monitor: a browser with many tabs showing a carrier portal, a PDF invoice and a sticky note. The amount due, 1,250.00, and a PDF line, 126.00, are boxed." style="margin: 0">
+<figure class="mon" aria-label="Left monitor: a 12-page PDF statement and an accounting app's bills list. One box covers 12 amounts in the PDF, another covers 8 bill amounts." style="margin: 0">
 <div class="bezel"><div class="scr wall-a">
-<div class="win" style="left: 2%; top: 3%; width: 70%; height: 74%">
-<div class="tabs"><span>Inbox (38)</span><span class="on">Carrier portal</span><span>Q3 freight – Sheets</span><span>Calendar</span><span>Rates PDF</span><span>Tracking</span><span>+</span></div>
-<div class="addr">portal.example-carrier.com/billing/INV-24081</div>
-<div style="padding: 2.4cqw 3cqw; display: flex; flex-direction: column; gap: 1.4cqw">
-<div style="display: flex; justify-content: space-between; align-items: center"><b style="font-size: 2.3cqw">Billing summary</b><span class="pill">Due 10/31</span></div>
-<div class="kv"><span>Invoice</span><span>INV-24081</span></div>
-<div class="kv"><span>Shipment date</span><span>10/02/2026</span></div>
-<div class="kv" style="font-size: 2cqw"><b>Amount due</b><span class="sel" data-n="1">$1,250.00</span></div>
-<div style="display: flex; gap: 1.2cqw; margin-top: .6cqw"><span class="fakebtn">Pay now</span><span class="fakebtn ghost">Download PDF</span></div>
+<div class="win" style="left: 26%; top: 2%; width: 72%; height: 34%">
+<div class="tabs"><span>Inbox (38)</span><span>Carrier portal</span><span class="on">Rates – Q3</span><span>Calendar</span><span>Tracking</span><span>Bank</span><span>+</span></div>
+<div class="addr">portal.example-carrier.com/billing</div>
+</div>
+<div class="sticky" style="right: 2%; top: 4%">reconcile<br>Sept AP<br>before 3pm!</div>
+<div class="win" style="left: 2%; top: 4%; width: 51%; height: 86%">
+<div class="bar"><span>Statement_Sep_2026.pdf · page 3 of 12</span><span class="ctl">— ▢ ✕</span></div>
+<div style="padding: 1.4cqw 1.6cqw">
+<b style="font-size: 1.5cqw">ACCOUNT STATEMENT · SEPTEMBER</b>
+<div class="tbl-wrap" style="margin-top: 1cqw"><table class="grid "><colgroup><col style="width:17%"><col style="width:18%"><col style="width:41%"><col style="width:24%"></colgroup><thead><tr><th class="">Date</th><th class="">Ref</th><th class="">Description</th><th class="r">Amount</th></tr></thead><tbody><tr><td class="">09/03</td><td class="">R-4410</td><td class="">Ocean freight LAX</td><td class="r">307.50</td></tr><tr><td class="">09/05</td><td class="">R-4417</td><td class="">Drayage</td><td class="r">164.10</td></tr><tr><td class="">09/07</td><td class="">R-4424</td><td class="">Chassis split</td><td class="r">557.85</td></tr><tr><td class="">09/09</td><td class="">R-4431</td><td class="">Exam fee</td><td class="r">709.40</td></tr><tr><td class="">09/11</td><td class="">R-4438</td><td class="">Storage 3d</td><td class="r">2,111.30</td></tr><tr><td class="">09/13</td><td class="">R-4445</td><td class="">Fuel surcharge</td><td class="r">1,651.15</td></tr><tr><td class="">09/15</td><td class="">R-4452</td><td class="">Port fee</td><td class="r">990.70</td></tr><tr><td class="">09/17</td><td class="">R-4459</td><td class="">Handling</td><td class="r">1,589.85</td></tr><tr><td class="">09/19</td><td class="">R-4466</td><td class="">Documentation</td><td class="r">1,528.85</td></tr><tr><td class="">09/21</td><td class="">R-4473</td><td class="">Pier pass</td><td class="r">1,475.55</td></tr><tr><td class="">09/23</td><td class="">R-4480</td><td class="">Customs bond</td><td class="r">666.50</td></tr><tr><td class="">09/25</td><td class="">R-4487</td><td class="">Delivery order</td><td class="r">2,191.60</td></tr><tr><td class="">09/27</td><td class="">R-4494</td><td class="">Pallet wrap</td><td class="r">1,609.40</td></tr><tr><td class="">09/29</td><td class="">R-4501</td><td class="">Detention</td><td class="r">2,034.15</td></tr></tbody></table><div class="box" style="left:calc(76% - .3cqw);width:calc(24% + .6cqw);top:2.25cqw;height:27.10cqw"><span class="box-n">1</span><span class="box-tag">12 numbers</span></div></div>
 </div>
 </div>
-<div class="win" style="left: 46%; top: 54%; width: 51%; height: 38%">
-<div class="bar"><span>Rates_Q3.pdf</span><span class="ctl">— ▢ ✕</span></div>
-<div style="padding: 2cqw 2.6cqw; font-size: 1.6cqw; display: flex; flex-direction: column; gap: .9cqw">
-<b style="font-size: 2cqw">INVOICE · 10/06/2026</b>
-<div class="kv"><span>Steel plate 12*1800</span><span>547.20</span></div>
-<div class="kv"><span>Rubber gaskets</span><span class="sel" data-n="2">126.00</span></div>
-<div class="kv"><span>Hex nuts</span><span>90.00</span></div>
-<div class="kv"><span>PO#55</span><span>Net 30</span></div>
+<div class="win" style="left: 55%; top: 20%; width: 42%; height: 68%">
+<div class="bar"><span>Accounting · Bills to pay</span><span class="ctl">— ▢ ✕</span></div>
+<div class="appnav"><span class="on">Bills</span><span>Vendors</span><span>Reports</span></div>
+<div style="padding: .6cqw 1.2cqw">
+<div class="tbl-wrap"><table class="grid "><colgroup><col style="width:48%"><col style="width:22%"><col style="width:30%"></colgroup><thead><tr><th class="">Vendor</th><th class="">Due</th><th class="r">Amount</th></tr></thead><tbody><tr><td class="">Pacific Drayage Co.</td><td class="">10/12</td><td class="r">$643.75</td></tr><tr><td class="">Harbor Exam Station</td><td class="">10/13</td><td class="r">$83.75</td></tr><tr><td class="">Coastline Trucking</td><td class="">10/14</td><td class="r">$2,267.25</td></tr><tr><td class="">Bay Storage LLC</td><td class="">10/15</td><td class="r">$1,381.00</td></tr><tr><td class="">Summit Freight</td><td class="">10/16</td><td class="r">$1,947.50</td></tr><tr><td class="">Metro Chassis Pool</td><td class="">10/17</td><td class="r">$202.25</td></tr><tr><td class="">Westport Logistics</td><td class="">10/18</td><td class="r">$444.50</td></tr><tr><td class="">Golden Gate Bonds</td><td class="">10/19</td><td class="r">$764.75</td></tr><tr><td class="">Rapid Docs Inc.</td><td class="">10/20</td><td class="r">$1,086.25</td></tr></tbody></table><div class="box" style="left:calc(70% - .3cqw);width:calc(30% + .6cqw);top:2.25cqw;height:18.30cqw"><span class="box-n">2</span><span class="box-tag">8 numbers</span></div></div>
 </div>
 </div>
-<div class="sticky" style="right: 3%; top: 5%">call broker<br>re: exam fee<br>2:30 ✔</div>
-<div class="taskbar"><span class="tb"></span><span class="tb on"></span><span class="tb"></span><span class="tb on"></span><span class="tb"></span><span class="clock">1:42 PM</span></div>
+<div class="taskbar"><span class="tb"></span><span class="tb on"></span><span class="tb"></span><span class="tb on"></span><span class="tb on"></span><span class="tb"></span><span class="clock">1:42 PM</span></div>
 <div class="dim"></div>
 </div></div>
 <div class="neck"></div><div class="base"></div>
 </figure>
-
-<figure class="mon" aria-label="Right monitor: an email that mentions 1641.60, a spreadsheet with three cost cells boxed, and a chat message asking for the total." style="margin: 0">
+<figure class="mon" aria-label="Right monitor: a freight log spreadsheet with 24 sheet tabs. One box covers the Duty and Freight columns, 16 numbers at once." style="margin: 0">
 <div class="bezel"><div class="scr wall-b">
-<div class="win" style="left: 3%; top: 4%; width: 47%; height: 58%; overflow: visible">
-<div class="bar"><span>Q3 freight.xlsx</span><span class="ctl">— ▢ ✕</span></div>
-<table class="mini">
-<tr><th></th><th>A</th><th>B</th><th>C</th></tr>
-<tr><th>1</th><td><b>Carrier</b></td><td><b>Date</b></td><td class="r"><b>Cost</b></td></tr>
-<tr><th>2</th><td>Ocean · LAX</td><td>9/12</td><td class="r"><span class="sel" data-n="4">980.00</span></td></tr>
-<tr><th>3</th><td>Drayage</td><td>9/14</td><td class="r"><span class="sel nob">1,312.50</span></td></tr>
-<tr><th>4</th><td>Exam fee</td><td>9/20</td><td class="r"><span class="sel nob">47.25</span></td></tr>
-<tr><th>5</th><td>Storage</td><td>9/22</td><td class="r">—</td></tr>
-<tr><th>6</th><td>Notes</td><td colspan="2">check w/ broker</td></tr>
-</table>
+<div class="win" style="left: 58%; top: 6%; width: 40%; height: 30%">
+<div class="bar"><span>Mail · Re: Sept freight</span><span class="ctl">— ▢ ✕</span></div>
+<div style="padding: 1.2cqw 1.6cqw; font-size: 1.4cqw; line-height: 1.5"><b>Sam (Accounts)</b> · 11:08 AM<br>Need the Sept duty + freight total for the close…</div>
 </div>
-<div class="win" style="left: 54%; top: 10%; width: 43%; height: 38%">
-<div class="bar"><span>Mail — Re: invoice 24081</span><span class="ctl">— ▢ ✕</span></div>
-<div style="padding: 1.8cqw 2.4cqw; font-size: 1.6cqw; line-height: 1.5">
-<b>Sam (Accounts)</b> · 11:08 AM<br>
-Hi! The corrected invoice total is <span class="sel" data-n="3">1641.60</span>, sent 10/06. Can you confirm by Friday?
+<div class="win" style="left: 2%; top: 3%; width: 74%; height: 84%">
+<div class="bar"><span>Q3 freight log.xlsx</span><span class="ctl">— ▢ ✕</span></div>
+<div class="fx"><span>fx</span>=SUM(F2:G40)</div>
+<div class="tbl-wrap"><table class="grid xl"><colgroup><col style="width:6%"><col style="width:16%"><col style="width:12%"><col style="width:11%"><col style="width:19%"><col style="width:18%"><col style="width:18%"></colgroup><thead><tr><th class=""></th><th class="">Entry</th><th class="">Date</th><th class="">Port</th><th class="">Carrier</th><th class="r">Duty</th><th class="r">Freight</th></tr></thead><tbody><tr><td class="">2</td><td class="">E-88120</td><td class="">9/1</td><td class="">LGB</td><td class="">ONE</td><td class="r">660.19</td><td class="r">761.60</td></tr><tr><td class="">3</td><td class="">E-88133</td><td class="">9/2</td><td class="">LAX</td><td class="">Maersk Line</td><td class="r">459.45</td><td class="r">3,568.40</td></tr><tr><td class="">4</td><td class="">E-88146</td><td class="">9/3</td><td class="">LAX</td><td class="">HMM</td><td class="r">588.97</td><td class="r">2,451.75</td></tr><tr><td class="">5</td><td class="">E-88159</td><td class="">9/4</td><td class="">NYC</td><td class="">COSCO</td><td class="r">285.65</td><td class="r">2,673.35</td></tr><tr><td class="">6</td><td class="">E-88172</td><td class="">9/5</td><td class="">SAV</td><td class="">Evergreen</td><td class="r">711.25</td><td class="r">3,150.60</td></tr><tr><td class="">7</td><td class="">E-88185</td><td class="">9/6</td><td class="">SAV</td><td class="">Evergreen</td><td class="r">514.04</td><td class="r">1,164.85</td></tr><tr><td class="">8</td><td class="">E-88198</td><td class="">9/7</td><td class="">OAK</td><td class="">HMM</td><td class="r">50.25</td><td class="r">2,137.35</td></tr><tr><td class="">9</td><td class="">E-88211</td><td class="">9/8</td><td class="">SEA</td><td class="">ONE</td><td class="r">222.41</td><td class="r">2,746.00</td></tr><tr><td class="">10</td><td class="">E-88224</td><td class="">9/9</td><td class="">LGB</td><td class="">Maersk Line</td><td class="r">52.32</td><td class="r">2,357.00</td></tr><tr><td class="">11</td><td class="">E-88237</td><td class="">9/10</td><td class="">LAX</td><td class="">HMM</td><td class="r">691.33</td><td class="r">1,644.25</td></tr><tr><td class="">12</td><td class="">E-88250</td><td class="">9/11</td><td class="">NYC</td><td class="">Maersk Line</td><td class="r">806.53</td><td class="r">1,888.15</td></tr><tr><td class="">13</td><td class="">E-88263</td><td class="">9/12</td><td class="">SEA</td><td class="">CMA CGM</td><td class="r">851.18</td><td class="r">2,122.85</td></tr><tr><td class="">14</td><td class="">E-88276</td><td class="">9/13</td><td class="">LAX</td><td class="">Maersk Line</td><td class="r">435.72</td><td class="r">2,023.50</td></tr><tr><td class="">15</td><td class="">E-88289</td><td class="">9/14</td><td class="">OAK</td><td class="">COSCO</td><td class="r">447.18</td><td class="r">3,204.10</td></tr><tr><td class="">16</td><td class="">E-88302</td><td class="">9/15</td><td class="">SEA</td><td class="">Evergreen</td><td class="r">529.69</td><td class="r">1,824.05</td></tr></tbody></table><div class="box" style="left:calc(64% - .3cqw);width:calc(36% + .6cqw);top:2.25cqw;height:18.30cqw"><span class="box-n">3</span><span class="box-tag">16 numbers</span></div></div>
+<div class="sheettabs"><span class="nav">◀ ▶</span><span class="">Jan</span><span class="">Feb</span><span class="">Mar</span><span class="">Apr</span><span class="">May</span><span class="">Jun</span><span class="">Jul</span><span class="">Aug</span><span class="on">Sep</span><span class="">Q1</span><span class="">Q2</span><span class="">Q3</span><span class="">Vendors</span><span class="">Duty</span><span class="">Freight</span><span class="">Storage</span><span class="">Exams</span><span class="">Brokers</span><span class="">Rates</span><span class="">Bonds</span><span class="">Claims</span><span class="">Notes</span><span class="">Summary</span><span class="">Archive</span><span>+</span></div>
 </div>
-</div>
-<div class="toast" style="left: 3%; bottom: 11%">Mina: can you send me the Q3 total by 3?</div>
+<div class="toast" style="left: 3%; bottom: 9%">Mina: can you send me the Q3 total by 3?</div>
 <div class="taskbar"><span class="tb on"></span><span class="tb"></span><span class="tb on"></span><span class="tb"></span><span class="clock">1:42 PM</span></div>
 <div class="dim"></div>
 </div></div>
@@ -302,77 +317,412 @@ Hi! The corrected invoice total is <span class="sel" data-n="3">1641.60</span>, 
 </figure>
 </div>
 
+<ol class="scene-note" aria-label="What happened">
+<li><b>3</b><span>boxes dragged</span></li>
+<li><b>36</b><span>numbers read</span></li>
+<li><b>1</b><span>total, copied</span></li>
+</ol>
 <div class="app-float">
 <section class="bubble" aria-label="PurrSum result. Click a number to leave it out.">
-<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found <span id="count">6</span> numbers on 2 screens</p>
+<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found <span id="count">36</span> numbers on 2 screens</p>
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px 4px">
-<p aria-live="polite" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em"><span class="sr">Total </span><span id="total">5,357.35</span></p>
+<p aria-live="polite" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em"><span class="sr">Total </span><span id="total">43,825.21</span></p>
 <span style="padding: 3px 9px; border-radius: 9px; background: #2e2a12; color: #ffcf6b; font-size: 12px; white-space: nowrap">Copied ✓</span>
 </div>
 <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px">
 
 
 <li>
-<button type="button" class="row-btn" aria-pressed="true" data-cents="125000">
+<button type="button" class="row-btn" aria-pressed="true" data-cents="30750">
 <span class="rownum" aria-hidden="true">1</span>
 <span style="flex: 1; text-align: right">
-<span class="v-in"><span>$1,250.00</span></span>
-<span class="v-out" hidden><s style="color: #8f889e">$1,250.00</s><span class="sr"> (left out)</span></span>
+<span class="v-in"><span>307.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">307.50</s><span class="sr"> (left out)</span></span>
 </span>
 </button>
 </li>
 
-<li aria-hidden="true" class="divider"></li>
+
 <li>
-<button type="button" class="row-btn" aria-pressed="true" data-cents="12600">
+<button type="button" class="row-btn" aria-pressed="true" data-cents="16410">
 <span class="rownum" aria-hidden="true">2</span>
 <span style="flex: 1; text-align: right">
-<span class="v-in"><span>126.00</span></span>
-<span class="v-out" hidden><s style="color: #8f889e">126.00</s><span class="sr"> (left out)</span></span>
+<span class="v-in"><span>164.10</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">164.10</s><span class="sr"> (left out)</span></span>
 </span>
 </button>
 </li>
 
-<li aria-hidden="true" class="divider"></li>
+
 <li>
-<button type="button" class="row-btn" aria-pressed="true" data-cents="164160">
+<button type="button" class="row-btn" aria-pressed="true" data-cents="55785">
 <span class="rownum" aria-hidden="true">3</span>
 <span style="flex: 1; text-align: right">
-<span class="v-in"><span>1641.60</span></span>
-<span class="v-out" hidden><s style="color: #8f889e">1641.60</s><span class="sr"> (left out)</span></span>
+<span class="v-in"><span>557.85</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">557.85</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="70940">
+<span class="rownum" aria-hidden="true">4</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>709.40</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">709.40</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="211130">
+<span class="rownum" aria-hidden="true">5</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,111.30</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,111.30</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="165115">
+<span class="rownum" aria-hidden="true">6</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,651.15</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,651.15</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="99070">
+<span class="rownum" aria-hidden="true">7</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>990.70</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">990.70</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="158985">
+<span class="rownum" aria-hidden="true">8</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,589.85</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,589.85</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="152885">
+<span class="rownum" aria-hidden="true">9</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,528.85</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,528.85</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="147555">
+<span class="rownum" aria-hidden="true">10</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,475.55</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,475.55</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="66650">
+<span class="rownum" aria-hidden="true">11</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>666.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">666.50</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="219160">
+<span class="rownum" aria-hidden="true">12</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,191.60</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,191.60</s><span class="sr"> (left out)</span></span>
 </span>
 </button>
 </li>
 
 <li aria-hidden="true" class="divider"></li>
 <li>
-<button type="button" class="row-btn" aria-pressed="true" data-cents="98000">
-<span class="rownum" aria-hidden="true">4</span>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="64375">
+<span class="rownum" aria-hidden="true">13</span>
 <span style="flex: 1; text-align: right">
-<span class="v-in"><span>980.00</span></span>
-<span class="v-out" hidden><s style="color: #8f889e">980.00</s><span class="sr"> (left out)</span></span>
+<span class="v-in"><span>$643.75</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$643.75</s><span class="sr"> (left out)</span></span>
 </span>
 </button>
 </li>
 
 
 <li>
-<button type="button" class="row-btn" aria-pressed="true" data-cents="131250">
-<span class="rownum" aria-hidden="true">5</span>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="8375">
+<span class="rownum" aria-hidden="true">14</span>
 <span style="flex: 1; text-align: right">
-<span class="v-in"><span>1,312.50</span></span>
-<span class="v-out" hidden><s style="color: #8f889e">1,312.50</s><span class="sr"> (left out)</span></span>
+<span class="v-in"><span>$83.75</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$83.75</s><span class="sr"> (left out)</span></span>
 </span>
 </button>
 </li>
 
 
 <li>
-<button type="button" class="row-btn" aria-pressed="true" data-cents="4725">
-<span class="rownum" aria-hidden="true">6</span>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="226725">
+<span class="rownum" aria-hidden="true">15</span>
 <span style="flex: 1; text-align: right">
-<span class="v-in"><span>47.25</span></span>
-<span class="v-out" hidden><s style="color: #8f889e">47.25</s><span class="sr"> (left out)</span></span>
+<span class="v-in"><span>$2,267.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$2,267.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="138100">
+<span class="rownum" aria-hidden="true">16</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$1,381.00</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$1,381.00</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="194750">
+<span class="rownum" aria-hidden="true">17</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$1,947.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$1,947.50</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="20225">
+<span class="rownum" aria-hidden="true">18</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$202.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$202.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="44450">
+<span class="rownum" aria-hidden="true">19</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$444.50</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$444.50</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="76475">
+<span class="rownum" aria-hidden="true">20</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>$764.75</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">$764.75</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+<li aria-hidden="true" class="divider"></li>
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="66019">
+<span class="rownum" aria-hidden="true">21</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>660.19</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">660.19</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="76160">
+<span class="rownum" aria-hidden="true">22</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>761.60</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">761.60</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="45945">
+<span class="rownum" aria-hidden="true">23</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>459.45</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">459.45</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="356840">
+<span class="rownum" aria-hidden="true">24</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>3,568.40</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">3,568.40</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="58897">
+<span class="rownum" aria-hidden="true">25</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>588.97</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">588.97</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="245175">
+<span class="rownum" aria-hidden="true">26</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,451.75</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,451.75</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="28565">
+<span class="rownum" aria-hidden="true">27</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>285.65</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">285.65</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="267335">
+<span class="rownum" aria-hidden="true">28</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,673.35</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,673.35</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="71125">
+<span class="rownum" aria-hidden="true">29</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>711.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">711.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="315060">
+<span class="rownum" aria-hidden="true">30</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>3,150.60</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">3,150.60</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="51404">
+<span class="rownum" aria-hidden="true">31</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>514.04</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">514.04</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="116485">
+<span class="rownum" aria-hidden="true">32</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1,164.85</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1,164.85</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="5025">
+<span class="rownum" aria-hidden="true">33</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>50.25</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">50.25</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="213735">
+<span class="rownum" aria-hidden="true">34</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,137.35</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,137.35</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="22241">
+<span class="rownum" aria-hidden="true">35</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>222.41</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">222.41</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="274600">
+<span class="rownum" aria-hidden="true">36</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>2,746.00</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">2,746.00</s><span class="sr"> (left out)</span></span>
 </span>
 </button>
 </li>
