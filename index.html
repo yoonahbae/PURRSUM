@@ -7,9 +7,9 @@
 <meta name="description" content="A tiny cat for Windows that adds up any numbers on your screen: PDFs, Excel, Google Sheets, emails and websites, across all your monitors. Free, and nothing leaves your computer.">
 <meta name="theme-color" content="#141217">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://purrsum-noir.netlify.app/">
 <meta property="og:title" content="PurrSum Noir — add up any numbers on your screen">
 <meta property="og:description" content="Click the cat, drag a box over numbers in a PDF, Excel, Google Sheets or anywhere else, and the total is copied. Free for Windows.">
+<meta property="og:url" content="https://purrsum-noir.netlify.app/">
 <meta property="og:image" content="https://purrsum-noir.netlify.app/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -57,31 +57,19 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 @media (min-width:821px){.mob-nav{display:none}}
 
 /* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,5vw,64px);align-items:center;padding-top:clamp(32px,6vw,72px);padding-bottom:clamp(64px,9vw,112px)}
+.hero-copy{display:flex;flex-direction:column;gap:26px;min-width:0}
+.hero-h1{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(2.6rem,6.2vw,4.75rem);line-height:1;letter-spacing:-.03em}
+.hero-free{margin:0;color:#ffcf6b;font-size:clamp(1.05rem,1.8vw,1.25rem);font-weight:600}
+.hero-art{display:flex;align-items:flex-end;justify-content:center;gap:10px;min-width:0}
+.srow{display:flex;align-items:center;gap:10px;min-height:30px;padding:2px 8px;font:500 14px "IBM Plex Mono",ui-monospace,monospace}
+.srow span:last-child{flex:1;text-align:right}
 .chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .chips li{padding:7px 12px;border-radius:999px;background:#24212b;border:1px solid #3a3644;color:#e9e4f0;font-size:14px;font-weight:500}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr)}.hero-art{display:none}}
+@media (max-width:400px){.hero-art .bubble{width:100%}.hero-art{flex-direction:column;align-items:flex-end}}
 
-/* demo: two screens + bubble */
-.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:20px;align-items:end;margin-top:clamp(40px,6vw,64px)}
-.screen{background:#2a2632;border-radius:16px;padding:10px;box-shadow:0 24px 60px rgba(0,0,0,.4);min-width:0}
-.screen-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 6px 10px;color:#c9c3d4;font-size:13px}
-.screen-bar .tag{flex:none;padding:3px 9px;border-radius:8px;background:#141217;color:#ffcf6b;font-size:12px;font-weight:600}
-.paper{background:#ffffff;color:#2a2730;border-radius:10px;padding:18px 18px 16px;overflow:hidden}
-.inv{width:100%;border-collapse:collapse;font-size:13.5px}
-.inv td,.inv th{padding:6px 8px;text-align:left;border-bottom:1px solid #ece6dc}
-.inv th{font-weight:600;color:#5c5566;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid #d9d2c8}
-.inv .num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;white-space:pre}
-.lit{background:#fff3d6;box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00}
-.lit.top{box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00,inset 0 2px #c27c00}
-.lit.bot{box-shadow:inset 2px 0 #c27c00,inset -2px 0 #c27c00,inset 0 -2px #c27c00}
-.sheet{width:100%;border-collapse:collapse;font-size:13px;background:#ffffff;color:#202124}
-.sheet th{background:#f1f3f4;color:#5f6368;font-weight:500;font-size:11.5px;padding:4px 6px;border:1px solid #dadce0;text-align:center}
-.sheet td{padding:6px 8px;border:1px solid #e3e3e3}
-.sheet th.rh{width:28px}
-.sheet .num{text-align:right;font-family:"IBM Plex Mono",ui-monospace,monospace;white-space:pre}
-.sheet-tabs{display:flex;gap:4px;padding:8px 2px 0;font-size:12px;color:#5f6368}
-.sheet-tabs span{padding:4px 10px;border-radius:6px 6px 0 0;background:#f1f3f4}
-.sheet-tabs span.on{background:#ffffff;color:#1e7e34;font-weight:600;border-bottom:2px solid #1e7e34}
-.side{display:flex;align-items:flex-end;gap:10px}
+/* shared app bits */
 .bubble{width:272px;background:#1c1a22;border:1px solid #3a3644;border-radius:16px;padding:14px 12px 12px 14px;color:#f4f1ea;box-shadow:0 18px 40px rgba(0,0,0,.45)}
 .row-btn{display:flex;align-items:center;gap:10px;width:100%;min-height:30px;padding:2px 8px;border:0;border-radius:8px;background:transparent;color:#f4f1ea;font:500 14px "IBM Plex Mono",ui-monospace,monospace;cursor:pointer;text-align:left}
 .row-btn:hover{background:#2a2632}
@@ -94,9 +82,50 @@ a.btn-main:hover{background:#ffc64d;color:#1a1206}
 @keyframes shrink{0%,100%{transform:scaleX(1);opacity:.55}50%{transform:scaleX(.8);opacity:.35}}
 @keyframes blink{0%,93%,97%,100%{opacity:1}94%,96%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.cat,.shadow,.eyes{animation:none}}
-@media (max-width:1100px){.demo{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.side{grid-column:1 / -1;justify-content:flex-end}}
-@media (max-width:700px){.demo{grid-template-columns:minmax(0,1fr)}.side{grid-column:auto}}
-@media (max-width:400px){.bubble{width:100%}.side{flex-direction:column;align-items:flex-end}.inv td,.inv th{padding:6px 5px}}
+
+/* workday scene */
+.scene{position:relative;padding-bottom:clamp(0px,8vw,96px)}
+.monitors{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(14px,2.4vw,32px)}
+.mon{display:flex;flex-direction:column;align-items:center;min-width:0}
+.bezel{width:100%;background:#09080c;border:1px solid #34303d;border-radius:14px;padding:clamp(5px,.9vw,10px);box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.scr{position:relative;aspect-ratio:16/10;border-radius:5px;overflow:hidden;container-type:inline-size;color:#24212b;font-family:"IBM Plex Sans",system-ui,sans-serif}
+.wall-a{background:linear-gradient(135deg,#3a4f7a,#7a5c8f 55%,#c98a6b)}
+.wall-b{background:linear-gradient(160deg,#2f6b6a,#41507e 60%,#6b3f6f)}
+.neck{width:12%;height:clamp(14px,2.4vw,30px);background:linear-gradient(#2a2730,#1d1b22)}
+.base{width:34%;height:clamp(6px,.8vw,10px);border-radius:6px 6px 2px 2px;background:#2a2730}
+.win{position:absolute;font-size:1.6cqw;line-height:1.35;background:#ffffff;border-radius:.9cqw;box-shadow:0 1.2cqw 3cqw rgba(0,0,0,.35);overflow:hidden}
+.bar{display:flex;align-items:center;justify-content:space-between;height:4.4cqw;padding:0 1.6cqw;background:#ece9f1;font-size:1.5cqw;color:#4a4452}
+.ctl{letter-spacing:.6cqw;color:#6a6474}
+.tabs{display:flex;gap:.4cqw;padding:.8cqw .8cqw 0;background:#dfdbe6;font-size:1.3cqw;white-space:nowrap;overflow:hidden}
+.tabs span{padding:.7cqw 1.2cqw;border-radius:.7cqw .7cqw 0 0;background:#cfcad8;color:#4a4452;max-width:16cqw;overflow:hidden;text-overflow:ellipsis}
+.tabs span.on{background:#ffffff;color:#1f1b24;font-weight:600}
+.addr{margin:.8cqw 1.2cqw 0;padding:.6cqw 1.2cqw;border-radius:2cqw;background:#f1eff4;color:#6a6474;font-size:1.3cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kv{display:flex;justify-content:space-between;align-items:center;gap:1cqw;padding-bottom:.6cqw;border-bottom:.15cqw solid #ece6dc}
+.kv span:last-child{font-family:"IBM Plex Mono",monospace}
+.pill{padding:.3cqw 1cqw;border-radius:2cqw;background:#fde8d4;color:#8a3b00;font-size:1.3cqw}
+.fakebtn{padding:.8cqw 1.8cqw;border-radius:.7cqw;background:#2f4fb3;color:#fff;font-size:1.4cqw}
+.fakebtn.ghost{background:#eceaf2;color:#2f2b38}
+.sticky{position:absolute;width:20%;padding:1.4cqw;background:#ffe27a;color:#4a3b00;font-size:1.5cqw;line-height:1.4;transform:rotate(3deg);box-shadow:0 .8cqw 1.6cqw rgba(0,0,0,.25);font-family:"Bricolage Grotesque",sans-serif}
+.toast{position:absolute;max-width:44%;padding:1.2cqw 1.6cqw;border-radius:1.2cqw;background:#2b2833;color:#f4f1ea;font-size:1.5cqw;box-shadow:0 1cqw 2cqw rgba(0,0,0,.35)}
+.mini{width:100%;border-collapse:collapse;font-size:1.55cqw}
+.mini th{background:#f1f3f4;color:#5f6368;font-weight:500;padding:.4cqw .8cqw;border:.1cqw solid #dadce0}
+.mini td{padding:.7cqw .9cqw;border:.1cqw solid #e3e3e3;white-space:nowrap}
+.mini .r{text-align:right;font-family:"IBM Plex Mono",monospace}
+.taskbar{position:absolute;left:0;right:0;bottom:0;height:5.6cqw;display:flex;align-items:center;justify-content:center;gap:1.2cqw;background:rgba(18,16,24,.9)}
+.tb{width:3cqw;height:3cqw;border-radius:.7cqw;background:#5b5568}
+.tb.on{background:#8f88a6;box-shadow:inset 0 -.4cqw #ffb21e}
+.clock{position:absolute;right:2cqw;color:#e9e4f0;font-size:1.4cqw}
+.dim{position:absolute;inset:0;background:rgba(8,7,12,.52);z-index:1;pointer-events:none}
+.sel{position:relative;z-index:2;background:#ffffff;color:#1f1b24;outline:.35cqw solid #ffb21e;outline-offset:.35cqw;border-radius:.2cqw;font-family:"IBM Plex Mono",monospace;font-weight:600}
+.sel[data-n]::after{content:attr(data-n);position:absolute;right:-2.2cqw;top:-2.6cqw;width:2.6cqw;height:2.6cqw;border-radius:50%;background:#ffb21e;color:#1a1206;font:700 1.4cqw/2.6cqw "IBM Plex Sans",sans-serif;text-align:center}
+.app-float{position:absolute;right:clamp(-28px,-1.5vw,0px);bottom:0;z-index:3;display:flex;align-items:flex-end;gap:10px}
+.app-float .bubble{box-shadow:0 24px 60px rgba(0,0,0,.6)}
+@media (max-width:860px){
+.monitors{grid-template-columns:minmax(0,1fr);gap:28px}
+.scene{padding-bottom:0}
+.app-float{position:relative;right:auto;justify-content:flex-end;margin-top:-56px}
+}
+@media (max-width:400px){.app-float .bubble{width:100%}.app-float{flex-direction:column;align-items:flex-end}}
 
 /* sections */
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
@@ -141,6 +170,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </a>
 <nav class="desk-nav" aria-label="Main">
 <ul>
+<li><a href="#workday">See it work</a></li>
 <li><a href="#how">How it works</a></li>
 <li><a href="#features">Features</a></li>
 <li><a href="#faq">Questions</a></li>
@@ -154,6 +184,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 
 <nav id="mobile-menu" class="mob-nav" hidden aria-label="Main">
 <ul>
+<li><a href="#workday">See it work</a></li>
 <li><a href="#how">How it works</a></li>
 <li><a href="#features">Features</a></li>
 <li><a href="#faq">Questions</a></li>
@@ -164,57 +195,115 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </header>
 
 <main id="top">
-<section aria-labelledby="hero-title" class="wrap" style="padding-top: clamp(24px, 5vw, 48px); padding-bottom: clamp(64px, 9vw, 104px)">
-<div style="display: flex; flex-direction: column; gap: 24px; max-width: 52rem">
-<p style="margin: 0; display: inline-flex; align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #2a2412; color: #ffcf6b; font-size: 14px; font-weight: 500">Free for Windows · nothing leaves your computer</p>
-<h1 id="hero-title" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(2.4rem, 6.4vw, 5rem); line-height: 1.02; letter-spacing: -0.03em">Add up any numbers on your screen.</h1>
-<p style="margin: 0; font-size: clamp(1.05rem, 2vw, 1.25rem); line-height: 1.6; color: #c9c3d4; max-width: 40rem">PDFs, Excel, Google Sheets, emails, websites, even scanned pages, across all your monitors. Click the cat, drag a box over the numbers, and the total is copied.</p>
+<section aria-labelledby="hero-title" class="wrap hero">
+<div class="hero-copy">
+<h1 id="hero-title" class="hero-h1">Add up any numbers on your screen.</h1>
 <ul class="chips" aria-label="Works with">
 <li>PDF</li><li>Excel</li><li>Google Sheets</li><li>Email</li><li>Websites</li><li>Scans &amp; images</li><li>Multiple monitors</li>
 </ul>
-<div class="hero-ctas" style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 4px">
+<p class="hero-free">Free for Windows · nothing leaves your computer</p>
+<div class="hero-ctas" style="display: flex; flex-wrap: wrap; gap: 14px">
 <a class="btn btn-main" href="https://github.com/yoonahbae/PURRSUM/raw/downloads/Install%20PurrSum%20Noir.exe" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Download for Windows</a>
 <a class="btn btn-ghost" href="#install">How to install</a>
 </div>
-<p style="margin: 0; color: #a39cb0; font-size: 15px; line-height: 1.6">Windows 10 and 11 · 22 MB · no account. Mac version coming soon.</p>
+</div>
+<div class="hero-art">
+<div class="bubble" role="img" aria-label="Example result: Noir found 6 numbers on 2 screens and copied the total, 5,357.35">
+<p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found 6 numbers on 2 screens</p>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px 4px">
+<p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em">5,357.35</p>
+<span style="padding: 3px 9px; border-radius: 9px; background: #2e2a12; color: #ffcf6b; font-size: 12px; white-space: nowrap">Copied ✓</span>
+</div>
+<div class="srow"><span class="rownum">1</span><span>$1,250.00</span></div>
+<div class="divider"></div>
+<div class="srow"><span class="rownum">2</span><span>126.00</span></div>
+<div class="divider"></div>
+<div class="srow"><span class="rownum">3</span><span>1641.60</span></div>
+<div class="divider"></div>
+<div class="srow"><span class="rownum">4</span><span>980.00</span></div>
+<div class="srow"><span class="rownum">5</span><span>1,312.50</span></div>
+<div class="srow"><span class="rownum">6</span><span>47.25</span></div>
+<p style="margin: 8px 0 0 4px; color: #a39cb0; font-size: 12px">Total copied ✓</p>
+</div>
+<div aria-hidden="true" style="flex: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 4px">
+<div class="cat"><svg class="px" viewBox="0 0 23 18" width="92" height="72" aria-hidden="true"><path fill="#2f2f36" d="M5 5h1v1h-1zM11 5h1v1h-1zM10 5h1v1h-1zM6 5h1v1h-1z"/><path fill="#0b0b0e" d="M5 6h1v1h-1zM11 6h1v1h-1zM10 6h1v1h-1zM6 6h1v1h-1z"/><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#2f2f36" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path class="eyes" fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg></div>
+<div class="shadow" style="width: 44px; height: 8px; margin-top: 4px; margin-right: 24px; border-radius: 50%; background: #000000"></div>
+</div>
+</div>
+</section>
+
+<section id="workday" aria-labelledby="workday-title" class="sec" style="background: #1a1820; border-top: 1px solid #2a2632">
+<div class="wrap" style="display: flex; flex-direction: column; gap: clamp(28px, 4vw, 44px)">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 44rem">
+<p class="eyebrow" style="color: #ffcf6b">In a real workday</p>
+<h2 id="workday-title" class="h2">Two screens, ten tabs, one total.</h2>
+<p style="margin: 0; color: #c9c3d4; font-size: 1.1rem; line-height: 1.6">Amounts scattered across a portal, a PDF, an email and a spreadsheet? Click the cat, box them all in one go (hold <kbd>Shift</kbd> for more boxes), and the total is ready to paste.</p>
 </div>
 
-<div class="demo">
-<figure class="screen" style="margin: 0" aria-label="Screen 1: a PDF invoice with three amounts boxed">
-<div class="screen-bar"><span class="mono" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">invoice_24081.pdf</span><span class="tag">Screen 1</span></div>
-<div class="paper">
-<p style="margin: 0 0 12px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 17px; letter-spacing: 0.02em">INVOICE <span class="mono" style="font-weight: 400; font-size: 12px; color: #5c5566">INV-24081 · 10/06/2026</span></p>
-<table class="inv">
-<thead><tr><th scope="col">Item</th><th scope="col" class="num">Amount</th></tr></thead>
-<tbody>
-<tr><td>Steel plate 12*1800</td><td class="num lit top">1641. 60</td></tr>
-<tr><td>Anchor bolts M12</td><td class="num lit">$1,250.00</td></tr>
-<tr><td>Rubber gaskets</td><td class="num lit bot">126.00</td></tr>
-<tr><td>Hex nuts</td><td class="num">90.00</td></tr>
-</tbody>
-</table>
+<div class="scene">
+<div class="monitors">
+
+<figure class="mon" aria-label="Left monitor: a browser with many tabs showing a carrier portal, a PDF invoice and a sticky note. The amount due, 1,250.00, and a PDF line, 126.00, are boxed." style="margin: 0">
+<div class="bezel"><div class="scr wall-a">
+<div class="win" style="left: 2%; top: 3%; width: 70%; height: 74%">
+<div class="tabs"><span>Inbox (38)</span><span class="on">Carrier portal</span><span>Q3 freight – Sheets</span><span>Calendar</span><span>Rates PDF</span><span>Tracking</span><span>+</span></div>
+<div class="addr">portal.example-carrier.com/billing/INV-24081</div>
+<div style="padding: 2.4cqw 3cqw; display: flex; flex-direction: column; gap: 1.4cqw">
+<div style="display: flex; justify-content: space-between; align-items: center"><b style="font-size: 2.3cqw">Billing summary</b><span class="pill">Due 10/31</span></div>
+<div class="kv"><span>Invoice</span><span>INV-24081</span></div>
+<div class="kv"><span>Shipment date</span><span>10/02/2026</span></div>
+<div class="kv" style="font-size: 2cqw"><b>Amount due</b><span class="sel" data-n="1">$1,250.00</span></div>
+<div style="display: flex; gap: 1.2cqw; margin-top: .6cqw"><span class="fakebtn">Pay now</span><span class="fakebtn ghost">Download PDF</span></div>
 </div>
+</div>
+<div class="win" style="left: 46%; top: 54%; width: 51%; height: 38%">
+<div class="bar"><span>Rates_Q3.pdf</span><span class="ctl">— ▢ ✕</span></div>
+<div style="padding: 2cqw 2.6cqw; font-size: 1.6cqw; display: flex; flex-direction: column; gap: .9cqw">
+<b style="font-size: 2cqw">INVOICE · 10/06/2026</b>
+<div class="kv"><span>Steel plate 12*1800</span><span>547.20</span></div>
+<div class="kv"><span>Rubber gaskets</span><span class="sel" data-n="2">126.00</span></div>
+<div class="kv"><span>Hex nuts</span><span>90.00</span></div>
+<div class="kv"><span>PO#55</span><span>Net 30</span></div>
+</div>
+</div>
+<div class="sticky" style="right: 3%; top: 5%">call broker<br>re: exam fee<br>2:30 ✔</div>
+<div class="taskbar"><span class="tb"></span><span class="tb on"></span><span class="tb"></span><span class="tb on"></span><span class="tb"></span><span class="clock">1:42 PM</span></div>
+<div class="dim"></div>
+</div></div>
+<div class="neck"></div><div class="base"></div>
 </figure>
 
-<figure class="screen" style="margin: 0" aria-label="Screen 2: a spreadsheet with three cells boxed">
-<div class="screen-bar"><span class="mono" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Q3 freight.xlsx</span><span class="tag">Screen 2</span></div>
-<div class="paper" style="padding: 0; background: #ffffff">
-<table class="sheet">
-<thead><tr><th class="rh" scope="col"><span class="sr">Row</span></th><th scope="col">A</th><th scope="col">B</th></tr></thead>
-<tbody>
-<tr><th class="rh" scope="row">1</th><td style="font-weight: 600">Carrier</td><td class="num" style="font-weight: 600; font-family: 'IBM Plex Sans', sans-serif">Cost</td></tr>
-<tr><th class="rh" scope="row">2</th><td>Ocean · LAX</td><td class="num lit top">980.00</td></tr>
-<tr><th class="rh" scope="row">3</th><td>Drayage</td><td class="num lit">1,312.50</td></tr>
-<tr><th class="rh" scope="row">4</th><td>Exam fee</td><td class="num lit bot">47.25</td></tr>
-<tr><th class="rh" scope="row">5</th><td>Notes</td><td style="color: #5f6368">due 10/15</td></tr>
-</tbody>
+<figure class="mon" aria-label="Right monitor: an email that mentions 1641.60, a spreadsheet with three cost cells boxed, and a chat message asking for the total." style="margin: 0">
+<div class="bezel"><div class="scr wall-b">
+<div class="win" style="left: 3%; top: 4%; width: 47%; height: 58%; overflow: visible">
+<div class="bar"><span>Q3 freight.xlsx</span><span class="ctl">— ▢ ✕</span></div>
+<table class="mini">
+<tr><th></th><th>A</th><th>B</th><th>C</th></tr>
+<tr><th>1</th><td><b>Carrier</b></td><td><b>Date</b></td><td class="r"><b>Cost</b></td></tr>
+<tr><th>2</th><td>Ocean · LAX</td><td>9/12</td><td class="r"><span class="sel" data-n="4">980.00</span></td></tr>
+<tr><th>3</th><td>Drayage</td><td>9/14</td><td class="r"><span class="sel nob">1,312.50</span></td></tr>
+<tr><th>4</th><td>Exam fee</td><td>9/20</td><td class="r"><span class="sel nob">47.25</span></td></tr>
+<tr><th>5</th><td>Storage</td><td>9/22</td><td class="r">—</td></tr>
+<tr><th>6</th><td>Notes</td><td colspan="2">check w/ broker</td></tr>
 </table>
-<div class="sheet-tabs" aria-hidden="true" style="padding: 8px 8px 0"><span class="on">Sheet1</span><span>Sheet2</span></div>
 </div>
+<div class="win" style="left: 54%; top: 10%; width: 43%; height: 38%">
+<div class="bar"><span>Mail — Re: invoice 24081</span><span class="ctl">— ▢ ✕</span></div>
+<div style="padding: 1.8cqw 2.4cqw; font-size: 1.6cqw; line-height: 1.5">
+<b>Sam (Accounts)</b> · 11:08 AM<br>
+Hi! The corrected invoice total is <span class="sel" data-n="3">1641.60</span>, sent 10/06. Can you confirm by Friday?
+</div>
+</div>
+<div class="toast" style="left: 3%; bottom: 11%">Mina: can you send me the Q3 total by 3?</div>
+<div class="taskbar"><span class="tb on"></span><span class="tb"></span><span class="tb on"></span><span class="tb"></span><span class="clock">1:42 PM</span></div>
+<div class="dim"></div>
+</div></div>
+<div class="neck"></div><div class="base"></div>
 </figure>
+</div>
 
-<div class="side">
-<section class="bubble" aria-label="Example PurrSum result. Click a number to leave it out.">
+<div class="app-float">
+<section class="bubble" aria-label="PurrSum result. Click a number to leave it out.">
 <p style="margin: 0 0 0 4px; color: #b9b3c6; font-size: 13px">Noir found <span id="count">6</span> numbers on 2 screens</p>
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px 4px">
 <p aria-live="polite" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.01em"><span class="sr">Total </span><span id="total">5,357.35</span></p>
@@ -224,19 +313,8 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 
 
 <li>
-<button type="button" class="row-btn" aria-pressed="true" data-cents="164160">
-<span class="rownum" aria-hidden="true">1</span>
-<span style="flex: 1; text-align: right">
-<span class="v-in"><span>1641.60</span></span>
-<span class="v-out" hidden><s style="color: #8f889e">1641.60</s><span class="sr"> (left out)</span></span>
-</span>
-</button>
-</li>
-
-
-<li>
 <button type="button" class="row-btn" aria-pressed="true" data-cents="125000">
-<span class="rownum" aria-hidden="true">2</span>
+<span class="rownum" aria-hidden="true">1</span>
 <span style="flex: 1; text-align: right">
 <span class="v-in"><span>$1,250.00</span></span>
 <span class="v-out" hidden><s style="color: #8f889e">$1,250.00</s><span class="sr"> (left out)</span></span>
@@ -244,13 +322,24 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 </button>
 </li>
 
-
+<li aria-hidden="true" class="divider"></li>
 <li>
 <button type="button" class="row-btn" aria-pressed="true" data-cents="12600">
-<span class="rownum" aria-hidden="true">3</span>
+<span class="rownum" aria-hidden="true">2</span>
 <span style="flex: 1; text-align: right">
 <span class="v-in"><span>126.00</span></span>
 <span class="v-out" hidden><s style="color: #8f889e">126.00</s><span class="sr"> (left out)</span></span>
+</span>
+</button>
+</li>
+
+<li aria-hidden="true" class="divider"></li>
+<li>
+<button type="button" class="row-btn" aria-pressed="true" data-cents="164160">
+<span class="rownum" aria-hidden="true">3</span>
+<span style="flex: 1; text-align: right">
+<span class="v-in"><span>1641.60</span></span>
+<span class="v-out" hidden><s style="color: #8f889e">1641.60</s><span class="sr"> (left out)</span></span>
 </span>
 </button>
 </li>
@@ -294,6 +383,7 @@ kbd{font-family:"IBM Plex Mono",monospace;font-size:.9em;padding:1px 6px;border-
 <div aria-hidden="true" style="flex: none; display: flex; flex-direction: column; align-items: center; padding-bottom: 4px">
 <div class="cat"><svg class="px" viewBox="0 0 23 18" width="92" height="72" aria-hidden="true"><path fill="#2f2f36" d="M5 5h1v1h-1zM11 5h1v1h-1zM10 5h1v1h-1zM6 5h1v1h-1z"/><path fill="#0b0b0e" d="M5 6h1v1h-1zM11 6h1v1h-1zM10 6h1v1h-1zM6 6h1v1h-1z"/><path fill="#0b0b0e" d="M2 0h2v1h-2zM13 0h2v1h-2zM2 1h1v1h-1zM4 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM2 2h1v1h-1zM5 2h7v1h-7zM14 2h1v1h-1zM2 3h1v1h-1zM14 3h1v1h-1zM2 4h1v1h-1zM14 4h1v1h-1zM2 5h1v1h-1zM14 5h1v1h-1zM0 6h3v1h-3zM14 6h3v1h-3zM2 7h1v1h-1zM8 7h1v1h-1zM14 7h1v1h-1zM0 8h3v1h-3zM7 8h1v1h-1zM9 8h1v1h-1zM14 8h3v1h-3zM2 9h1v1h-1zM14 9h1v1h-1zM3 10h1v1h-1zM13 10h1v1h-1zM3 11h1v1h-1zM13 11h1v1h-1zM19 11h3v1h-3zM3 12h1v1h-1zM13 12h1v1h-1zM18 12h1v1h-1zM22 12h1v1h-1zM3 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM21 13h1v1h-1zM3 14h1v1h-1zM13 14h1v1h-1zM16 14h1v1h-1zM19 14h1v1h-1zM3 15h1v1h-1zM6 15h1v1h-1zM10 15h1v1h-1zM13 15h3v1h-3zM18 15h1v1h-1zM3 16h1v1h-1zM6 16h1v1h-1zM10 16h1v1h-1zM17 16h1v1h-1zM3 17h14v1h-14z"/><path fill="#f39bb0" d="M3 1h1v1h-1zM13 1h1v1h-1zM3 2h2v1h-2zM12 2h2v1h-2z"/><path fill="#2f2f36" d="M3 3h11v1h-11zM3 4h11v1h-11zM3 5h2v1h-2zM7 5h3v1h-3zM12 5h2v1h-2zM3 6h2v1h-2zM7 6h3v1h-3zM12 6h2v1h-2zM3 7h5v1h-5zM9 7h5v1h-5zM3 8h4v1h-4zM8 8h1v1h-1zM10 8h4v1h-4zM3 9h11v1h-11zM4 10h9v1h-9zM4 11h9v1h-9zM4 12h9v1h-9zM19 12h3v1h-3zM4 13h9v1h-9zM18 13h3v1h-3zM4 14h9v1h-9zM17 14h2v1h-2zM4 15h2v1h-2zM7 15h3v1h-3zM11 15h2v1h-2zM16 15h2v1h-2zM4 16h2v1h-2zM7 16h3v1h-3zM11 16h6v1h-6z"/><path class="eyes" fill="#ffb21e" d="M5 5h2v1h-2zM10 5h2v1h-2zM5 6h2v1h-2zM10 6h2v1h-2z"/></svg></div>
 <div class="shadow" style="width: 44px; height: 8px; margin-top: 4px; margin-right: 24px; border-radius: 50%; background: #000000"></div>
+</div>
 </div>
 </div>
 </div>
